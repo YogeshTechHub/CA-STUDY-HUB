@@ -567,7 +567,15 @@
       .stat-pill { padding-inline: 0.2rem; text-align: center; }
       .card-header, .card-body { padding-inline: 0.85rem; }
     }
-  </style>
+   .study-find {display:flex;flex-wrap:wrap;gap:1rem;padding:1rem;max-width:70rem;margin:auto;}
+.study-find label {flex:1;min-width:220px;}
+.study-find input,.study-find select {display:block;width:100%;padding:.7rem;background:var(--bg-card);color:var(--text-primary);border:1px solid var(--border);border-radius:8px;}
+.solution summary {cursor:pointer;padding:.8rem;background:var(--bg-elevated);font-weight:700;}
+.solution {margin-top:1rem;}
+body.rapid-revision-active .solution {display:block;}
+body.rapid-revision-active .solution > summary {display:none;}
+body.rapid-revision-active .solution > .revision-core {display:block;}
+</style>
 <link rel="stylesheet" href="./theme-engine.css">
 </head>
 <body>
@@ -617,6 +625,11 @@
     </div>
   </header>
 
+  <section class="study-find" aria-label="Find a topic">
+<label>Search this chapter<input id="chapter-search" type="search" placeholder="Topic, keyword, or illustration number"></label>
+<label>Topic index<select id="topic-index"><option value="">Choose a topic</option></select></label>
+<p id="search-status" role="status"></p>
+</section>
   <main class="container" id="cards-container">
     <!-- CARDS INJECTED HERE -->
     <!-- Card 1: 1. Introduction to Ind AS 116 (Leases) & Shift from AS 19 -->
@@ -805,7 +818,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given data and requirement</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Customer</th><td>Entity XYZ (Chemical Manufacturer)</td></tr>
@@ -816,11 +829,12 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">⚖️ Step-by-Step Ind AS 116 Analysis</div>
           <div class="table-container">
             <table class="data-table">
-              <thead><tr><th>Criteria Evaluated</th><th>Condition Met?</th><th>Reason</th></tr></thead>
+              <thead><tr><th>Test</th><th>Result</th><th>Reason</th></tr></thead>
               <tbody>
                 <tr><td>Implicit Identification</td><td><span class="badge-pass">YES</span></td><td>Supplier owns only one rolling stock that meets XYZ's unique specifications. Hence, implicitly identified.</td></tr>
                 <tr><td>Substantive Substitution Right</td><td><span class="badge-pass">NO (Absent)</span></td><td>Supplier can replace ONLY in event of malfunction/repairs. Repair/malfunction replacement right is <strong>protective</strong>, not substantive.</td></tr>
@@ -829,12 +843,13 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>Conclusion: An Identified Asset Exists.</strong><br>
             <strong>ICAI Exam Trap:</strong> Explicit serial number is NOT mandatory. An asset can be <em>implicitly specified</em> at the time it is made available. Further, replacement rights triggered purely by breakdown, defect, or maintenance do NOT negate asset identification.
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -858,7 +873,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given data and requirement</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Customer & Supplier</th><td>Customer XYZ enters into a 10-year contract with Supplier ABC for the use of a car.</td></tr>
@@ -868,6 +883,7 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">⚖️ Regulatory Analysis</div>
           <div class="table-container">
@@ -881,11 +897,12 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>Conclusion: Asset is an Identified Asset.</strong> An asset need not be physically in existence at contract inception; it is identified once made available to the lessee per agreed specifications.
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -951,7 +968,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given data and requirement</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Customer & Supplier</th><td>Customer contracts with Supplier for data storage services involving a specified server (Server #104).</td></tr>
@@ -960,6 +977,7 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">⚖️ Dual Test Matrix</div>
           <div class="table-container">
@@ -973,12 +991,13 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>Conclusion: NO Identified Asset → NOT a Lease (Service Contract).</strong><br>
             Even though a specific server number was named, the supplier possesses a substantive substitution right. The contract is accounted for as a service contract under Ind AS 115.
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -1002,7 +1021,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given data and requirement</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Customer & Supplier</th><td>Customer contracts with Supplier for data center server hosting. Server #10 is highly customized for customer's proprietary software.</td></tr>
@@ -1011,6 +1030,7 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">⚖️ Evaluation Table</div>
           <div class="table-container">
@@ -1022,11 +1042,12 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>Conclusion: An Identified Asset Exists.</strong> Customization destroys practical ability and economic benefit of substitution. The contract meets the identified asset test under Ind AS 116.
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -1092,7 +1113,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given data and requirement</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Customer & Supplier</th><td>Customer XYZ enters into a 15-year contract with Telecom Supplier for 5 dark fibers within a 25-fiber optical cable between Mumbai and Pune.</td></tr>
@@ -1101,6 +1122,7 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">⚖️ Analysis</div>
           <div class="table-container">
@@ -1111,11 +1133,12 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>Conclusion: Contains an Identified Asset.</strong> Dedicated physical strands/fibers within a cable are physically distinct assets.
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -1139,7 +1162,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given data and requirement</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Customer & Supplier</th><td>Customer XYZ enters into a 10-year contract with Supplier ABC to transport oil through ABC's interstate pipeline.</td></tr>
@@ -1148,6 +1171,7 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">⚖️ Analysis</div>
           <div class="table-container">
@@ -1158,12 +1182,13 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>Conclusion: NO Identified Asset → Service Contract under Ind AS 115.</strong><br>
             A capacity portion that is neither physically distinct nor represents substantially all the capacity is not an identified asset.
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -1187,7 +1212,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given data and requirement</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Parties</th><td>Entity X (Garment Manufacturer) enters into a contract with Warehouse Facility Y.</td></tr>
@@ -1196,6 +1221,7 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">⚖️ Analysis</div>
           <div class="table-container">
@@ -1206,12 +1232,13 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>Conclusion: NO Identified Asset → Warehousing Service Contract.</strong><br>
             Without physical demarcation (e.g. dedicated Unit 4B) or substantially all warehouse capacity, it is a service contract.
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -1235,7 +1262,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given data and requirement</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Customer & Supplier</th><td>Customer contracts with Pipeline Operator for transmission of natural gas for 15 years.</td></tr>
@@ -1244,6 +1271,7 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">⚖️ Analysis</div>
           <div class="table-container">
@@ -1255,11 +1283,12 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>Conclusion: Contains an Identified Asset.</strong> Because 95% represents substantially all capacity, customer controls the asset's economic output, satisfying the identified asset condition.
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -1283,7 +1312,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given data and requirement</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Retailer & Mall</th><td>Coffee Kiosk enters into a 3-year contract to occupy retail kiosk space in a prime shopping mall.</td></tr>
@@ -1292,6 +1321,7 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">⚖️ Dual Test of Substitution Right</div>
           <div class="table-container">
@@ -1303,12 +1333,13 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>Conclusion: NO Identified Asset → Service Agreement.</strong><br>
             Because the mall operator can relocate the kiosk easily and gain an economic advantage, the kiosk space is not an identified asset. Contrast with leases where landlord pays hefty compensation or has no alternate vacant space!
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -1374,7 +1405,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given data and requirement</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Customer & Supplier</th><td>Customer enters into a 20-year Power Purchase Agreement (PPA) with a Solar Farm operator.</td></tr>
@@ -1383,6 +1414,7 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">⚖️ Analysis of Economic Benefits</div>
           <div class="table-container">
@@ -1394,11 +1426,12 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>Conclusion: Economic Benefits Test Satisfied.</strong> Customer gets 100% power + RECs. (Note: Next step must evaluate who directs the use to confirm whether PPA is a lease or executory supply contract).
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -1464,7 +1497,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given data and requirement</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Customer & Supplier</th><td>Customer enters into a 5-year contract with Supplier for the exclusive use of a specialized manufacturing plant.</td></tr>
@@ -1473,6 +1506,7 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">⚖️ Analysis</div>
           <div class="table-container">
@@ -1483,11 +1517,12 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>Conclusion: Contract CONTAINS A LEASE of the plant.</strong> Customer directs how and for what purpose the plant is operated.
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -1511,7 +1546,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given data and requirement</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Customer & Shipowner</th><td>Customer enters into a 3-year contract for an identified cargo ship (MV Ocean Star).</td></tr>
@@ -1520,6 +1555,7 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">⚖️ Analysis: Directing Use vs Physical Operation</div>
           <div class="table-container">
@@ -1533,12 +1569,13 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>Conclusion: Contract CONTAINS A LEASE of the ship + Service contract for crew.</strong><br>
             ICAI Favorite Sum! The fact that the lessor operates the asset does NOT prevent the customer from directing its use. Time charters contain a lease; contrast with Voyage charters where shipowner dictates route and carries general cargo!
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -1562,7 +1599,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given data and requirement</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Customer & Supplier</th><td>Hospital enters into a 10-year contract with Supplier for a dedicated on-site HVAC cooling plant.</td></tr>
@@ -1571,6 +1608,7 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">⚖️ Analysis</div>
           <div class="table-container">
@@ -1581,11 +1619,12 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>Conclusion: Contains a Lease of the HVAC plant.</strong> The customer directs how and for what purpose the plant cools the facility.
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -1609,7 +1648,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given data and requirement</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Customer & Developer</th><td>Customer contracts for an identified solar plant. The plant's operation is predetermined by sunlight availability.</td></tr>
@@ -1618,6 +1657,7 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">⚖️ Predetermined Use Test (Para B24(b)(ii))</div>
           <div class="table-container">
@@ -1629,11 +1669,12 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>Conclusion: Contract CONTAINS A LEASE.</strong> When asset use is predetermined, customer directs use IF customer designed the asset in a manner that predetermines how and for what purpose it operates!
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -1657,7 +1698,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given data and requirement</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Customer & Dealer</th><td>Entity X leases an explicitly specified SUV crossover for 2 years.</td></tr>
@@ -1666,6 +1707,7 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">⚖️ Analysis</div>
           <div class="table-container">
@@ -1676,11 +1718,12 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>Conclusion: Contract CONTAINS A LEASE.</strong> Contractual limitations (mileage caps, geographical limits) define the scope of rights, not a denial of control. Within that scope, customer directs use.
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -1790,7 +1833,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given data and requirement</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Entity</th><td>Entity ABC enters into an equipment lease.</td></tr>
@@ -1800,6 +1843,7 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">⚖️ Analysis</div>
           <div class="table-container">
@@ -1810,11 +1854,12 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>Conclusion: Lease Term = 6 Years.</strong> When renewal option is at fair market value and no economic penalties or significant improvements exist, lessee is not reasonably certain to exercise at commencement.
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -1838,7 +1883,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given data and requirement</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Entity & Asset</th><td>Entity XYZ enters into an 8-year lease for a commercial building + 2-year market rate renewal option.</td></tr>
@@ -1847,6 +1892,7 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">⚖️ Step-by-Step Lease Term Evaluation</div>
           <div class="table-container">
@@ -1861,12 +1907,13 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>Conclusion: Lease Term = 10 Years.</strong><br>
             Classic ICAI exam question! Even though renewal is at market rent, the presence of <em>significant leasehold improvements that would be abandoned</em> provides an economic incentive making renewal reasonably certain.
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -1890,7 +1937,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given data and requirement</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Retailer & Lessor</th><td>Entity PQR leases an identified retail kiosk space in a prime shopping center.</td></tr>
@@ -1900,11 +1947,12 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
-          <div class="sub-heading">⚖️ Working Notes & Computation</div>
+          <div class="sub-heading">⚖️ Working Notes & Calculation</div>
           <div class="table-container">
             <table class="data-table">
-              <thead><tr><th>Calculation Step</th><th>Computation</th><th>Result</th></tr></thead>
+              <thead><tr><th>Calculation Step</th><th>Calculation</th><th>Result</th></tr></thead>
               <tbody>
                 <tr><td>Annual Months Leased</td><td>3 Months (Oct, Nov, Dec)</td><td>3 months / year</td></tr>
                 <tr><td>Total Contract Duration</td><td>7 Years</td><td>7 festive seasons</td></tr>
@@ -1914,12 +1962,13 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>Conclusion: Contains a Lease with a Lease Term of 21 Months.</strong><br>
             Under Ind AS 116, the period of use does NOT need to be continuous. Non-consecutive seasonal periods are aggregated. Because total term is 21 months (>12 months), the short-term lease exemption does NOT apply!
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -1985,7 +2034,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given data and requirement</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Original Lease</th><td>Retailer leases 3rd floor for 5 years + two successive 5-year renewal options (initially assessed as not reasonably certain; term = 5 yrs).</td></tr>
@@ -1994,6 +2043,7 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">⚖️ Analysis</div>
           <div class="table-container">
@@ -2005,12 +2055,13 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>Conclusion: Reassess Lease Term to 10 Years at end of Year 3.</strong><br>
             The acquisition is a significant event within lessee's control. Lease liability must be re-measured using the revised discount rate at reassessment date!
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -2034,7 +2085,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given data and requirement</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Company N Fleet</th><td>10 commercial vehicles leased for 5 years + 5-year renewal option.</td></tr>
@@ -2044,6 +2095,7 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">⚖️ Analysis: Contractual Obligation / Legal Frustration</div>
           <div class="table-container">
@@ -2058,12 +2110,13 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>Conclusion: Lease Term Reduced from 10 Years to 5 Years.</strong><br>
             When a government regulation prevents continuation, the enforceable period itself changes. The entity must revise the lease term to 5 years and account for remeasurement/curtailment.
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -2238,13 +2291,13 @@
         </div>
       </div>
     </div>
-    <!-- Card 36: 36. Comprehensive Practical Illustration: Initial & Subsequent Measurement -->
+    <!-- Card 36: 36.  Practical Illustration: Initial & Subsequent Measurement -->
     <div class="card illus-card" data-id="card-36" data-visual="true">
       <div class="card-header">
         <div class="header-left">
           <a href="https://www.youtube.com/watch?v=JXpKNI-WqpE&t=7335s" target="_blank" class="timestamp-link" title="Jump to YouTube at 02:02:15">⏱ 02:02:15</a>
           <span class="badge badge-visual">Video walkthrough</span>
-          <h2 class="card-title">36. Comprehensive Practical Illustration: Initial & Subsequent Measurement</h2>
+          <h2 class="card-title">36.  Practical Illustration: Initial & Subsequent Measurement</h2>
         </div>
         <div class="header-actions">
           <label class="toggle-action-label">
@@ -2255,7 +2308,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given data and requirement</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Lease Term</th><td>5 Years (Non-cancellable)</td></tr>
@@ -2266,6 +2319,7 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">🔢 Step 1: Present Value Calculation of Lease Liability</div>
           <div class="table-container">
@@ -2315,7 +2369,7 @@
             </table>
           </div>
 
-          <div class="sub-heading">📒 Step 4: Comprehensive Journal Entries (Books of Lessee)</div>
+          <div class="sub-heading">📒 Step 4:  Journal Entries (Books of Lessee)</div>
           <div class="table-container">
             <table class="data-table">
               <thead><tr><th>Date / Period</th><th>Particulars</th><th class="text-right">Debit (₹)</th><th class="text-right">Credit (₹)</th></tr></thead>
@@ -2350,12 +2404,13 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & P&L Front-Loading Proof</div>
+          <div class="revision-core-header">⚡ Exam trap & P&L Front-Loading Proof</div>
           <div class="revision-core-content">
             <strong>Total P&L Charge Year 1 = ₹11,373</strong> (₹3,791 Interest + ₹7,582 Depreciation) vs <strong>Cash Paid = ₹10,000</strong>.<br>
             Under old AS 19, P&L rent was flat ₹10,000. Ind AS 116 creates an initial front-loaded excess charge of <strong>₹1,373 in Year 1</strong>, reversing in later years (Year 5 P&L = ₹908 + ₹7,582 = ₹8,490). Keep this front-loading dynamic in mind for analytical exam questions!
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -2466,7 +2521,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given data and requirement</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Entity</th><td>Customer Q leases industrial machinery.</td></tr>
@@ -2475,6 +2530,7 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">⚖️ Analysis of Payment Structure</div>
           <div class="table-container">
@@ -2488,12 +2544,13 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>Conclusion: Capitalize ₹1,000/month as in-substance fixed payment.</strong><br>
             Even though worded as conditional on usage, the minimum unavoidable outflow is ₹1,000. The additional ₹1,000 is contingent on actual operation and is recognized as variable rent expense in P&L when incurred.
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -2517,7 +2574,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given data and requirement</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Entity & Base Rent</th><td>Entity P leases retail premises for ₹1,00,000 per month.</td></tr>
@@ -2526,6 +2583,7 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">⚖️ Analysis</div>
           <div class="table-container">
@@ -2537,12 +2595,13 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>Conclusion: Fixed 2% annual escalation is included in lease liability.</strong><br>
             Because sales may be zero, the 2% increase is the minimum unavoidable floor. If 1% of sales subsequently exceeds the 2% rate, the excess is recognized in P&L as variable lease payment in that period.
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -2566,7 +2625,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given data and requirement</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Entity & Asset</th><td>Company N leases an automated production line.</td></tr>
@@ -2576,6 +2635,7 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">⚖️ Comparison: Estimate vs Contractual Commitment</div>
           <div class="table-container">
@@ -2587,12 +2647,13 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>Conclusion: Capitalize ₹10 Lakhs per year. Do NOT capitalize ₹15 Lakhs!</strong><br>
             ICAI Golden Rule: Management estimates of future usage never determine initial lease liability. Only the contractually guaranteed minimum (₹10L) is capitalized. The excess ₹5L is expensed in P&L when hours are actually worked!
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -2700,7 +2761,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given Data & Practical Problem Setup</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Lease Term</th><td>10 Years; Payments at <strong>beginning of each year</strong> (Year 0 to 9).</td></tr>
@@ -2712,6 +2773,7 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">🔢 Step 1: Initial Measurement at Commencement Date (t=0)</div>
           <p style="font-size:0.8rem; margin-bottom:0.4rem;">Payment at t=0 is paid immediately (₹1,000). Remaining 9 payments of ₹1,000 at t=1 to 9 @ 8% discount rate.</p>
@@ -2760,7 +2822,7 @@
           <p style="font-size:0.75rem; color:var(--text-secondary);">Journal Entry: ROU Asset A/c Dr. ₹496 | To Lease Liability A/c ₹496.</p>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>Key ICAI Exam Principles:</strong><br>
             1. CPI changes are remeasured only when cash flows actually change (end of Year 2, not Year 1).<br>
@@ -2768,6 +2830,7 @@
             3. The ₹496 liability increase is added to ROU Asset carrying amount, prospectively revising future depreciation!
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -2791,7 +2854,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given data and requirement</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Customer</th><td>Entity L enters into a 10-year lease.</td></tr>
@@ -2801,6 +2864,7 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">⚖️ Regulatory Framework (Para 42 & 43)</div>
           <div class="table-container">
@@ -2814,12 +2878,13 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>Conclusion: Remeasure using REVISED discount rate.</strong><br>
             Crucial distinction: When variable lease payments change due to a floating interest rate (e.g. MIBOR + 2%), the lessee MUST update the discount rate to reflect the changes in the interest rate!
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -2843,7 +2908,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given data and requirement</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Parties</th><td>Entity XYZ (Manufacturer) and Medical Center ABC (Customer).</td></tr>
@@ -2853,6 +2918,7 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">⚖️ Analysis of Embedded Lease & Separation of Components</div>
           <div class="table-container">
@@ -2868,12 +2934,13 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>Conclusion: Contains an embedded lease of the diagnostic analyzer.</strong><br>
             Do not fall for "free machine" marketing! The minimum annual commitment (10,000 kits × ₹500 = ₹50 Lakhs) must be allocated between the machine lease and the consumable supply based on relative standalone selling prices.
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -2972,7 +3039,7 @@
         <div class="header-left">
           <a href="https://www.youtube.com/watch?v=JXpKNI-WqpE&t=12206s" target="_blank" class="timestamp-link" title="Jump to YouTube at 03:23:26">⏱ 03:23:26</a>
           <span class="badge badge-visual">Video walkthrough</span>
-          <h2 class="card-title">49. Illus 27: Comprehensive Initial ROU Asset & Lease Liability Calculation</h2>
+          <h2 class="card-title">49. Illus 27:  Initial ROU Asset & Lease Liability Calculation</h2>
         </div>
         <div class="header-actions">
           <label class="toggle-action-label">
@@ -2983,7 +3050,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given Data & Practical Problem Setup</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Parties & Asset</th><td>Entity Y (Lessee) leases a specialized railcar from Entity Z (Lessor).</td></tr>
@@ -2997,11 +3064,12 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
-          <div class="sub-heading">🔢 Step 1: Initial Lease Liability Computation</div>
+          <div class="sub-heading">🔢 Step 1: Initial Lease Liability Calculation</div>
           <div class="table-container">
             <table class="data-table">
-              <thead><tr><th>Particulars</th><th>Computation</th><th class="text-right">Amount (₹)</th></tr></thead>
+              <thead><tr><th>Particulars</th><th>Calculation</th><th class="text-right">Amount (₹)</th></tr></thead>
               <tbody>
                 <tr><td>Annual Lease Payment</td><td>₹10,000</td><td class="text-right">-</td></tr>
                 <tr><td>PV factor for 12 year-end payments at 8%</td><td>(1 − 1.08<sup>−12</sup>) ÷ 0.08</td><td class="text-right">7.53608</td></tr>
@@ -3013,7 +3081,7 @@
             </table>
           </div>
 
-          <div class="sub-heading">🏗️ Step 2: Initial ROU Asset Computation</div>
+          <div class="sub-heading">🏗️ Step 2: Initial ROU Asset Calculation</div>
           <div class="table-container">
             <table class="data-table">
               <thead><tr><th>Component</th><th>Nature</th><th class="text-right">Amount (₹)</th></tr></thead>
@@ -3045,12 +3113,13 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>Initial Lease Liability = ₹75,361 | Initial ROU Asset = ₹81,361.</strong><br>
             <strong>Payment timing:</strong> The lease liability includes payments still unpaid at commencement. Add the ₹5,000 of rent already paid to the ROU asset.
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -3074,7 +3143,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given data and requirement</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Customer & Asset</th><td>Company H leases an aircraft for 5 years.</td></tr>
@@ -3084,6 +3153,7 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">⚖️ Analysis</div>
           <div class="table-container">
@@ -3095,12 +3165,13 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>Conclusion: Obligation is capitalized as part of ROU Asset at commencement.</strong><br>
             Any dismantling, site restoration, or redelivery condition required by the lease contract is recognized as a Provision under Ind AS 37 and added to ROU Asset cost on Day 1.
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -3150,13 +3221,13 @@
         </div>
       </div>
     </div>
-    <!-- Card 52: 52. Illus 29: Comprehensive Subsequent Measurement Example (3-Year Amortization) -->
+    <!-- Card 52: 52. Illus 29:  Subsequent Measurement Example (3-Year Amortization) -->
     <div class="card illus-card" data-id="card-52" data-visual="true">
       <div class="card-header">
         <div class="header-left">
           <a href="https://www.youtube.com/watch?v=JXpKNI-WqpE&t=12842s" target="_blank" class="timestamp-link" title="Jump to YouTube at 03:34:02">⏱ 03:34:02</a>
           <span class="badge badge-visual">Video walkthrough</span>
-          <h2 class="card-title">52. Illus 29: Comprehensive Subsequent Measurement Example (3-Year Amortization)</h2>
+          <h2 class="card-title">52. Illus 29:  Subsequent Measurement Example (3-Year Amortization)</h2>
         </div>
         <div class="header-actions">
           <label class="toggle-action-label">
@@ -3167,7 +3238,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given Data & Practical Problem Setup</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Lessee & Asset</th><td>Entity ABC enters into a 3-year lease of an industrial equipment.</td></tr>
@@ -3178,6 +3249,7 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">🔢 Step 1: Initial Measurement (PV @ 12%)</div>
           <div class="table-container">
@@ -3223,11 +3295,12 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             Notice how cash paid increases (₹20k → ₹30k → ₹50k), but P&L charge DECREASES (₹35,070 → ₹33,784 → ₹31,146)! In Year 1, P&L expense exceeds cash outflow by ₹15,070. Over the 3 years, total expense exactly equals total cash paid (₹1,00,000).
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -3251,7 +3324,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given Data & Practical Problem Setup</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Parties & Asset</th><td>Company EFG (Lessee) leases commercial property from Entity H (Lessor).</td></tr>
@@ -3263,6 +3336,7 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">⚖️ ICAI Step-by-Step Evaluation</div>
           <div class="table-container">
@@ -3278,12 +3352,13 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>Ultimate CA Final Exam Master Rule:</strong><br>
             Whenever a lease contains a <em>reasonably certain purchase option</em>, the lessee will take ownership of the asset at the end of the term. Therefore, the ROU Asset MUST be depreciated over the <strong>40-year economic life of the property</strong>, rather than the 10-year lease term!
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -3391,7 +3466,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given Data & Practical Problem Setup</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Original Lease</th><td>10-year lease of 5,000 sq m office space; Rent = ₹1,00,000/year (arrears). Initial IBR = 6%.</td></tr>
@@ -3402,12 +3477,13 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">🔢 Step 1: Liability & ROU Asset Immediately Before Modification</div>
           <p style="font-size:0.8rem; margin-bottom:0.4rem;">Original term remaining = 4 years (Years 7 to 10) of ₹1,00,000 @ original 6% discount rate.</p>
           <div class="table-container">
             <table class="data-table">
-              <thead><tr><th>Particulars</th><th>Computation</th><th class="text-right">Amount (₹)</th></tr></thead>
+              <thead><tr><th>Particulars</th><th>Calculation</th><th class="text-right">Amount (₹)</th></tr></thead>
               <tbody>
                 <tr><td>Carrying Amount of Lease Liability</td><td>₹1,00,000 × PVIFA(6%, 4 yrs: 3.46511)</td><td class="text-right">₹3,46,511</td></tr>
                 <tr><td>Carrying Amount of ROU Asset</td><td>Original ₹7,36,009 - 6 yrs SLM Depreciation (₹73,601 × 6)</td><td class="text-right">₹2,94,403</td></tr>
@@ -3419,7 +3495,7 @@
           <p style="font-size:0.8rem; margin-bottom:0.4rem;">8 remaining payments of ₹1,50,000 discounted @ REVISED 7% discount rate.</p>
           <div class="table-container">
             <table class="data-table">
-              <thead><tr><th>Particulars</th><th>Computation</th><th class="text-right">Amount (₹)</th></tr></thead>
+              <thead><tr><th>Particulars</th><th>Calculation</th><th class="text-right">Amount (₹)</th></tr></thead>
               <tbody>
                 <tr><td>Modified Lease Liability (t=6)</td><td>₹1,50,000 × PVIFA(7%, 8 yrs: 5.97130)</td><td class="text-right">₹8,95,695</td></tr>
                 <tr><td>Less: Old Carrying Amount of Liability</td><td>-</td><td class="text-right">-₹3,46,511</td></tr>
@@ -3441,12 +3517,13 @@
           <p style="font-size:0.8rem; color:var(--text-secondary); margin-top:0.4rem;">Revised ROU Asset = ₹2,94,403 + ₹5,49,184 = <strong>₹8,43,587</strong> (depreciated SLM over remaining 8 years = ₹1,05,448/yr).</p>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>Conclusion: Zero P&L impact! Full ₹5,49,184 added to ROU Asset.</strong><br>
             Because this modification extends the lease term without decreasing scope, there is no derecognition. The liability is remeasured using the <em>new discount rate (7%)</em> and the balancing figure updates the ROU Asset.
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -3470,7 +3547,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given Data & Practical Problem Setup</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Original Lease</th><td>10-year lease of 5,000 sq m office space; Rent = ₹50,000/year (arrears). Initial IBR = 6%.</td></tr>
@@ -3481,6 +3558,7 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">🔢 Step 1: Pre-Modification Balances & 50% Scope Derecognition</div>
           <p style="font-size:0.8rem; margin-bottom:0.4rem;">Before modification at end of Year 5: Lease Liability = ₹2,10,618 (PVIFA 6%, 5 yrs × 50k); ROU Asset carrying value = ₹1,84,002.</p>
@@ -3502,7 +3580,7 @@
           <div class="sub-heading">🔄 Step 2: Remeasure Remaining Liability for Revised Payments (₹30k @ 5%)</div>
           <div class="table-container">
             <table class="data-table">
-              <thead><tr><th>Particulars</th><th>Computation</th><th class="text-right">Amount (₹)</th></tr></thead>
+              <thead><tr><th>Particulars</th><th>Calculation</th><th class="text-right">Amount (₹)</th></tr></thead>
               <tbody>
                 <tr><td>Re-measured Modified Liability (5 yrs @ 5%)</td><td>₹30,000 × PVIFA(5%, 5 yrs: 4.32948)</td><td class="text-right">₹1,29,884</td></tr>
                 <tr><td>Less: Retained 50% Lease Liability</td><td>From Step 1</td><td class="text-right">-₹1,05,309</td></tr>
@@ -3525,13 +3603,14 @@
           <p style="font-size:0.8rem; color:var(--text-secondary); margin-top:0.4rem;">Final Post-Modification ROU Asset = ₹92,001 + ₹24,575 = <strong>₹1,16,576</strong>.</p>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>2-Step Modification Mechanics (Mandatory ICAI Procedure):</strong><br>
             1. First derecognize proportionate ROU Asset and Liability based on % space given up (50%). Record the difference in <strong>Profit and Loss (Gain ₹13,308)</strong>.<br>
             2. Then remeasure the remaining liability for revised consideration (₹30k) at new rate (5%) and adjust the difference against the remaining ROU Asset!
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -3555,7 +3634,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given Data & Practical Problem Setup</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Scenario</th><td>Entity leases 5,000 sq m for 10 years at ₹1,00,000/year. At beginning of Year 6, parties agree to:</td></tr>
@@ -3565,6 +3644,7 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">⚖️ Sequence of Accounting Steps</div>
           <div class="table-container">
@@ -3578,11 +3658,12 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>Order of Operations Rule:</strong> In hybrid modifications with both increase and decrease in scope, <strong>ALWAYS EXECUTE THE SCOPE DECREASE FIRST</strong> (recognizing P&L gain/loss), and then execute the scope increase/consideration modification on the remaining asset!
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -3649,7 +3730,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given data and requirement</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Retailer Q</th><td>Leases store in mall; rent = ₹1,00,000/month. Due to COVID-19, parties agree in May 2020:</td></tr>
@@ -3658,6 +3739,7 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">⚖️ 3-Condition Check</div>
           <div class="table-container">
@@ -3669,11 +3751,12 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>Conclusion: Eligible for Practical Expedient.</strong> Pure timing deferral within the June 2022 window qualifies. Lessee can retain original liability schedule and adjust payment timing without lease modification accounting.
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -3697,7 +3780,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given data and requirement</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Entity</th><td>Restaurant chain leases outlets. Agreed deferral: Rent originally due July 2021 to December 2021 deferred to January 2022 to June 2022.</td></tr>
@@ -3705,6 +3788,7 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">⚖️ Analysis</div>
           <div class="table-container">
@@ -3715,11 +3799,12 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>Conclusion: Qualifies for Expedient.</strong> Shifting payments across financial years does not disqualify the concession as long as payments are due on or before 30 June 2022.
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -3743,7 +3828,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given data and requirement</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Concession Terms</th><td>In September 2021, lessor agrees to reduce monthly rent by 50% for 24 months (October 2021 to September 2023).</td></tr>
@@ -3751,6 +3836,7 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">⚖️ Evaluation</div>
           <div class="table-container">
@@ -3761,12 +3847,13 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>Conclusion: DISQUALIFIED from Practical Expedient.</strong><br>
             Because rent reductions extend beyond 30 June 2022, the entity CANNOT apply the practical expedient. It MUST account for the arrangement as a full <strong>Lease Modification under Para 45</strong>!
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -3790,7 +3877,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given data and requirement</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Concession Terms</th><td>Rent for April 2021 to June 2021 (3 months) waived; 3 additional months added at the end of the 5-year lease at same monthly rent.</td></tr>
@@ -3798,6 +3885,7 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">⚖️ Analysis: Minor vs Substantive Change</div>
           <div class="table-container">
@@ -3812,11 +3900,12 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>Conclusion: Qualifies for Expedient!</strong> Minor tail-end extension to compensate for waived pandemic months does not invalidate the practical expedient. Record the net concession in P&L.
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -3882,7 +3971,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given data and requirement</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Entity X</th><td>Leases non-specialized machine for producing Phone A1 parts.</td></tr>
@@ -3891,6 +3980,7 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">⚖️ Analysis</div>
           <div class="table-container">
@@ -3902,12 +3992,13 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>Conclusion: Qualifies as a Short-Term Lease.</strong><br>
             Lease term is determined based on the substance and reasonable certainty of termination options, not the nominal agreement heading. Because assessed lease term is 9 months, Entity X can elect the short-term exemption!
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -3973,7 +4064,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given data and requirement</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Customer</th><td>Entity L leases an office building from Landlord M for 10 years.</td></tr>
@@ -3982,6 +4073,7 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">⚖️ Interdependence Analysis</div>
           <div class="table-container">
@@ -3993,11 +4085,12 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>Conclusion: Single Lease Component.</strong> Specialized integrated fixtures (HVAC, electrical conduits) that are highly interrelated with the structure form part of the primary building lease component.
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -4021,7 +4114,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given data and requirement</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Contract Terms</th><td>5-year equipment lease with fixed annual payments of ₹10,000.</td></tr>
@@ -4030,6 +4123,7 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">⚖️ Analysis of Transfer of Goods/Services</div>
           <div class="table-container">
@@ -4044,12 +4138,13 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>Conclusion: Administrative fee is NOT a separate component!</strong><br>
             Amounts charged for lessor administrative overheads, billing, or lease management do not transfer a distinct good or service. The ₹500 must be allocated across the genuine components (Rent & Maintenance) based on relative standalone selling prices!
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -4073,7 +4168,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given data and requirement</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Fact Pattern</th><td>Same as Illus 40, but contract also requires lessee to pay an additional fee for end-of-lease equipment restoration.</td></tr>
@@ -4081,6 +4176,7 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">⚖️ Analysis</div>
           <div class="table-container">
@@ -4091,11 +4187,12 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>Conclusion: Restoration obligations are part of the Lease Component.</strong> They do not transfer a separate service to the lessee during the lease term.
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -4119,7 +4216,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given data and requirement</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Contract Prices</th><td>Total ₹90,000/year stated as: Lease = ₹80,000, Maintenance = ₹10,000.</td></tr>
@@ -4128,6 +4225,7 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">🔢 Relative Standalone Price Allocation (Total = ₹90,000)</div>
           <div class="table-container">
@@ -4142,12 +4240,13 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>Contract stated prices are completely IGNORED!</strong><br>
             Consideration must be allocated strictly based on <strong>relative standalone selling prices</strong> (Lease = ₹76,500, Maintenance = ₹13,500). Capitalize ₹76,500 into Lease Liability; expense ₹13,500 in P&L!
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -4171,7 +4270,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given data and requirement</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Contract Details</th><td>Annual lease payment = ₹10,000. Stated breakdown: Lease = ₹8,500, Maintenance = ₹1,000, Insurance reimbursement = ₹500.</td></tr>
@@ -4180,6 +4279,7 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">⚖️ Analysis</div>
           <div class="table-container">
@@ -4190,12 +4290,13 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>Conclusion: Insurance & Property Tax reimbursements are NOT separate components.</strong><br>
             Reimbursement of lessor costs (property tax, building insurance) does not transfer a good or service to the lessee. It forms part of the total consideration allocated to the lease component!
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -4219,7 +4320,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given Data & Practical Problem Setup</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Parties</th><td>Entity X (Lessee) and Entity Y (Lessor).</td></tr>
@@ -4230,6 +4331,7 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">⚖️ Step 1: Component Evaluation</div>
           <div class="table-container">
@@ -4245,7 +4347,7 @@
           <div class="sub-heading">🔢 Step 2: Initial Measurement of Lease Component</div>
           <div class="table-container">
             <table class="data-table">
-              <thead><tr><th>Particulars</th><th>Computation</th><th class="text-right">Amount (₹)</th></tr></thead>
+              <thead><tr><th>Particulars</th><th>Calculation</th><th class="text-right">Amount (₹)</th></tr></thead>
               <tbody>
                 <tr><td>Annual Lease Payment</td><td>₹70,000</td><td class="text-right">-</td></tr>
                 <tr><td>PVIFA Factor (6%, 9 years)</td><td>6.80169</td><td class="text-right">-</td></tr>
@@ -4267,12 +4369,13 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>Initial Lease Liability & ROU Asset = ₹4,76,118.</strong><br>
             Do not lump facilities charges into lease liability! The ₹1,00,000 facility fee is a service contract expensed annually in P&L as maintenance/power service cost. Only the ₹70,000 floor rent is capitalized!
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -4366,7 +4469,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given Data & Practical Problem Setup</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Entity & Functional Currency</th><td>Indian Entity X (Functional Currency = INR ₹).</td></tr>
@@ -4377,6 +4480,7 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">🔢 Step 1: Initial Measurement at Commencement Date (USD to INR @ ₹68)</div>
           <div class="table-container">
@@ -4401,13 +4505,14 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>Critical ICAI Exam Trap:</strong><br>
             <strong>ROU Asset is NON-MONETARY:</strong> Never retranslate ROU Asset for exchange rate changes! Depreciate at historical rate.<br>
             <strong>Lease Liability is MONETARY:</strong> Retranslate at every balance sheet date at closing spot rate (₹70), taking the exchange fluctuation directly to <strong>Profit and Loss</strong> under Ind AS 21!
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -4624,13 +4729,13 @@
         </div>
       </div>
     </div>
-    <!-- Card 81: 81. Illus 46: Comprehensive Dealer Lessor Accounting Working -->
+    <!-- Card 81: 81. Illus 46:  Dealer Lessor Accounting Working -->
     <div class="card illus-card" data-id="card-81" data-visual="true">
       <div class="card-header">
         <div class="header-left">
           <a href="https://www.youtube.com/watch?v=JXpKNI-WqpE&t=30232s" target="_blank" class="timestamp-link" title="Jump to YouTube at 08:23:52">⏱ 08:23:52</a>
           <span class="badge badge-visual">Video walkthrough</span>
-          <h2 class="card-title">81. Illus 46: Comprehensive Dealer Lessor Accounting Working</h2>
+          <h2 class="card-title">81. Illus 46:  Dealer Lessor Accounting Working</h2>
         </div>
         <div class="header-actions">
           <label class="toggle-action-label">
@@ -4641,7 +4746,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given Data & Practical Problem Setup</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Dealer Lessor</th><td>Enters into 10-year equipment lease with annual rent of <strong>₹15,000</strong> in arrears.</td></tr>
@@ -4652,8 +4757,9 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
-          <div class="sub-heading">🔢 Step-by-Step Dealer Lessor Computations</div>
+          <div class="sub-heading">🔢 Step-by-Step Dealer Lessor Calculations</div>
           <div class="table-container">
             <table class="data-table">
               <thead><tr><th>Component</th><th>Working & Regulatory Formula</th><th class="text-right">Amount (₹)</th></tr></thead>
@@ -4672,7 +4778,7 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>Key ICAI Exam Mechanics:</strong><br>
             1. Revenue is capped at PV of lease payments (₹98,425) when PV of UGRV exists.<br>
@@ -4680,6 +4786,7 @@
             3. Dealer's IDC (₹3,000) is expensed in P&L immediately, leaving net Day 1 profit of ₹4,271.
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -4775,7 +4882,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given data and requirement</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Parties</th><td>Lessor L leases 40 lorries to Lessee M on 10-year finance lease.</td></tr>
@@ -4784,6 +4891,7 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">⚖️ Accounting Treatment (Para 80)</div>
           <div class="table-container">
@@ -4795,11 +4903,12 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>Conclusion: Reclassified to Operating Lease.</strong> Net investment balance becomes the opening gross book value of PPE. No Day 1 profit or loss is recognized.
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -4823,7 +4932,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given data and requirement</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Lessor Y</th><td>5-year finance lease of equipment; annual rent = ₹1,95,000.</td></tr>
@@ -4832,6 +4941,7 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">⚖️ Ind AS 109 Financial Asset Modification</div>
           <div class="table-container">
@@ -4842,11 +4952,12 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>Conclusion: Apply Ind AS 109 modification accounting.</strong> Re-calculate net investment using original implicit rate and record difference in P&L.
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -4912,7 +5023,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given data and requirement</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Lessor L</th><td>Leases retail space to Lessee Z on operating lease; rent = ₹10,000/month.</td></tr>
@@ -4920,6 +5031,7 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">⚖️ Analysis</div>
           <div class="table-container">
@@ -4930,11 +5042,12 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>Conclusion: Operating lease income remains ₹10,000/month.</strong> Because total consideration is unchanged, straight-line income recognition continues uninterrupted.
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -4958,7 +5071,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given data and requirement</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Lessor M</th><td>10-year operating lease of office space; rent = ₹15,000/month.</td></tr>
@@ -4967,6 +5080,7 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">⚖️ Accounting Mechanics</div>
           <div class="table-container">
@@ -4977,11 +5091,12 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>Conclusion: Operating lease modifications are accounted for PROSPECTIVELY as a new lease.</strong> Any prepaid or accrued lease payments are treated as part of the consideration for the new lease.
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -5005,7 +5120,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given data and requirement</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Lessor Scope Expansion</th><td>Lessee operating lease expanded to add an additional floor of office space for remaining 6 years at a negotiated discounted rate (below standalone price).</td></tr>
@@ -5013,6 +5128,7 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">⚖️ Separate Lease Test</div>
           <div class="table-container">
@@ -5024,11 +5140,12 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>Conclusion: Prospective straight-lining over remaining term.</strong> If additional space is not priced at standalone selling price, pool the remaining original rents and new rents and straight-line them over the remaining term.
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -5154,13 +5271,13 @@
         </div>
       </div>
     </div>
-    <!-- Card 93: 93. Illus 52: Comprehensive Sale & Leaseback Practical Accounting Working -->
+    <!-- Card 93: 93. Illus 52:  Sale & Leaseback Practical Accounting Working -->
     <div class="card illus-card" data-id="card-93" data-visual="true">
       <div class="card-header">
         <div class="header-left">
           <a href="https://www.youtube.com/watch?v=JXpKNI-WqpE&t=34944s" target="_blank" class="timestamp-link" title="Jump to YouTube at 09:42:24">⏱ 09:42:24</a>
           <span class="badge badge-visual">Video walkthrough</span>
-          <h2 class="card-title">93. Illus 52: Comprehensive Sale & Leaseback Practical Accounting Working</h2>
+          <h2 class="card-title">93. Illus 52:  Sale & Leaseback Practical Accounting Working</h2>
         </div>
         <div class="header-actions">
           <label class="toggle-action-label">
@@ -5171,7 +5288,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given Data & Practical Problem Setup</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Transaction</th><td>Seller-Lessee sells a commercial building to Buyer-Lessor for cash of <strong>₹30,00,000 (Fair Value)</strong>.</td></tr>
@@ -5183,6 +5300,7 @@
             </table>
           </div>
         </div>
+        <details class="solution"><summary>Reveal working and answer</summary>
         <div class="calculation-workings">
           <div class="sub-heading">🔢 Step 1: Present Value of Leaseback Payments (Lease Liability)</div>
           <p style="font-size:0.8rem; margin-bottom:0.4rem;">PV of 20 annual payments of ₹2,00,000 @ 12% = ₹2,00,000 × 7.46944 = <strong>₹14,93,888</strong>.</p>
@@ -5201,7 +5319,7 @@
           <div class="sub-heading">🏗️ Step 3: Measurement of ROU Asset & Gain on Rights Transferred</div>
           <div class="table-container">
             <table class="data-table">
-              <thead><tr><th>Item</th><th>Computation</th><th class="text-right">Amount (₹)</th></tr></thead>
+              <thead><tr><th>Item</th><th>Calculation</th><th class="text-right">Amount (₹)</th></tr></thead>
               <tbody>
                 <tr><td>Total Notional Gain on Outright Sale</td><td>Sale Price (₹30,00,000) - Carrying Amount (₹15,00,000)</td><td class="text-right">₹15,00,000</td></tr>
                 <tr style="background:rgba(56,189,248,0.15)">
@@ -5230,7 +5348,7 @@
           </div>
         </div>
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rule & Conclusion</div>
+          <div class="revision-core-header">⚡ Exam trap and conclusion</div>
           <div class="revision-core-content">
             <strong>The Classic CA Final Sale & Leaseback Formula:</strong><br>
             • ROU Asset = Book Value ₹15L × (PV ₹14.94L / FV ₹30L) = <strong>₹7,46,944</strong>.<br>
@@ -5238,6 +5356,7 @@
             • The remaining ₹7,46,944 gain is effectively deferred by reducing ROU Asset cost from its full PV (₹14,93,888 - ₹7,46,944 = ₹7,46,944)!
           </div>
         </div>
+        </details>
         <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
@@ -5500,7 +5619,7 @@
       </div>
       <div class="card-body">
         <div class="question-details">
-          <div class="sub-heading">📋 Given Data & Problem Statement</div>
+          <div class="sub-heading">Given and required</div>
           <div class="table-container">
             <table class="data-table">
               <tr><th>Entity & Contract</th><td>Retailer entered into a 3-year lease of retail space commencing <strong>1 April 2017</strong>.</td></tr>
@@ -5514,7 +5633,7 @@
           </div>
         </div>
 
-        <div class="working-notes">
+<details class="solution"><summary>Reveal working and answer</summary>        <div class="working-notes">
           <div class="sub-heading">🔢 Step 1: Full Retrospective Approach (Ind AS 8)</div>
           <div class="branch-group">
             <div class="branch-root">Initial Measurement & Amortization Schedule at Commencement (1 April 2017 @ 12%)</div>
@@ -5563,7 +5682,7 @@
             </div>
           </div>
 
-          <div class="sub-heading">📊 Comprehensive P&L Impact Comparison for FY 2019-20 (Year 3)</div>
+          <div class="sub-heading">📊  P&L Impact Comparison for FY 2019-20 (Year 3)</div>
           <div class="table-container">
             <table class="data-table">
               <thead><tr><th>Expense Element</th><th>Full Retrospective (₹)</th><th>Modified Option A (₹)</th><th>Modified Option B (₹)</th></tr></thead>
@@ -5596,7 +5715,7 @@
         </div>
 
         <div class="revision-core">
-          <div class="revision-core-header">⚡ Exam Day Core Rules: Option A vs Option B</div>
+          <div class="revision-core-header">⚡ Exam traps: Option A vs Option B</div>
           <div class="revision-core-content">
             • <strong>Modified Option A:</strong> ROU Asset is lower than Lease Liability on transition $
 ightarrow$ results in <strong>Day 1 debit to Retained Earnings</strong> (₹16,000), but <strong>lower future depreciation</strong> (₹1,65,800) in subsequent years.<br>
@@ -5604,7 +5723,7 @@ ightarrow$ results in <strong>Day 1 debit to Retained Earnings</strong> (₹16,0
 ightarrow$ <strong>ZERO equity hit on Day 1</strong>, but <strong>higher future depreciation</strong> (₹1,81,800) in remaining lease term. Total P&L charge in final year equals old rent of ₹2,00,000.
           </div>
         </div>
-        <div class="notes-container">
+</details>        <div class="notes-container">
           <button type="button" class="notes-toggle" aria-expanded="false">Personal notes</button>
           <textarea aria-label="Personal notes" class="notes-textarea" placeholder="Add an exam reminder or a question…"></textarea>
         </div>
@@ -5867,9 +5986,33 @@ ightarrow$ <strong>ZERO equity hit on Day 1</strong>, but <strong>higher future 
         else if (filter === 'visual') show = isVisual;
         else if (filter === 'revision') show = isRev;
 
+        const query = document.getElementById('chapter-search').value.trim().toLowerCase();
+        show = show && card.textContent.toLowerCase().includes(query);
         card.style.display = show ? 'block' : 'none';
       });
     }
+
+    const search = document.getElementById('chapter-search');
+    const index = document.getElementById('topic-index');
+    document.querySelectorAll('#cards-container > .card').forEach(card => {
+      card.id = card.dataset.id;
+      const option = document.createElement('option');
+      option.value = card.id;
+      option.textContent = card.querySelector('.card-title').textContent;
+      index.appendChild(option);
+    });
+    search.addEventListener('input', () => {
+      applyFilter(currentFilter);
+      const count = [...document.querySelectorAll('#cards-container > .card')].filter(card => card.style.display !== 'none').length;
+      document.getElementById('search-status').textContent = count ? count + ' topics found' : 'No matching topics. Try another keyword or filter.';
+    });
+    index.addEventListener('change', () => {
+      if (!index.value) return;
+      search.value = '';
+      document.getElementById('search-status').textContent = '';
+      applyFilter('all');
+      document.getElementById(index.value).scrollIntoView({behavior:'smooth',block:'start'});
+    });
 
     // Setup event listeners
     function bindCardEvents() {
@@ -5917,6 +6060,7 @@ ightarrow$ <strong>ZERO equity hit on Day 1</strong>, but <strong>higher future 
     examBtn.addEventListener('click', () => {
       studyState.rapidMode = !studyState.rapidMode;
       document.body.classList.toggle('rapid-revision-active', studyState.rapidMode);
+      document.querySelectorAll('.solution').forEach(solution => solution.open = studyState.rapidMode);
       examBtn.classList.toggle('active', studyState.rapidMode);
       examBtn.innerHTML = studyState.rapidMode 
         ? '<span>✓</span> Rapid Mode Active (Core Only)'
@@ -5952,6 +6096,7 @@ ightarrow$ <strong>ZERO equity hit on Day 1</strong>, but <strong>higher future 
         examBtn.innerHTML = '<span>✓</span> Rapid Mode Active (Core Only)';
       }
       applyFilter('all');
+      document.querySelectorAll('.solution').forEach(solution => solution.open = studyState.rapidMode);
       bindCardEvents();
       updateDashboard();
     });
