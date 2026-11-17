@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ind AS 116: Leases - Deep-Dive Revision Capsule | CA Final FR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <style>
+    :root {
+      --bg-primary: #0a0e17;
+      --bg-secondary: #111827;
+      --bg-card: #162032;
+      --border-color: #2a3a54;
+      --text-main: #f8fafc;
+      --text-muted: #cbd5e1;
+      --accent-blue: #3b82f6;
+      --accent-emerald: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-purple: #a855f7;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      line-height: 1.6;
+      padding: 24px;
+      padding-bottom: 90px;
+    }
+    .container { max-width: 1000px; margin: 0 auto; }
+    header {
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 16px;
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--accent-blue);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .back-link:hover { text-decoration: underline; }
+    h1 { font-size: 28px; font-weight: 800; color: #fff; margin-bottom: 6px; }
+    .badge-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+    .badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      text-transform: uppercase;
+    }
+    .badge-cat-a { background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid #f87171; }
+    .badge-sub { background: rgba(59, 130, 246, 0.2); color: #93c5fd; border: 1px solid #3b82f6; }
+    
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    .card h2 { font-size: 20px; margin-bottom: 14px; color: #60a5fa; display: flex; align-items: center; gap: 8px; }
+    .checklist-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .checklist-item:last-child { border-bottom: none; }
+    .checklist-item input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--accent-emerald);
+      cursor: pointer;
+      margin-top: 3px;
+    }
+    .checklist-item label {
+      cursor: pointer;
+      font-size: 15px;
+      color: var(--text-muted);
+      user-select: text;
+    }
+    .formula-box {
+      background: #0f172a;
+      border-left: 4px solid var(--accent-amber);
+      padding: 14px;
+      border-radius: 6px;
+      margin: 12px 0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: #fde68a;
+    }
+    .notes-box {
+      width: 100%;
+      min-height: 100px;
+      background: #0d131f;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 12px;
+      color: #fff;
+      font-family: inherit;
+      font-size: 14px;
+      resize: vertical;
+      margin-top: 10px;
+    }
+    .notes-box:focus {
+      outline: none;
+      border-color: var(--accent-blue);
+    }
+    .tip-box {
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 12px;
+      border-radius: 8px;
+      color: #6ee7b7;
+      font-size: 13px;
+      margin-top: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Master Dashboard</a>
+      <h1>Ind AS 116: Leases (Revision Capsule)</h1>
+      <div class="badge-bar">
+        <span class="badge badge-sub">Paper 1: FR</span>
+        <span class="badge badge-cat-a">Category A (High Weightage: 8 - 14 Marks)</span>
+      </div>
+    </header>
+
+    <!-- Section 1: Core Concept Checks -->
+    <div class="card" id="sec_identifying_lease">
+      <h2><i class="fa-solid fa-list-check"></i> 1. Identifying a Lease (3 Key Questions)</h2>
+      <p style="color: #94a3b8; font-size: 14px; margin-bottom: 12px;">
+        A contract contains a lease if the customer controls the use of an identified asset for a period of time in exchange for consideration. Tip: Select any text below to highlight it with yellow or green!
+      </p>
+
+      <div class="checklist-item">
+        <input type="checkbox" id="chk_indas116_id_asset">
+        <label for="chk_indas116_id_asset">
+          <strong>Identified Asset:</strong> Explicitly specified or implicitly specified. Lessor has NO substantive substitution right (practical ability + economic benefit to substitute).
+        </label>
+      </div>
+
+      <div class="checklist-item">
+        <input type="checkbox" id="chk_indas116_economic_benefits">
+        <label for="chk_indas116_economic_benefits">
+          <strong>Substantially all economic benefits:</strong> Customer has right to obtain substantially all economic benefits from use throughout the entire period.
+        </label>
+      </div>
+
+      <div class="checklist-item">
+        <input type="checkbox" id="chk_indas116_direct_use">
+        <label for="chk_indas116_direct_use">
+          <strong>Right to direct the use:</strong> Customer has the right to direct HOW and for WHAT PURPOSE the asset is used throughout the period.
+        </label>
+      </div>
+    </div>
+
+    <!-- Section 2: Lessee Accounting -->
+    <div class="card" id="sec_lessee_model">
+      <h2><i class="fa-solid fa-calculator"></i> 2. Lessee Accounting Model (Single Model)</h2>
+      <p style="color: #cbd5e1; font-size: 14px;">
+        At commencement date, lessee recognises a <strong>Right-of-Use (ROU) Asset</strong> and a <strong>Lease Liability</strong>.
+      </p>
+
+      <div class="formula-box">
+        <strong>Initial ROU Asset Value =</strong><br>
+        Initial Lease Liability (PV of unpaid lease payments)<br>
+        + Lease payments made at or before commencement (less lease incentives received)<br>
+        + Initial Direct Costs (IDC) incurred by lessee<br>
+        + Estimated dismantling / restoration cost (Ind AS 37)
+      </div>
+
+      <div class="checklist-item">
+        <input type="checkbox" id="chk_indas116_discount_rate">
+        <label for="chk_indas116_discount_rate">
+          Discount Rate Priority: Interest rate implicit in the lease (if readily determinable); otherwise Lessee's Incremental Borrowing Rate (IBR).
+        </label>
+      </div>
+
+      <div class="checklist-item">
+        <input type="checkbox" id="chk_indas116_short_term_exempt">
+        <label for="chk_indas116_short_term_exempt">
+          Exemption Recognitions: Short-term leases (<= 12 months with no purchase option) & Low-value assets (e.g., laptops, tablets, office furniture). Charged on straight-line basis.
+        </label>
+      </div>
+    </div>
+
+    <!-- Section 3: Remeasurement & Modification -->
+    <div class="card" id="sec_remeasurement">
+      <h2><i class="fa-solid fa-repeat"></i> 3. Subsequent Remeasurement & Modifications</h2>
+      
+      <div class="checklist-item">
+        <input type="checkbox" id="chk_indas116_remeasure_discount">
+        <label for="chk_indas116_remeasure_discount">
+          <strong>Remeasure with REVISED Discount Rate:</strong> Change in lease term, change in assessment of purchase option, or change in floating interest rates.
+        </label>
+      </div>
+
+      <div class="checklist-item">
+        <input type="checkbox" id="chk_indas116_remeasure_unchanged">
+        <label for="chk_indas116_remeasure_unchanged">
+          <strong>Remeasure with UNCHANGED Discount Rate:</strong> Change in residual value guarantee amounts, or change in index/rate linked payments (e.g. CPI change).
+        </label>
+      </div>
+
+      <div class="checklist-item">
+        <input type="checkbox" id="chk_indas116_separate_lease">
+        <label for="chk_indas116_separate_lease">
+          <strong>Modification as Separate Lease:</strong> Increases scope by adding right to use one or more underlying assets + consideration increases commensurate with standalone price.
+        </label>
+      </div>
+    </div>
+
+    <!-- Section 4: Personal Study Notes -->
+    <div class="card" id="sec_personal_notes">
+      <h2><i class="fa-solid fa-pen-to-square"></i> My Rapid Exam Notes & Tricky Adjustments</h2>
+      <p style="color: #94a3b8; font-size: 13px;">Anything typed below automatically syncs in real-time to your Google Firebase account across all your devices.</p>
+      <textarea id="notes_indas116_personal" class="notes-box" placeholder="Write exam memory tricks, institute RTP/MTP specific adjustments, or revision pointers here..."></textarea>
+      <div class="tip-box">
+        <i class="fa-solid fa-lightbulb"></i> <strong>Exam Alert:</strong> Pay special attention to Sale & Leaseback transactions where the transfer qualifies or does not qualify as a sale under Ind AS 115!
+      </div>
+    </div>
+  </div>
+
+  <!-- Page ID Definition & Sync Engine Initialization -->
+  <script>
+    window.PAGE_ID = "indas-116";
+  </script>
+  <script type="module" src="./sync-engine.js"></script>
+</body>
+</html>

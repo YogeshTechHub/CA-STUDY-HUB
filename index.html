@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CA Final Study Hub - Master Dashboard</title>
+  <!-- Google Fonts & Font Awesome Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <style>
+    :root {
+      --bg-primary: #0a0e17;
+      --bg-secondary: #111827;
+      --bg-card: #162032;
+      --bg-card-hover: #1c283f;
+      --border-color: #2a3a54;
+      --border-subtle: #1e2c42;
+      --text-main: #f8fafc;
+      --text-muted: #cbd5e1;
+      --text-dim: #94a3b8;
+      
+      --accent-blue: #3b82f6;
+      --accent-blue-hover: #2563eb;
+      --accent-emerald: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-purple: #a855f7;
+      --accent-rose: #f43f5e;
+      --accent-cyan: #06b6d4;
+
+      --p1-color: #60a5fa;
+      --p2-color: #c084fc;
+      --p3-color: #f472b6;
+      --p4-color: #fbbf24;
+      --p5-color: #34d399;
+      --p6-color: #22d3ee;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.5;
+      padding: 24px;
+      padding-bottom: 100px;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Hero / Header Section */
+    .header-section {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.9) 100%);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 32px 28px;
+      margin-bottom: 28px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    .header-section::before {
+      content: "";
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(59, 130, 246, 0.15);
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      color: #93c5fd;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      margin-bottom: 12px;
+      letter-spacing: 0.5px;
+    }
+
+    h1.hero-title {
+      font-size: 32px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    h1.hero-title i {
+      color: var(--accent-blue);
+    }
+
+    p.hero-subtitle {
+      font-size: 15px;
+      color: var(--text-dim);
+      max-width: 750px;
+    }
+
+    /* Stats Overview Cards */
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    .stat-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+    .stat-icon.blue { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
+    .stat-icon.emerald { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+    .stat-icon.amber { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+    .stat-icon.purple { background: rgba(168, 85, 247, 0.15); color: #c084fc; }
+
+    .stat-meta .stat-val {
+      font-size: 22px;
+      font-weight: 800;
+      color: #fff;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .stat-meta .stat-lbl {
+      font-size: 12px;
+      color: var(--text-dim);
+      font-weight: 500;
+    }
+
+    /* Search and Filter Controls */
+    .control-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 16px 20px;
+      margin-bottom: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .search-box-wrapper {
+      position: relative;
+      width: 100%;
+    }
+    .search-box-wrapper i {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-dim);
+      font-size: 15px;
+    }
+    .search-input {
+      width: 100%;
+      background: #0f172a;
+      border: 1px solid var(--border-color);
+      padding: 12px 16px 12px 42px;
+      border-radius: 10px;
+      color: #fff;
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-input:focus {
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    }
+    .search-input::placeholder {
+      color: var(--text-dim);
+    }
+
+    .filter-tabs {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .filter-tab {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 7px 16px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .filter-tab:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+      border-color: var(--text-dim);
+    }
+    .filter-tab.active {
+      background: var(--accent-blue);
+      color: #fff;
+      border-color: var(--accent-blue);
+      box-shadow: 0 2px 10px rgba(59, 130, 246, 0.3);
+    }
+
+    /* Study Cards Grid */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 20px;
+    }
+
+    .study-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+      color: inherit;
+      position: relative;
+    }
+    .study-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent-blue);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .card-top {
+      padding: 20px;
+      flex: 1;
+    }
+
+    .card-header-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .subject-pill {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .pill-tracker { background: rgba(59, 130, 246, 0.2); color: #93c5fd; border: 1px solid rgba(59, 130, 246, 0.4); }
+    .pill-fr { background: rgba(96, 165, 250, 0.2); color: #bfdbfe; border: 1px solid rgba(96, 165, 250, 0.4); }
+    .pill-afm { background: rgba(192, 132, 252, 0.2); color: #e9d5ff; border: 1px solid rgba(192, 132, 252, 0.4); }
+    .pill-audit { background: rgba(244, 114, 182, 0.2); color: #fbcfe8; border: 1px solid rgba(244, 114, 182, 0.4); }
+    .pill-dt { background: rgba(251, 191, 36, 0.2); color: #fef08a; border: 1px solid rgba(251, 191, 36, 0.4); }
+    .pill-idt { background: rgba(52, 211, 153, 0.2); color: #a7f3d0; border: 1px solid rgba(52, 211, 153, 0.4); }
+
+    .card-badge-cat {
+      font-size: 11px;
+      font-weight: 600;
+      color: #94a3b8;
+    }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 8px;
+      line-height: 1.35;
+    }
+
+    .card-desc {
+      font-size: 13px;
+      color: var(--text-dim);
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+
+    /* Card Progress Section */
+    .card-progress-wrapper {
+      margin-top: auto;
+      background: #0f172a;
+      padding: 14px 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .progress-meta span:first-child { color: var(--text-dim); }
+    .progress-meta span:last-child { color: var(--accent-emerald); font-family: 'JetBrains Mono', monospace; }
+
+    .progress-track {
+      width: 100%;
+      height: 8px;
+      background: #1e293b;
+      border-radius: 9999px;
+      overflow: hidden;
+      position: relative;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #3b82f6, #10b981);
+      border-radius: 9999px;
+      width: 0%;
+      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .card-footer-action {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 20px;
+      background: var(--bg-card-hover);
+      border-top: 1px solid var(--border-color);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent-blue);
+    }
+    .study-card:hover .card-footer-action {
+      color: #93c5fd;
+    }
+
+    /* Empty state */
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 60px 20px;
+      background: var(--bg-card);
+      border: 1px dashed var(--border-color);
+      border-radius: 16px;
+      display: none;
+    }
+    .empty-state i {
+      font-size: 40px;
+      color: var(--text-dim);
+      margin-bottom: 12px;
+    }
+    .empty-state h3 {
+      font-size: 18px;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+    .empty-state p {
+      font-size: 14px;
+      color: var(--text-dim);
+    }
+
+    /* Mobile adjustments */
+    @media (max-width: 640px) {
+      body { padding: 16px; padding-bottom: 110px; }
+      .header-section { padding: 24px 18px; }
+      h1.hero-title { font-size: 24px; }
+      .cards-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header-section">
+      <div class="header-badge">
+        <i class="fa-solid fa-cloud-arrow-up"></i> Google Cloud Real-Time Sync Enabled
+      </div>
+      <h1 class="hero-title">
+        <i class="fa-solid fa-graduation-cap"></i> CA Final Master Study Hub
+      </h1>
+      <p class="hero-subtitle">
+        Your centralized repository for ICAI New Scheme (6 Papers) trackers, revision capsules, and active-recall checklists. Progress, highlights, and notes automatically sync across Windows 11 and Android tablets.
+      </p>
+    </header>
+
+    <!-- Quick Stats Bar -->
+    <div class="overview-grid">
+      <div class="stat-card">
+        <div class="stat-icon blue">
+          <i class="fa-solid fa-book-open"></i>
+        </div>
+        <div class="stat-meta">
+          <div class="stat-val" id="totalModulesCount">2</div>
+          <div class="stat-lbl">Active Study Modules</div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon emerald">
+          <i class="fa-solid fa-circle-check"></i>
+        </div>
+        <div class="stat-meta">
+          <div class="stat-val" id="totalCompletedCheckboxes">0</div>
+          <div class="stat-lbl">Checkpoints Mastered</div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon amber">
+          <i class="fa-solid fa-highlighter"></i>
+        </div>
+        <div class="stat-meta">
+          <div class="stat-val" id="totalHighlightsCount">0</div>
+          <div class="stat-lbl">Highlights & Annotations</div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon purple">
+          <i class="fa-solid fa-shield-halved"></i>
+        </div>
+        <div class="stat-meta">
+          <div class="stat-val" id="activeSyncUser">Guest (Local)</div>
+          <div class="stat-lbl">Cloud Sync Account</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filter & Search Controls -->
+    <div class="control-panel">
+      <div class="search-box-wrapper">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="moduleSearchInput" class="search-input" placeholder="Search chapters, Ind AS, standards, topics, or tracker modules...">
+      </div>
+      <div class="filter-tabs">
+        <button class="filter-tab active" data-filter="all"><i class="fa-solid fa-border-all"></i> All Modules</button>
+        <button class="filter-tab" data-filter="trackers"><i class="fa-solid fa-table-list"></i> Trackers</button>
+        <button class="filter-tab" data-filter="FR"><i class="fa-solid fa-calculator"></i> FR</button>
+        <button class="filter-tab" data-filter="AFM"><i class="fa-solid fa-chart-line"></i> AFM</button>
+        <button class="filter-tab" data-filter="Audit"><i class="fa-solid fa-magnifying-glass-chart"></i> Audit</button>
+        <button class="filter-tab" data-filter="DT"><i class="fa-solid fa-file-invoice-dollar"></i> DT</button>
+        <button class="filter-tab" data-filter="IDT"><i class="fa-solid fa-receipt"></i> IDT</button>
+      </div>
+    </div>
+
+    <!-- Study Cards Container -->
+    <div class="cards-grid" id="studyCardsContainer">
+
+      <!-- Card 1: Master Granular Study Tracker -->
+      <a href="study-tracker.html" class="study-card" data-subject="trackers" data-pageid="study-tracker" data-keywords="granular tracker syllabus weightage abc revision 6 papers">
+        <div class="card-top">
+          <div class="card-header-bar">
+            <span class="subject-pill pill-tracker">Trackers</span>
+            <span class="card-badge-cat">All 6 Papers</span>
+          </div>
+          <h2 class="card-title">Granular Study Tracker & Exam Strategy Hub</h2>
+          <p class="card-desc">
+            Complete syllabus matrix for ICAI New Scheme with Theory/Practice breakdowns, 5 revision cycles, ABC classifications, weightage, and custom notes.
+          </p>
+        </div>
+        <div class="card-progress-wrapper">
+          <div class="progress-meta">
+            <span>Overall Progress</span>
+            <span class="card-progress-percent" id="prog_study_tracker">0%</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill" id="bar_study_tracker"></div>
+          </div>
+        </div>
+        <div class="card-footer-action">
+          <span>Open Interactive Tracker</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </div>
+      </a>
+
+      <!-- Card 2: Ind AS 116 Leases -->
+      <a href="indas-116.html" class="study-card" data-subject="FR" data-pageid="indas-116" data-keywords="ind as 116 leases fr financial reporting rou asset discount rate sale and leaseback">
+        <div class="card-top">
+          <div class="card-header-bar">
+            <span class="subject-pill pill-fr">Paper 1: FR</span>
+            <span class="card-badge-cat">Category A (8-14 Marks)</span>
+          </div>
+          <h2 class="card-title">Ind AS 116: Leases - Deep-Dive Revision Capsule</h2>
+          <p class="card-desc">
+            3-step identification test, Lessee accounting formula, remeasurement logic, exemptions, and live notes block with real-time text highlight annotations.
+          </p>
+        </div>
+        <div class="card-progress-wrapper">
+          <div class="progress-meta">
+            <span>Checkpoints Completed</span>
+            <span class="card-progress-percent" id="prog_indas_116">0%</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill" id="bar_indas_116"></div>
+          </div>
+        </div>
+        <div class="card-footer-action">
+          <span>Study Capsule</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </div>
+      </a>
+
+      <!-- Empty Search State -->
+      <div class="empty-state" id="emptySearchState">
+        <i class="fa-solid fa-circle-question"></i>
+        <h3>No matching study modules found</h3>
+        <p>Try searching for a different keyword or switch subject filter tabs.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    window.PAGE_ID = "master-dashboard";
+
+    // Filtering & Searching
+    let activeFilter = "all";
+    let activeSearch = "";
+
+    const searchInput = document.getElementById("moduleSearchInput");
+    const filterTabs = document.querySelectorAll(".filter-tab");
+    const cards = document.querySelectorAll(".study-card");
+    const emptyState = document.getElementById("emptySearchState");
+
+    function applyFilters() {
+      let visibleCount = 0;
+      cards.forEach(card => {
+        const subject = card.dataset.subject;
+        const keywords = (card.dataset.keywords || "").toLowerCase();
+        const title = card.querySelector(".card-title").innerText.toLowerCase();
+        const desc = card.querySelector(".card-desc").innerText.toLowerCase();
+
+        const matchesFilter = (activeFilter === "all") || (subject === activeFilter);
+        const matchesSearch = !activeSearch || title.includes(activeSearch) || desc.includes(activeSearch) || keywords.includes(activeSearch);
+
+        if (matchesFilter && matchesSearch) {
+          card.style.display = "flex";
+          visibleCount++;
+        } else {
+          card.style.display = "none";
+        }
+      });
+
+      emptyState.style.display = visibleCount === 0 ? "block" : "none";
+    }
+
+    searchInput.addEventListener("input", (e) => {
+      activeSearch = e.target.value.toLowerCase().trim();
+      applyFilters();
+    });
+
+    filterTabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        filterTabs.forEach(t => t.classList.remove("active"));
+        tab.classList.add("active");
+        activeFilter = tab.dataset.filter;
+        applyFilters();
+      });
+    });
+
+    // Read stored progress for visual progress bars on each card
+    function refreshCardProgress() {
+      let totalCompleted = 0;
+      let totalHighlights = 0;
+
+      // 1. Study tracker progress
+      try {
+        const trackerCache = localStorage.getItem("ca_hub_sync_study-tracker") || localStorage.getItem("CA_FINAL_TRACKER_PROGRESS_v2");
+        if (trackerCache) {
+          const parsed = JSON.parse(trackerCache);
+          const progressObj = parsed.customState?.userProgress || parsed;
+          let completed = 0;
+          let total = 0;
+          Object.values(progressObj).forEach(ch => {
+            ['learn_th', 'learn_pr', 'r1_th', 'r1_pr', 'r2_th', 'r2_pr', 'r3_th', 'r3_pr', 'r4_th', 'r4_pr', 'r5_th', 'r5_pr'].forEach(k => {
+              total++;
+              if (ch[k]) completed++;
+            });
+          });
+          const pct = total > 0 ? Math.round((completed / total) * 100) : 0;
+          const progEl = document.getElementById("prog_study_tracker");
+          const barEl = document.getElementById("bar_study_tracker");
+          if (progEl) progEl.innerText = `${pct}% (${completed}/${total})`;
+          if (barEl) barEl.style.width = `${pct}%`;
+          totalCompleted += completed;
+        }
+      } catch (e) {
+        console.warn("Tracker progress calc error:", e);
+      }
+
+      // 2. Ind AS 116 progress
+      try {
+        const indasCache = localStorage.getItem("ca_hub_sync_indas-116");
+        if (indasCache) {
+          const parsed = JSON.parse(indasCache);
+          const chks = parsed.checkboxes || {};
+          const keys = Object.keys(chks);
+          const completed = Object.values(chks).filter(v => !!v).length;
+          const total = Math.max(keys.length, 6);
+          const pct = Math.round((completed / total) * 100);
+          const progEl = document.getElementById("prog_indas_116");
+          const barEl = document.getElementById("bar_indas_116");
+          if (progEl) progEl.innerText = `${pct}% (${completed}/${total})`;
+          if (barEl) barEl.style.width = `${pct}%`;
+          totalCompleted += completed;
+
+          if (Array.isArray(parsed.highlights)) {
+            totalHighlights += parsed.highlights.length;
+          }
+        }
+      } catch (e) {
+        console.warn("IndAS progress calc error:", e);
+      }
+
+      const totalCompletedEl = document.getElementById("totalCompletedCheckboxes");
+      if (totalCompletedEl) totalCompletedEl.innerText = totalCompleted;
+
+      const totalHighlightsEl = document.getElementById("totalHighlightsCount");
+      if (totalHighlightsEl) totalHighlightsEl.innerText = totalHighlights;
+    }
+
+    refreshCardProgress();
+    window.addEventListener("studyHubSyncReceived", refreshCardProgress);
+  </script>
+  <script type="module" src="./sync-engine.js"></script>
+</body>
+</html>
