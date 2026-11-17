@@ -22,28 +22,13 @@
     const style = document.createElement("style");
     style.id = "theme-switcher-styles";
     style.textContent = `
-      /* Universal Floating Header Bar (Top Right) */
+      /* Controls sit in the shared page header. */
       #hub-theme-toolbar {
-        position: fixed;
-        top: 14px;
-        right: 18px;
-        z-index: 99998;
+        position: relative;
         display: flex;
         align-items: center;
-        gap: 6px;
-        background: var(--bg-card, #ffffff);
-        border: 1.5px solid var(--border, #cbd5e1);
-        padding: 5px 10px;
-        border-radius: 9999px;
-        box-shadow: var(--shadow-3d, 0 10px 25px rgba(0,0,0,0.15));
-        backdrop-filter: blur(14px);
-        -webkit-backdrop-filter: blur(14px);
-        user-select: none;
-        transition: transform 0.2s, box-shadow 0.2s;
-      }
-      #hub-theme-toolbar:hover {
-        transform: translateY(-1px);
-        box-shadow: var(--shadow-hover, 0 15px 30px rgba(0,0,0,0.25));
+        flex-wrap: wrap;
+        gap: 4px;
       }
 
       .hub-tool-btn {
@@ -53,8 +38,7 @@
         font-family: var(--font-sans, system-ui, sans-serif);
         font-size: 13px;
         font-weight: 700;
-        min-width: 34px;
-        height: 34px;
+        min-height: 40px;
         padding: 0 10px;
         border-radius: 9999px;
         display: inline-flex;
@@ -67,14 +51,14 @@
       }
       .hub-tool-btn:hover {
         background: var(--accent-soft, rgba(59, 130, 246, 0.12));
-        color: var(--accent, #1d4ed8);
+        color: var(--text-primary, #0f172a);
       }
       .hub-tool-btn:active {
         transform: scale(0.94);
       }
 
       .hub-tool-btn.btn-dashboard {
-        color: var(--accent, #1d4ed8);
+        color: var(--text-primary, #0f172a);
         padding-left: 12px;
         padding-right: 12px;
       }
@@ -90,7 +74,7 @@
       #hub-theme-dropdown {
         position: absolute;
         top: calc(100% + 10px);
-        right: 0;
+        left: 0;
         background: var(--bg-card, #ffffff);
         border: 1.5px solid var(--border, #cbd5e1);
         border-radius: 16px;
@@ -124,7 +108,7 @@
       }
       .hub-theme-item.active {
         background: var(--accent-soft, rgba(59, 130, 246, 0.15));
-        color: var(--accent, #1d4ed8);
+        color: var(--text-primary, #0f172a);
         font-weight: 800;
       }
       .hub-theme-dot {
@@ -171,23 +155,7 @@
         transform: translateX(-50%) translateY(0);
       }
 
-      @media (max-width: 768px) {
-        #hub-theme-toolbar {
-          top: 10px;
-          right: 10px;
-          padding: 4px 8px;
-          gap: 4px;
-        }
-        .hub-tool-btn {
-          min-width: 30px;
-          height: 30px;
-          padding: 0 6px;
-          font-size: 12px;
-        }
-        .hub-tool-btn span.label-txt {
-          display: none;
-        }
-      }
+
     `;
     document.head.appendChild(style);
   }
@@ -218,7 +186,7 @@
     const btn = document.getElementById("btnHubMode");
     if (!btn) return;
     const mode = document.documentElement.getAttribute("data-mode") || "light";
-    btn.innerHTML = mode === "light" ? "🌙" : "☀️";
+    btn.textContent = mode === "light" ? "Dark mode" : "Light mode";
     btn.title = mode === "light" ? "Switch to Dark Mode" : "Switch to Light Mode";
   }
 
@@ -228,7 +196,7 @@
     localStorage.setItem("ca_hub_pref_theme", themeId);
     updateActiveThemeItem();
     const dropdown = document.getElementById("hub-theme-dropdown");
-    if (dropdown) dropdown.style.display = "none";
+    if (dropdown) closeThemeDropdown();
   }
 
   function updateActiveThemeItem() {
@@ -274,7 +242,7 @@
     try {
       const clone = document.documentElement.cloneNode(true);
       const toRemove = clone.querySelectorAll(
-        "#hub-theme-toolbar, #hub-copy-toast, #theme-switcher-styles, #sync-topbar, #study-highlight-toolbar"
+        "#hub-site-tools, #hub-copy-toast, #theme-switcher-styles, #sync-topbar, #study-highlight-toolbar"
       );
       toRemove.forEach(el => el.remove());
       const htmlStr = "<!DOCTYPE html>\n" + clone.outerHTML;
@@ -286,6 +254,11 @@
     }
   }
 
+  function closeThemeDropdown() {
+    document.getElementById("hub-theme-dropdown").style.display = "none";
+    document.getElementById("btnHubTheme").setAttribute("aria-expanded", "false");
+  }
+
   function renderToolbar() {
     const path = window.location.pathname.split("/").pop();
     const isDashboard = (path === "index.html" || path === "");
@@ -294,13 +267,14 @@
 
     const bar = document.createElement("div");
     bar.id = "hub-theme-toolbar";
+    bar.setAttribute("role", "group");
+    bar.setAttribute("aria-label", "Study tools");
 
     let html = "";
     if (!isDashboard) {
       html += `
         <a href="./index.html" class="hub-tool-btn btn-dashboard" title="Return to Master Dashboard">
-          <i class="fa-solid fa-arrow-left"></i>
-          <span class="label-txt">Dashboard</span>
+          Dashboard
         </a>
         <div class="hub-tool-sep"></div>
       `;
@@ -308,15 +282,15 @@
 
     html += `
       <button class="hub-tool-btn" id="btnHubCopy" title="Copy clean HTML layout">
-        📋
+        Copy HTML
       </button>
 
       <button class="hub-tool-btn" id="btnHubMode" title="Toggle Light / Dark mode">
-        🌙
+        Dark mode
       </button>
 
-      <button class="hub-tool-btn" id="btnHubTheme" title="Change Color Theme">
-        🎨
+      <button class="hub-tool-btn" id="btnHubTheme" aria-expanded="false" aria-controls="hub-theme-dropdown" title="Change Color Theme">
+        Theme
       </button>
 
       <button class="hub-tool-btn" id="btnHubFont" title="Toggle Font (Sans vs Serif)">
@@ -337,7 +311,10 @@
     `;
 
     bar.innerHTML = html;
-    document.body.appendChild(bar);
+    const header = document.createElement("div");
+    header.id = "hub-site-tools";
+    header.appendChild(bar);
+    document.body.prepend(header);
 
     // Event handlers
     document.getElementById("btnHubCopy").addEventListener("click", copyCleanHtml);
@@ -351,11 +328,19 @@
       e.stopPropagation();
       const isVisible = dropdown.style.display === "flex";
       dropdown.style.display = isVisible ? "none" : "flex";
+      themeBtn.setAttribute("aria-expanded", String(!isVisible));
     });
 
     document.addEventListener("click", (e) => {
       if (!e.target.closest("#hub-theme-toolbar")) {
-        dropdown.style.display = "none";
+        closeThemeDropdown();
+      }
+    });
+
+    bar.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && themeBtn.getAttribute("aria-expanded") === "true") {
+        closeThemeDropdown();
+        themeBtn.focus();
       }
     });
 

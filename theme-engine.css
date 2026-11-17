@@ -1,6 +1,6 @@
 /* theme-engine.css
    Shared Universal Theme & Typography Engine for CA Study Hub
-   WCAG AAA/AA High Contrast Certified across all 5 Themes x 2 Modes (10 Variations)
+   Five palettes with light and dark modes
    Fonts: Plus Jakarta Sans (Modern Sans), Literata (Book Serif), JetBrains Mono (Code/Numbers)
 */
 
@@ -225,4 +225,31 @@ body {
   --text-muted: var(--text-secondary);
   --border-color: var(--border);
   --accent-blue: var(--accent);
+}
+
+/* The study controls and sync status share one row above each page. */
+#hub-site-tools {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.3rem 1rem;
+  padding: 0.35rem clamp(0.5rem, 2vw, 1.5rem);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+}
+
+[data-mode="dark"] { color-scheme: dark; }
+[data-mode="light"] { color-scheme: light; }
+
+:where(button, a, input, textarea, select):focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+@media print {
+  #hub-site-tools, #study-highlight-toolbar { display: none !important; }
 }

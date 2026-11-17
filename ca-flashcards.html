@@ -2,12 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CA Flashcards • Ind AS & SA Master</title>
   <meta name="description" content="Mobile-ready flashcard and quiz revision app for CA students covering Ind AS, Standards on Auditing (SA), and Law with two-way flip and Google Drive backup sync.">
   <meta name="theme-color" content="#121316">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%231e293b'/><text x='50' y='65' font-family='sans-serif' font-size='48' font-weight='bold' fill='%2338bdf8' text-anchor='middle'>CA</text></svg>">
-  <link rel="manifest" href="manifest.json">
   <style>
 /* CA Flashcards App Stylesheet */
 
@@ -51,7 +50,7 @@
   --transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-body.theme-light {
+[data-mode="light"] {
   --bg-main: #f4f5f8;
   --bg-surface: #ffffff;
   --bg-card: #ffffff;
@@ -61,7 +60,7 @@ body.theme-light {
   
   --text-primary: #111827;
   --text-secondary: #4b5563;
-  --text-muted: #9ca3af;
+  --text-muted: #4b5563;
   
   --border-subtle: #e5e7eb;
   --border-strong: #d1d5db;
@@ -1670,38 +1669,10 @@ html, body {
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <style>
-    :root {
-      --bg-primary: #0a0e17;
-      --bg-card: #162032;
-      --text-main: #f8fafc;
-      --text-muted: #cbd5e1;
-      --border-color: #2a3a54;
-    }
-    [data-theme="light"] {
-      --bg-main: #f0f4f9 !important;
-      --bg-surface: #ffffff !important;
-      --bg-card: #ffffff !important;
-      --bg-elevated: #e2e8f0 !important;
-      --text-primary: #0f172a !important;
-      --text-secondary: #334155 !important;
-      --border-subtle: #cbd5e1 !important;
-      --border-strong: #94a3b8 !important;
-      --bg-primary: #f0f4f9;
-      --bg-card: #ffffff;
-      --text-main: #0f172a;
-      --text-muted: #334155;
-      --border-color: #cbd5e1;
-    }
-    body {
-      padding-top: 60px !important;
-      font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
-    }
-  </style>
 
   <link rel="stylesheet" href="./theme-engine.css">
 </head>
-<body class="theme-dark">
+<body>
   <div id="app" class="app-container">
 
     <!-- Top Navigation Header -->
@@ -1729,9 +1700,6 @@ html, body {
         </button>
         <button id="btn-open-sync" class="icon-btn" title="Google Drive & Backup Sync">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 18a3.5 3.5 0 0 0 0-7h-1A5 4.5 0 0 0 7 9.5 4 4 0 0 0 5 17h14z"></path><polyline points="12 12 12 16 10 14"></polyline></svg>
-        </button>
-        <button id="btn-toggle-theme" class="icon-btn" title="Toggle Dark/Light Mode">
-          <svg id="theme-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
         </button>
       </div>
     </header>
@@ -2425,7 +2393,6 @@ if (typeof module !== 'undefined' && module.exports) {
     btnNavTable: document.getElementById('btn-nav-table'),
     btnGrandShuffle: document.getElementById('btn-grand-shuffle'),
     btnOpenSync: document.getElementById('btn-open-sync'),
-    btnToggleTheme: document.getElementById('btn-toggle-theme'),
     
     // Views
     viewDecks: document.getElementById('view-decks'),
@@ -2550,7 +2517,6 @@ if (typeof module !== 'undefined' && module.exports) {
     loadSettings();
     loadData();
     setupEventListeners();
-    applyTheme();
     renderDeckTree();
     populateDeckSelects();
     updateGlobalStats();
@@ -2650,22 +2616,6 @@ if (typeof module !== 'undefined' && module.exports) {
   // -------------------------------------------------------------
   // THEME MANAGEMENT
   // -------------------------------------------------------------
-  function applyTheme() {
-    if (settings.theme === 'light') {
-      document.body.classList.add('theme-light');
-      document.body.classList.remove('theme-dark');
-    } else {
-      document.body.classList.add('theme-dark');
-      document.body.classList.remove('theme-light');
-    }
-  }
-
-  function toggleTheme() {
-    settings.theme = settings.theme === 'dark' ? 'light' : 'dark';
-    saveSettings();
-    applyTheme();
-    showToast(`Switched to ${settings.theme} mode`);
-  }
 
   // -------------------------------------------------------------
   // GLOBAL STATISTICS & DECK TREE (AnkiDroid Structure)
@@ -3598,7 +3548,6 @@ if (typeof module !== 'undefined' && module.exports) {
 
         saveData();
         saveSettings();
-        applyTheme();
         populateDeckSelects();
         renderDeckTree();
         updateGlobalStats();
@@ -3740,7 +3689,6 @@ if (typeof module !== 'undefined' && module.exports) {
     el.btnNavHome.addEventListener('click', () => showView('decks'));
     el.btnNavTable.addEventListener('click', () => showView('table'));
     el.btnGrandShuffle.addEventListener('click', () => startStudySession('all', true));
-    el.btnToggleTheme.addEventListener('click', toggleTheme);
     el.btnOpenSync.addEventListener('click', () => el.modalSync.classList.remove('hidden'));
     el.btnCloseSync.addEventListener('click', () => el.modalSync.classList.add('hidden'));
 

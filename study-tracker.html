@@ -80,7 +80,7 @@
       --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    [data-theme="light"] {
+    [data-mode="light"] {
       /* Light Theme: Crisp, Razor Sharp, Rich Contrast (No Vague/Faded Text) */
       --bg-primary: #f0f4f8;       /* Clean slate-blue tinted gray */
       --bg-secondary: #e2e8f0;     /* Slate 200 */
@@ -172,7 +172,7 @@
     .app-container {
       max-width: 1780px;
       margin: 0 auto;
-      padding: 68px 24px 80px 24px;
+      padding: 24px 24px 80px;
     }
 
     /* =========================================================================
@@ -671,7 +671,7 @@
       border-radius: 999px;
     }
 
-    [data-theme="light"] .filter-tab.active .count-bubble {
+    [data-mode="light"] .filter-tab.active .count-bubble {
       background: rgba(255, 255, 255, 0.25);
     }
 
@@ -1481,9 +1481,6 @@
           <i class="fa-solid fa-file-import"></i> Restore
         </button>
         <input type="file" id="importFileInput" accept=".json" style="display: none;">
-        <button class="btn btn-sm" id="themeToggleBtn" title="Toggle Dark/Light Mode">
-          <i class="fa-solid fa-moon"></i> Light / Dark
-        </button>
         <button class="btn btn-sm" id="printReportBtn" title="Print Study Planner / PDF">
           <i class="fa-solid fa-print"></i> Print
         </button>
@@ -3668,7 +3665,6 @@
               appSettings = { ...appSettings, ...imported.settings };
             }
             saveState(false);
-            applyTheme(appSettings.theme || "dark");
             initCountdown();
             renderDashboard();
             renderTable();
@@ -3688,26 +3684,6 @@
     /* =========================================================================
        13. THEME, COUNTDOWN & TOASTS
        ========================================================================= */
-    function toggleTheme() {
-      const current = document.documentElement.getAttribute("data-theme") || "dark";
-      const next = current === "dark" ? "light" : "dark";
-      applyTheme(next);
-      appSettings.theme = next;
-      saveState(false);
-    }
-
-    function applyTheme(theme) {
-      document.documentElement.setAttribute("data-theme", theme);
-      const btn = document.getElementById("themeToggleBtn");
-      if (btn) {
-        if (theme === "dark") {
-          btn.innerHTML = '<i class="fa-solid fa-sun"></i> Light Mode';
-        } else {
-          btn.innerHTML = '<i class="fa-solid fa-moon"></i> Dark Mode';
-        }
-      }
-    }
-
     function initCountdown() {
       const input = document.getElementById("targetExamDate");
       input.value = appSettings.targetExamDate || "2027-05-02";
@@ -3769,7 +3745,6 @@
        ========================================================================= */
     document.addEventListener("DOMContentLoaded", () => {
       loadState();
-      applyTheme(appSettings.theme || "dark");
       initCountdown();
 
       renderDashboard();
@@ -3795,7 +3770,6 @@
       });
 
       document.getElementById("resetFiltersBtn").addEventListener("click", resetAllFilters);
-      document.getElementById("themeToggleBtn").addEventListener("click", toggleTheme);
       document.getElementById("exportDataBtn").addEventListener("click", exportBackup);
       document.getElementById("importDataBtn").addEventListener("click", triggerImportBackup);
       document.getElementById("importFileInput").addEventListener("change", handleImportFile);
