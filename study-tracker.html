@@ -833,7 +833,10 @@
       background: var(--bg-card);
       border: 2px solid var(--border-color);
       border-radius: 16px;
-      overflow-x: auto;
+      overflow: auto;
+      max-height: 75vh;
+      max-height: 75dvh;
+      scrollbar-gutter: stable;
       box-shadow: var(--shadow-card);
     }
 
@@ -842,6 +845,20 @@
       border-collapse: collapse;
       text-align: left;
       font-size: 13.5px;
+    }
+
+    /* Freeze both heading rows together, including the row-spanning labels. */
+    .study-table thead {
+      position: sticky;
+      top: 0;
+      z-index: 3;
+      background: var(--bg-card);
+      box-shadow: 0 2px 0 var(--border-color);
+    }
+
+    @media print {
+      .table-container { max-height: none; overflow: visible; }
+      .study-table thead { position: static; box-shadow: none; }
     }
 
     .study-table th {
@@ -1716,7 +1733,7 @@
       </div>
 
       <!-- Main Study Matrix Table -->
-      <div class="table-container">
+      <div class="table-container" tabindex="0" role="region" aria-label="Study tracker table. Scroll to view topics with fixed column headings.">
         <table class="study-table" id="studyTable">
           <thead>
             <!-- Super Header Row -->
