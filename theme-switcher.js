@@ -359,9 +359,9 @@
   // Auto initialize
   injectStyles();
   initPreferences();
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", renderToolbar);
-  } else {
+  if (document.body) {
     renderToolbar();
+  } else {
+    document.addEventListener("DOMContentLoaded", renderToolbar, { once: true });
   }
 })();
