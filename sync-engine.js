@@ -58,38 +58,14 @@ class SyncEngine {
     const style = document.createElement("style");
     style.id = "sync-engine-styles";
     style.textContent = `
-      /* Sync Top Bar - Compact, Drag-safe & Smart-Positioned */
       #sync-topbar {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        z-index: 99999;
         display: flex;
         align-items: center;
-        gap: 10px;
-        background: rgba(15, 23, 42, 0.92);
-        backdrop-filter: blur(14px);
-        -webkit-backdrop-filter: blur(14px);
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        padding: 6px 14px;
-        border-radius: 9999px;
-        box-shadow: 0 10px 32px rgba(0, 0, 0, 0.45);
-        font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        font-size: 12.5px;
-        color: #f8fafc;
-        transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
-        user-select: none;
-      }
-      [data-theme="light"] #sync-topbar {
-        background: rgba(255, 255, 255, 0.94);
-        border: 1px solid #cbd5e1;
-        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
-        color: #0f172a;
-      }
-      #sync-topbar:hover {
-        border-color: rgba(59, 130, 246, 0.5);
-        box-shadow: 0 14px 40px rgba(0, 0, 0, 0.5);
-        transform: translateY(-2px);
+        flex-wrap: wrap;
+        gap: 6px 10px;
+        color: var(--text-primary);
+        font-family: var(--font-sans);
+        font-size: 0.8rem;
       }
       .sync-status-indicator {
         display: flex;
@@ -133,7 +109,7 @@ class SyncEngine {
         text-overflow: ellipsis;
         font-size: 12px;
         font-weight: 600;
-        color: #e2e8f0;
+        color: var(--text-primary);
       }
       .sync-btn {
         background: #2563eb;
@@ -157,12 +133,11 @@ class SyncEngine {
       }
       .sync-btn.btn-signout {
         background: rgba(239, 68, 68, 0.18);
-        color: #fca5a5;
+        color: var(--text-primary);
         border: 1px solid rgba(239, 68, 68, 0.3);
       }
       .sync-btn.btn-signout:hover {
         background: rgba(239, 68, 68, 0.35);
-        color: #fff;
       }
 
       /* Floating Highlight Toolbar for Text Selection */
@@ -212,25 +187,17 @@ class SyncEngine {
         background-color: #86efac;
         color: #064e3b;
       }
-      [data-theme="dark"] mark.study-hl-yellow {
+      [data-mode="dark"] mark.study-hl-yellow {
         background-color: rgba(234, 179, 8, 0.4);
         color: #fef08a;
       }
-      [data-theme="dark"] mark.study-hl-green {
+      [data-mode="dark"] mark.study-hl-green {
         background-color: rgba(34, 197, 94, 0.35);
         color: #bbf7d0;
       }
 
       /* Responsive for Android Tablets / Mobile */
       @media (max-width: 640px) {
-        #sync-topbar {
-          top: auto;
-          bottom: 16px;
-          right: 12px;
-          left: 12px;
-          justify-content: space-between;
-          border-radius: 14px;
-        }
         .sync-user-name {
           max-width: 70px;
         }
@@ -255,7 +222,9 @@ class SyncEngine {
         </button>
       </div>
     `;
-    document.body.appendChild(bar);
+    const header = document.getElementById("hub-site-tools");
+    if (header) header.appendChild(bar);
+    else document.body.prepend(bar);
 
     document.getElementById("btnGoogleSignIn").addEventListener("click", () => this.handleSignIn());
   }
@@ -285,7 +254,7 @@ class SyncEngine {
 
     document.addEventListener("mouseup", (e) => {
       // Don't trigger if clicked within topbar or toolbar
-      if (e.target.closest("#sync-topbar") || e.target.closest("#study-highlight-toolbar")) return;
+      if (e.target.closest("#hub-site-tools, #sync-topbar, #study-highlight-toolbar")) return;
       setTimeout(() => {
         const selection = window.getSelection();
         if (selection && !selection.isCollapsed && selection.toString().trim().length > 0) {
