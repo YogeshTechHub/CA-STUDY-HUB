@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CA Final Study Hub - Master Dashboard</title>
-  <!-- Google Fonts & Font Awesome Icons -->
+  <title>CA Final Master Study Hub • ICAI New Scheme (6 Papers)</title>
+  
+  <!-- Modern Fonts & Font Awesome Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
@@ -12,12 +13,14 @@
   
   <style>
     :root {
-      --bg-primary: #0a0e17;
-      --bg-secondary: #111827;
-      --bg-card: #162032;
-      --bg-card-hover: #1c283f;
-      --border-color: #2a3a54;
-      --border-subtle: #1e2c42;
+      /* Dark Theme (Default) - Rich Depth, 3D Elevation & High Legibility */
+      --bg-primary: #0a0d14;
+      --bg-surface: #121826;
+      --bg-card: #182235;
+      --bg-card-hover: #1e2b43;
+      --border-color: #26354d;
+      --border-subtle: #1c283c;
+      
       --text-main: #f8fafc;
       --text-muted: #cbd5e1;
       --text-dim: #94a3b8;
@@ -27,15 +30,39 @@
       --accent-emerald: #10b981;
       --accent-amber: #f59e0b;
       --accent-purple: #a855f7;
-      --accent-rose: #f43f5e;
       --accent-cyan: #06b6d4;
+      --accent-rose: #f43f5e;
 
-      --p1-color: #60a5fa;
-      --p2-color: #c084fc;
-      --p3-color: #f472b6;
-      --p4-color: #fbbf24;
-      --p5-color: #34d399;
-      --p6-color: #22d3ee;
+      /* 3D Shadows & Layering */
+      --shadow-3d-card: 0 12px 30px -10px rgba(0, 0, 0, 0.6), 0 4px 12px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      --shadow-3d-hover: 0 20px 40px -12px rgba(37, 99, 235, 0.35), 0 8px 20px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      --shadow-3d-press: 0 6px 16px -4px rgba(0, 0, 0, 0.6), inset 0 2px 4px rgba(0, 0, 0, 0.4);
+    }
+
+    [data-theme="light"] {
+      /* Light Theme: Crisp, Clean, Tactile 3D Paper Surfaces (No Faded/Light Gray Text) */
+      --bg-primary: #f0f4f9;
+      --bg-surface: #ffffff;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f8fafc;
+      --border-color: #cbd5e1;
+      --border-subtle: #e2e8f0;
+      
+      --text-main: #0f172a;       /* Slate 900 - Pitch Black Readable */
+      --text-muted: #334155;      /* Slate 700 - Deep, Sharp */
+      --text-dim: #475569;        /* Slate 600 - High Contrast */
+      
+      --accent-blue: #1d4ed8;
+      --accent-blue-hover: #1e40af;
+      --accent-emerald: #047857;
+      --accent-amber: #b45309;
+      --accent-purple: #7e22ce;
+      --accent-cyan: #0e7490;
+      --accent-rose: #be123c;
+
+      --shadow-3d-card: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 4px 10px rgba(15, 23, 42, 0.04), inset 0 1px 0 #ffffff;
+      --shadow-3d-hover: 0 18px 35px -8px rgba(29, 78, 216, 0.2), 0 6px 16px rgba(15, 23, 42, 0.08), inset 0 1px 0 #ffffff;
+      --shadow-3d-press: 0 4px 12px rgba(15, 23, 42, 0.06), inset 0 2px 4px rgba(15, 23, 42, 0.05);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -43,487 +70,588 @@
     body {
       background-color: var(--bg-primary);
       color: var(--text-main);
-      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      line-height: 1.5;
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
       padding: 24px;
-      padding-bottom: 100px;
+      padding-bottom: 110px;
       min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.25s, color 0.25s;
     }
 
     .container {
-      max-width: 1200px;
+      max-width: 1240px;
       margin: 0 auto;
     }
 
-    /* Hero / Header Section */
-    .header-section {
-      background: linear-gradient(135deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.9) 100%);
+    /* 3D Hero Section */
+    .hero-banner {
+      background: linear-gradient(135deg, rgba(24, 34, 53, 0.95) 0%, rgba(15, 23, 42, 0.98) 100%);
       border: 1px solid var(--border-color);
-      border-radius: 20px;
-      padding: 32px 28px;
+      border-radius: 24px;
+      padding: 36px 32px;
       margin-bottom: 28px;
       position: relative;
       overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      box-shadow: var(--shadow-3d-card);
     }
-    .header-section::before {
+    [data-theme="light"] .hero-banner {
+      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+      border-color: #cbd5e1;
+    }
+
+    .hero-banner::after {
       content: "";
       position: absolute;
-      top: -50px;
-      right: -50px;
-      width: 220px;
-      height: 220px;
-      background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
+      top: -60px;
+      right: -60px;
+      width: 260px;
+      height: 260px;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.22) 0%, transparent 70%);
       border-radius: 50%;
       pointer-events: none;
     }
 
-    .header-badge {
+    .hero-badge-pill {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
       background: rgba(59, 130, 246, 0.15);
-      border: 1px solid rgba(59, 130, 246, 0.4);
-      color: #93c5fd;
+      border: 1px solid rgba(59, 130, 246, 0.35);
+      color: var(--accent-blue);
       font-size: 12px;
       font-weight: 700;
-      padding: 4px 12px;
+      padding: 5px 14px;
       border-radius: 9999px;
-      margin-bottom: 12px;
-      letter-spacing: 0.5px;
+      margin-bottom: 14px;
+      box-shadow: 0 2px 8px rgba(59, 130, 246, 0.15);
+    }
+    [data-theme="light"] .hero-badge-pill {
+      background: #eff6ff;
+      border-color: #bfdbfe;
     }
 
     h1.hero-title {
-      font-size: 32px;
+      font-size: 34px;
       font-weight: 800;
-      color: #ffffff;
-      margin-bottom: 8px;
+      color: var(--text-main);
+      margin-bottom: 10px;
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
+      letter-spacing: -0.5px;
     }
     h1.hero-title i {
       color: var(--accent-blue);
+      filter: drop-shadow(0 4px 10px rgba(59, 130, 246, 0.4));
     }
 
     p.hero-subtitle {
       font-size: 15px;
-      color: var(--text-dim);
-      max-width: 750px;
-    }
-
-    /* Stats Overview Cards */
-    .overview-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
-      margin-bottom: 28px;
-    }
-
-    .stat-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 14px;
-      padding: 18px 20px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    }
-    .stat-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-    }
-    .stat-icon.blue { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
-    .stat-icon.emerald { background: rgba(16, 185, 129, 0.15); color: #34d399; }
-    .stat-icon.amber { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
-    .stat-icon.purple { background: rgba(168, 85, 247, 0.15); color: #c084fc; }
-
-    .stat-meta .stat-val {
-      font-size: 22px;
-      font-weight: 800;
-      color: #fff;
-      font-family: 'JetBrains Mono', monospace;
-    }
-    .stat-meta .stat-lbl {
-      font-size: 12px;
-      color: var(--text-dim);
+      color: var(--text-muted);
+      max-width: 820px;
       font-weight: 500;
     }
 
-    /* Search and Filter Controls */
-    .control-panel {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 16px;
-      padding: 16px 20px;
+    /* 3D Overview Stat Tiles */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
       margin-bottom: 28px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
     }
 
-    .search-box-wrapper {
+    .stat-tile {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: 20px 22px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: var(--shadow-3d-card);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .stat-tile:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-3d-hover);
+    }
+
+    .stat-icon-wrap {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+    }
+    .stat-icon-wrap.blue { background: linear-gradient(135deg, #2563eb, #3b82f6); color: #fff; }
+    .stat-icon-wrap.emerald { background: linear-gradient(135deg, #059669, #10b981); color: #fff; }
+    .stat-icon-wrap.amber { background: linear-gradient(135deg, #d97706, #f59e0b); color: #fff; }
+    .stat-icon-wrap.purple { background: linear-gradient(135deg, #7c3aed, #a855f7); color: #fff; }
+
+    .stat-content .stat-number {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--text-main);
+      font-family: 'JetBrains Mono', monospace;
+      line-height: 1.2;
+    }
+    .stat-content .stat-label {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    /* 3D Search & Filter Panel */
+    .filter-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: 18px 22px;
+      margin-bottom: 28px;
+      box-shadow: var(--shadow-3d-card);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .search-input-group {
       position: relative;
       width: 100%;
     }
-    .search-box-wrapper i {
+    .search-input-group i {
       position: absolute;
-      left: 14px;
+      left: 16px;
       top: 50%;
       transform: translateY(-50%);
       color: var(--text-dim);
-      font-size: 15px;
+      font-size: 16px;
     }
-    .search-input {
+    .search-input-box {
       width: 100%;
-      background: #0f172a;
-      border: 1px solid var(--border-color);
-      padding: 12px 16px 12px 42px;
-      border-radius: 10px;
-      color: #fff;
-      font-size: 14px;
+      background: var(--bg-surface);
+      border: 1.5px solid var(--border-color);
+      padding: 13px 18px 13px 46px;
+      border-radius: 12px;
+      color: var(--text-main);
+      font-size: 14.5px;
       font-family: inherit;
+      font-weight: 500;
       outline: none;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
       transition: border-color 0.2s, box-shadow 0.2s;
     }
-    .search-input:focus {
-      border-color: var(--accent-blue);
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    [data-theme="light"] .search-input-box {
+      background: #f8fafc;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
     }
-    .search-input::placeholder {
+    .search-input-box:focus {
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.25);
+    }
+    .search-input-box::placeholder {
       color: var(--text-dim);
     }
 
-    .filter-tabs {
+    .filter-pill-bar {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       flex-wrap: wrap;
     }
-    .filter-tab {
-      background: rgba(255, 255, 255, 0.04);
+    .filter-btn {
+      background: var(--bg-surface);
       border: 1px solid var(--border-color);
       color: var(--text-muted);
-      padding: 7px 16px;
+      padding: 8px 18px;
       border-radius: 9999px;
       font-size: 13px;
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
-      transition: all 0.2s;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 7px;
+      box-shadow: var(--shadow-3d-card);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .filter-tab:hover {
-      background: rgba(255, 255, 255, 0.08);
-      color: #fff;
-      border-color: var(--text-dim);
-    }
-    .filter-tab.active {
-      background: var(--accent-blue);
-      color: #fff;
+    .filter-btn:hover {
+      transform: translateY(-2px);
+      color: var(--text-main);
       border-color: var(--accent-blue);
-      box-shadow: 0 2px 10px rgba(59, 130, 246, 0.3);
+    }
+    .filter-btn.active {
+      background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+      color: #ffffff;
+      border-color: #2563eb;
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
     }
 
-    /* Study Cards Grid */
-    .cards-grid {
+    /* 3D Study Modules Grid */
+    .modules-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 24px;
     }
 
-    .study-card {
+    .module-card {
       background: var(--bg-card);
       border: 1px solid var(--border-color);
-      border-radius: 16px;
+      border-radius: 20px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
       text-decoration: none;
       color: inherit;
       position: relative;
+      box-shadow: var(--shadow-3d-card);
+      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s, border-color 0.28s;
     }
-    .study-card:hover {
-      transform: translateY(-4px);
+    .module-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-3d-hover);
       border-color: var(--accent-blue);
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+    }
+    .module-card:active {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-3d-press);
     }
 
-    .card-top {
-      padding: 20px;
+    .module-card-body {
+      padding: 24px;
       flex: 1;
     }
 
-    .card-header-bar {
+    .module-top-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
-    .subject-pill {
+
+    .badge-tag {
       font-size: 11px;
-      font-weight: 700;
-      padding: 3px 10px;
-      border-radius: 6px;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 8px;
       text-transform: uppercase;
       letter-spacing: 0.5px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
     }
-    .pill-tracker { background: rgba(59, 130, 246, 0.2); color: #93c5fd; border: 1px solid rgba(59, 130, 246, 0.4); }
-    .pill-fr { background: rgba(96, 165, 250, 0.2); color: #bfdbfe; border: 1px solid rgba(96, 165, 250, 0.4); }
-    .pill-afm { background: rgba(192, 132, 252, 0.2); color: #e9d5ff; border: 1px solid rgba(192, 132, 252, 0.4); }
-    .pill-audit { background: rgba(244, 114, 182, 0.2); color: #fbcfe8; border: 1px solid rgba(244, 114, 182, 0.4); }
-    .pill-dt { background: rgba(251, 191, 36, 0.2); color: #fef08a; border: 1px solid rgba(251, 191, 36, 0.4); }
-    .pill-idt { background: rgba(52, 211, 153, 0.2); color: #a7f3d0; border: 1px solid rgba(52, 211, 153, 0.4); }
+    .badge-tracker { background: rgba(59, 130, 246, 0.2); color: #93c5fd; border: 1px solid rgba(59, 130, 246, 0.4); }
+    .badge-fr { background: rgba(96, 165, 250, 0.2); color: #bfdbfe; border: 1px solid rgba(96, 165, 250, 0.4); }
+    .badge-audit { background: rgba(244, 114, 182, 0.2); color: #fbcfe8; border: 1px solid rgba(244, 114, 182, 0.4); }
+    .badge-flash { background: rgba(168, 85, 247, 0.2); color: #e9d5ff; border: 1px solid rgba(168, 85, 247, 0.4); }
 
-    .card-badge-cat {
-      font-size: 11px;
-      font-weight: 600;
-      color: #94a3b8;
-    }
+    [data-theme="light"] .badge-tracker { background: #dbeafe; color: #1e40af; border-color: #93c5fd; }
+    [data-theme="light"] .badge-fr { background: #dbeafe; color: #1d4ed8; border-color: #93c5fd; }
+    [data-theme="light"] .badge-audit { background: #fce7f3; color: #9d174d; border-color: #f472b6; }
+    [data-theme="light"] .badge-flash { background: #f3e8ff; color: #6b21a8; border-color: #c084fc; }
 
-    .card-title {
-      font-size: 18px;
+    .module-weight {
+      font-size: 12px;
       font-weight: 700;
-      color: #ffffff;
-      margin-bottom: 8px;
+      color: var(--text-dim);
+    }
+
+    .module-title {
+      font-size: 19px;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 10px;
       line-height: 1.35;
     }
 
-    .card-desc {
-      font-size: 13px;
-      color: var(--text-dim);
-      line-height: 1.5;
+    .module-desc {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      line-height: 1.55;
+      font-weight: 500;
       margin-bottom: 16px;
     }
 
-    /* Card Progress Section */
-    .card-progress-wrapper {
+    /* 3D Progress Box */
+    .module-progress-box {
       margin-top: auto;
-      background: #0f172a;
-      padding: 14px 20px;
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      background: var(--bg-surface);
+      padding: 14px 22px;
+      border-top: 1px solid var(--border-subtle);
     }
-    .progress-meta {
+    .progress-stats-line {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 8px;
-      font-size: 12px;
-      font-weight: 600;
+      font-size: 12.5px;
+      font-weight: 700;
     }
-    .progress-meta span:first-child { color: var(--text-dim); }
-    .progress-meta span:last-child { color: var(--accent-emerald); font-family: 'JetBrains Mono', monospace; }
+    .progress-stats-line span:first-child { color: var(--text-muted); }
+    .progress-stats-line span:last-child { color: var(--accent-emerald); font-family: 'JetBrains Mono', monospace; }
 
-    .progress-track {
+    .progress-groove {
       width: 100%;
-      height: 8px;
-      background: #1e293b;
+      height: 9px;
+      background: rgba(0, 0, 0, 0.25);
       border-radius: 9999px;
       overflow: hidden;
-      position: relative;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
     }
-    .progress-fill {
+    [data-theme="light"] .progress-groove {
+      background: #e2e8f0;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+    .progress-bar-glow {
       height: 100%;
       background: linear-gradient(90deg, #3b82f6, #10b981);
       border-radius: 9999px;
       width: 0%;
-      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 0 12px rgba(16, 185, 129, 0.5);
+      transition: width 0.7s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .card-footer-action {
+    .module-action-footer {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 12px 20px;
+      padding: 14px 24px;
       background: var(--bg-card-hover);
       border-top: 1px solid var(--border-color);
-      font-size: 13px;
-      font-weight: 600;
+      font-size: 13.5px;
+      font-weight: 700;
       color: var(--accent-blue);
     }
-    .study-card:hover .card-footer-action {
+    .module-card:hover .module-action-footer {
       color: #93c5fd;
+    }
+    [data-theme="light"] .module-card:hover .module-action-footer {
+      color: #1e40af;
     }
 
     /* Empty state */
-    .empty-state {
+    .empty-search-alert {
       grid-column: 1 / -1;
       text-align: center;
       padding: 60px 20px;
       background: var(--bg-card);
-      border: 1px dashed var(--border-color);
-      border-radius: 16px;
+      border: 2px dashed var(--border-color);
+      border-radius: 20px;
       display: none;
     }
-    .empty-state i {
-      font-size: 40px;
+    .empty-search-alert i {
+      font-size: 44px;
       color: var(--text-dim);
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
-    .empty-state h3 {
-      font-size: 18px;
-      color: #fff;
-      margin-bottom: 6px;
+    .empty-search-alert h3 {
+      font-size: 19px;
+      color: var(--text-main);
+      margin-bottom: 8px;
     }
-    .empty-state p {
+    .empty-search-alert p {
       font-size: 14px;
-      color: var(--text-dim);
+      color: var(--text-muted);
     }
 
-    /* Mobile adjustments */
-    @media (max-width: 640px) {
-      body { padding: 16px; padding-bottom: 110px; }
-      .header-section { padding: 24px 18px; }
-      h1.hero-title { font-size: 24px; }
-      .cards-grid { grid-template-columns: 1fr; }
+    /* Tablet and Mobile Optimization */
+    @media (max-width: 768px) {
+      body { padding: 16px; padding-bottom: 120px; }
+      .hero-banner { padding: 24px 20px; }
+      h1.hero-title { font-size: 26px; }
+      .modules-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <!-- Header -->
-    <header class="header-section">
-      <div class="header-badge">
-        <i class="fa-solid fa-cloud-arrow-up"></i> Google Cloud Real-Time Sync Enabled
+    <!-- 3D Hero Section -->
+    <header class="hero-banner">
+      <div class="hero-badge-pill">
+        <i class="fa-solid fa-cloud-arrow-up"></i> Google Firebase Spark Real-Time Sync Active
       </div>
       <h1 class="hero-title">
         <i class="fa-solid fa-graduation-cap"></i> CA Final Master Study Hub
       </h1>
       <p class="hero-subtitle">
-        Your centralized repository for ICAI New Scheme (6 Papers) trackers, revision capsules, and active-recall checklists. Progress, highlights, and notes automatically sync across Windows 11 and Android tablets.
+        Your high-performance revision command center for ICAI New Scheme (6 Papers). Real-time synchronized checklists, video lecture companions, flashcard decks, and revision capsules designed for desktop and tablets.
       </p>
     </header>
 
-    <!-- Quick Stats Bar -->
-    <div class="overview-grid">
-      <div class="stat-card">
-        <div class="stat-icon blue">
+    <!-- Overview Stat Tiles -->
+    <div class="stats-row">
+      <div class="stat-tile">
+        <div class="stat-icon-wrap blue">
           <i class="fa-solid fa-book-open"></i>
         </div>
-        <div class="stat-meta">
-          <div class="stat-val" id="totalModulesCount">2</div>
-          <div class="stat-lbl">Active Study Modules</div>
+        <div class="stat-content">
+          <div class="stat-number" id="totalModulesCount">4</div>
+          <div class="stat-label">Active Study Modules</div>
         </div>
       </div>
 
-      <div class="stat-card">
-        <div class="stat-icon emerald">
+      <div class="stat-tile">
+        <div class="stat-icon-wrap emerald">
           <i class="fa-solid fa-circle-check"></i>
         </div>
-        <div class="stat-meta">
-          <div class="stat-val" id="totalCompletedCheckboxes">0</div>
-          <div class="stat-lbl">Checkpoints Mastered</div>
+        <div class="stat-content">
+          <div class="stat-number" id="totalCompletedCheckboxes">0</div>
+          <div class="stat-label">Milestones & Sums Done</div>
         </div>
       </div>
 
-      <div class="stat-card">
-        <div class="stat-icon amber">
+      <div class="stat-tile">
+        <div class="stat-icon-wrap amber">
           <i class="fa-solid fa-highlighter"></i>
         </div>
-        <div class="stat-meta">
-          <div class="stat-val" id="totalHighlightsCount">0</div>
-          <div class="stat-lbl">Highlights & Annotations</div>
+        <div class="stat-content">
+          <div class="stat-number" id="totalHighlightsCount">0</div>
+          <div class="stat-label">Saved Cloud Highlights</div>
         </div>
       </div>
 
-      <div class="stat-card">
-        <div class="stat-icon purple">
+      <div class="stat-tile">
+        <div class="stat-icon-wrap purple">
           <i class="fa-solid fa-shield-halved"></i>
         </div>
-        <div class="stat-meta">
-          <div class="stat-val" id="activeSyncUser">Guest (Local)</div>
-          <div class="stat-lbl">Cloud Sync Account</div>
+        <div class="stat-content">
+          <div class="stat-number" id="activeSyncUser">Guest (Local)</div>
+          <div class="stat-label">Firebase Cloud Account</div>
         </div>
       </div>
     </div>
 
-    <!-- Filter & Search Controls -->
-    <div class="control-panel">
-      <div class="search-box-wrapper">
+    <!-- Filter & Search Panel -->
+    <div class="filter-panel">
+      <div class="search-input-group">
         <i class="fa-solid fa-magnifying-glass"></i>
-        <input type="text" id="moduleSearchInput" class="search-input" placeholder="Search chapters, Ind AS, standards, topics, or tracker modules...">
+        <input type="text" id="moduleSearchInput" class="search-input-box" placeholder="Search chapters, Ind AS, CARO, flashcards, audit standards, or topics...">
       </div>
-      <div class="filter-tabs">
-        <button class="filter-tab active" data-filter="all"><i class="fa-solid fa-border-all"></i> All Modules</button>
-        <button class="filter-tab" data-filter="trackers"><i class="fa-solid fa-table-list"></i> Trackers</button>
-        <button class="filter-tab" data-filter="FR"><i class="fa-solid fa-calculator"></i> FR</button>
-        <button class="filter-tab" data-filter="AFM"><i class="fa-solid fa-chart-line"></i> AFM</button>
-        <button class="filter-tab" data-filter="Audit"><i class="fa-solid fa-magnifying-glass-chart"></i> Audit</button>
-        <button class="filter-tab" data-filter="DT"><i class="fa-solid fa-file-invoice-dollar"></i> DT</button>
-        <button class="filter-tab" data-filter="IDT"><i class="fa-solid fa-receipt"></i> IDT</button>
+      <div class="filter-pill-bar">
+        <button class="filter-btn active" data-filter="all"><i class="fa-solid fa-border-all"></i> All Modules (4)</button>
+        <button class="filter-btn" data-filter="trackers"><i class="fa-solid fa-table-list"></i> Trackers</button>
+        <button class="filter-btn" data-filter="FR"><i class="fa-solid fa-calculator"></i> FR (Paper 1)</button>
+        <button class="filter-btn" data-filter="Audit"><i class="fa-solid fa-magnifying-glass-chart"></i> Audit (Paper 3)</button>
+        <button class="filter-btn" data-filter="flashcards"><i class="fa-solid fa-clone"></i> Flashcards</button>
       </div>
     </div>
 
-    <!-- Study Cards Container -->
-    <div class="cards-grid" id="studyCardsContainer">
+    <!-- Study Modules Grid -->
+    <div class="modules-grid" id="studyCardsContainer">
 
       <!-- Card 1: Master Granular Study Tracker -->
-      <a href="study-tracker.html" class="study-card" data-subject="trackers" data-pageid="study-tracker" data-keywords="granular tracker syllabus weightage abc revision 6 papers">
-        <div class="card-top">
-          <div class="card-header-bar">
-            <span class="subject-pill pill-tracker">Trackers</span>
-            <span class="card-badge-cat">All 6 Papers</span>
+      <a href="study-tracker.html" class="module-card" data-subject="trackers" data-pageid="study-tracker" data-keywords="granular tracker syllabus weightage abc revision 6 papers exam strategy">
+        <div class="module-card-body">
+          <div class="module-top-row">
+            <span class="badge-tag badge-tracker">Trackers</span>
+            <span class="module-weight">All 6 Papers</span>
           </div>
-          <h2 class="card-title">Granular Study Tracker & Exam Strategy Hub</h2>
-          <p class="card-desc">
+          <h2 class="module-title">Granular Study Tracker &amp; Exam Strategy Hub</h2>
+          <p class="module-desc">
             Complete syllabus matrix for ICAI New Scheme with Theory/Practice breakdowns, 5 revision cycles, ABC classifications, weightage, and custom notes.
           </p>
         </div>
-        <div class="card-progress-wrapper">
-          <div class="progress-meta">
-            <span>Overall Progress</span>
-            <span class="card-progress-percent" id="prog_study_tracker">0%</span>
+        <div class="module-progress-box">
+          <div class="progress-stats-line">
+            <span>Overall Syllabus Completion</span>
+            <span id="prog_study_tracker">0%</span>
           </div>
-          <div class="progress-track">
-            <div class="progress-fill" id="bar_study_tracker"></div>
+          <div class="progress-groove">
+            <div class="progress-bar-glow" id="bar_study_tracker"></div>
           </div>
         </div>
-        <div class="card-footer-action">
+        <div class="module-action-footer">
           <span>Open Interactive Tracker</span>
           <i class="fa-solid fa-arrow-right"></i>
         </div>
       </a>
 
-      <!-- Card 2: Ind AS 116 Leases -->
-      <a href="indas-116.html" class="study-card" data-subject="FR" data-pageid="indas-116" data-keywords="ind as 116 leases fr financial reporting rou asset discount rate sale and leaseback">
-        <div class="card-top">
-          <div class="card-header-bar">
-            <span class="subject-pill pill-fr">Paper 1: FR</span>
-            <span class="card-badge-cat">Category A (8-14 Marks)</span>
+      <!-- Card 2: Ind AS 116 Comprehensive Study Guide (With 102 Illustrations) -->
+      <a href="indas-116.html" class="module-card" data-subject="FR" data-pageid="indas-116" data-keywords="ind as 116 leases fr financial reporting rou asset discount rate sale and leaseback 102 illustrations">
+        <div class="module-card-body">
+          <div class="module-top-row">
+            <span class="badge-tag badge-fr">Paper 1: FR</span>
+            <span class="module-weight">Cat A • 102 Sums &amp; Topics</span>
           </div>
-          <h2 class="card-title">Ind AS 116: Leases - Deep-Dive Revision Capsule</h2>
-          <p class="card-desc">
-            3-step identification test, Lessee accounting formula, remeasurement logic, exemptions, and live notes block with real-time text highlight annotations.
+          <h2 class="module-title">Ind AS 116: Leases — Master Revision &amp; Study Suite</h2>
+          <p class="module-desc">
+            Complete study companion with 48 theory topics, 54 practical illustrations, exam-day rapid revision mode, timestamped video links, and synced personal notes.
           </p>
         </div>
-        <div class="card-progress-wrapper">
-          <div class="progress-meta">
-            <span>Checkpoints Completed</span>
-            <span class="card-progress-percent" id="prog_indas_116">0%</span>
+        <div class="module-progress-box">
+          <div class="progress-stats-line">
+            <span>Illustrations &amp; Concepts Mastered</span>
+            <span id="prog_indas_116">0%</span>
           </div>
-          <div class="progress-track">
-            <div class="progress-fill" id="bar_indas_116"></div>
+          <div class="progress-groove">
+            <div class="progress-bar-glow" id="bar_indas_116"></div>
           </div>
         </div>
-        <div class="card-footer-action">
-          <span>Study Capsule</span>
+        <div class="module-action-footer">
+          <span>Study Leases Suite</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </div>
+      </a>
+
+      <!-- Card 3: CARO 2020 1-Minute Rapid Revision -->
+      <a href="caro-2020.html" class="module-card" data-subject="Audit" data-pageid="caro-2020" data-keywords="caro 2020 audit paper 3 clauses 21 reporting flashcards revision">
+        <div class="module-card-body">
+          <div class="module-top-row">
+            <span class="badge-tag badge-audit">Paper 3: Audit</span>
+            <span class="module-weight">All 21 Clauses</span>
+          </div>
+          <h2 class="module-title">CARO 2020 — 1-Minute Rapid Revision</h2>
+          <p class="module-desc">
+            Master Paragraph 3's all 21 clauses with dual interactive flip flashcards, quick checklist sheet mode, shuffle controls, and key audit pointer highlights.
+          </p>
+        </div>
+        <div class="module-progress-box">
+          <div class="progress-stats-line">
+            <span>Clauses Mastered</span>
+            <span id="prog_caro_2020">Ready</span>
+          </div>
+          <div class="progress-groove">
+            <div class="progress-bar-glow" id="bar_caro_2020" style="width: 100%;"></div>
+          </div>
+        </div>
+        <div class="module-action-footer">
+          <span>Open CARO Flashcards</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </div>
+      </a>
+
+      <!-- Card 4: CA Master Flashcards Standalone -->
+      <a href="ca-flashcards.html" class="module-card" data-subject="flashcards" data-pageid="ca-flashcards" data-keywords="flashcards quiz recall audit ind as sa standards on auditing law deck">
+        <div class="module-card-body">
+          <div class="module-top-row">
+            <span class="badge-tag badge-flash">Interactive Recall</span>
+            <span class="module-weight">Multi-Subject Decks</span>
+          </div>
+          <h2 class="module-title">CA Flashcards • Ind AS &amp; SA Master Decks</h2>
+          <p class="module-desc">
+            Active-recall card deck system covering Ind AS, Standards on Auditing (SA), and Corporate Law with two-way flipping, progress tracking, and quiz drills.
+          </p>
+        </div>
+        <div class="module-progress-box">
+          <div class="progress-stats-line">
+            <span>Deck Status</span>
+            <span id="prog_ca_flashcards">Active Decks</span>
+          </div>
+          <div class="progress-groove">
+            <div class="progress-bar-glow" id="bar_ca_flashcards" style="width: 100%;"></div>
+          </div>
+        </div>
+        <div class="module-action-footer">
+          <span>Launch Flashcard App</span>
           <i class="fa-solid fa-arrow-right"></i>
         </div>
       </a>
 
       <!-- Empty Search State -->
-      <div class="empty-state" id="emptySearchState">
+      <div class="empty-search-alert" id="emptySearchAlert">
         <i class="fa-solid fa-circle-question"></i>
         <h3>No matching study modules found</h3>
-        <p>Try searching for a different keyword or switch subject filter tabs.</p>
+        <p>Try searching for a different keyword or switch subject filter pills above.</p>
       </div>
 
     </div>
@@ -537,17 +665,17 @@
     let activeSearch = "";
 
     const searchInput = document.getElementById("moduleSearchInput");
-    const filterTabs = document.querySelectorAll(".filter-tab");
-    const cards = document.querySelectorAll(".study-card");
-    const emptyState = document.getElementById("emptySearchState");
+    const filterButtons = document.querySelectorAll(".filter-btn");
+    const cards = document.querySelectorAll(".module-card");
+    const emptyAlert = document.getElementById("emptySearchAlert");
 
     function applyFilters() {
       let visibleCount = 0;
       cards.forEach(card => {
         const subject = card.dataset.subject;
         const keywords = (card.dataset.keywords || "").toLowerCase();
-        const title = card.querySelector(".card-title").innerText.toLowerCase();
-        const desc = card.querySelector(".card-desc").innerText.toLowerCase();
+        const title = card.querySelector(".module-title").innerText.toLowerCase();
+        const desc = card.querySelector(".module-desc").innerText.toLowerCase();
 
         const matchesFilter = (activeFilter === "all") || (subject === activeFilter);
         const matchesSearch = !activeSearch || title.includes(activeSearch) || desc.includes(activeSearch) || keywords.includes(activeSearch);
@@ -560,7 +688,7 @@
         }
       });
 
-      emptyState.style.display = visibleCount === 0 ? "block" : "none";
+      emptyAlert.style.display = visibleCount === 0 ? "block" : "none";
     }
 
     searchInput.addEventListener("input", (e) => {
@@ -568,11 +696,11 @@
       applyFilters();
     });
 
-    filterTabs.forEach(tab => {
-      tab.addEventListener("click", () => {
-        filterTabs.forEach(t => t.classList.remove("active"));
-        tab.classList.add("active");
-        activeFilter = tab.dataset.filter;
+    filterButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        filterButtons.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        activeFilter = btn.dataset.filter;
         applyFilters();
       });
     });
@@ -609,24 +737,33 @@
 
       // 2. Ind AS 116 progress
       try {
-        const indasCache = localStorage.getItem("ca_hub_sync_indas-116");
-        if (indasCache) {
-          const parsed = JSON.parse(indasCache);
-          const chks = parsed.checkboxes || {};
-          const keys = Object.keys(chks);
-          const completed = Object.values(chks).filter(v => !!v).length;
-          const total = Math.max(keys.length, 6);
-          const pct = Math.round((completed / total) * 100);
-          const progEl = document.getElementById("prog_indas_116");
-          const barEl = document.getElementById("bar_indas_116");
-          if (progEl) progEl.innerText = `${pct}% (${completed}/${total})`;
-          if (barEl) barEl.style.width = `${pct}%`;
-          totalCompleted += completed;
+        const indasSuiteCache = localStorage.getItem("indas116_study_state_v1");
+        const indasSyncCache = localStorage.getItem("ca_hub_sync_indas-116");
+        let completed = 0;
+        let total = 102;
 
+        if (indasSuiteCache) {
+          const parsedSuite = JSON.parse(indasSuiteCache);
+          if (parsedSuite.completed) {
+            completed = Object.keys(parsedSuite.completed).length;
+          }
+        }
+        if (indasSyncCache) {
+          const parsed = JSON.parse(indasSyncCache);
+          if (parsed.checkboxes) {
+            completed += Object.values(parsed.checkboxes).filter(v => !!v).length;
+          }
           if (Array.isArray(parsed.highlights)) {
             totalHighlights += parsed.highlights.length;
           }
         }
+
+        const pct = Math.min(100, Math.round((completed / total) * 100));
+        const progEl = document.getElementById("prog_indas_116");
+        const barEl = document.getElementById("bar_indas_116");
+        if (progEl) progEl.innerText = `${pct}% (${completed}/${total})`;
+        if (barEl) barEl.style.width = `${pct}%`;
+        totalCompleted += completed;
       } catch (e) {
         console.warn("IndAS progress calc error:", e);
       }

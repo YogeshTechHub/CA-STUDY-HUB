@@ -1,0 +1,3894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>CA Flashcards • Ind AS & SA Master</title>
+  <meta name="description" content="Mobile-ready flashcard and quiz revision app for CA students covering Ind AS, Standards on Auditing (SA), and Law with two-way flip and Google Drive backup sync.">
+  <meta name="theme-color" content="#121316">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%231e293b'/><text x='50' y='65' font-family='sans-serif' font-size='48' font-weight='bold' fill='%2338bdf8' text-anchor='middle'>CA</text></svg>">
+  <link rel="manifest" href="manifest.json">
+  <style>
+/* CA Flashcards App Stylesheet */
+
+:root {
+  --bg-main: #0f1013;
+  --bg-surface: #18191d;
+  --bg-card: #282a2f;
+  --bg-card-hover: #32353c;
+  --bg-elevated: #212328;
+  --bg-input: #15161a;
+  
+  --text-primary: #f3f4f6;
+  --text-secondary: #9ca3af;
+  --text-muted: #6b7280;
+  
+  --border-subtle: #2d3139;
+  --border-strong: #3f4450;
+  
+  --primary: #3b82f6;
+  --primary-hover: #2563eb;
+  --primary-glow: rgba(59, 130, 246, 0.25);
+  
+  --success: #10b981;
+  --success-bg: rgba(16, 185, 129, 0.12);
+  --success-border: rgba(16, 185, 129, 0.3);
+  
+  --danger: #ef4444;
+  --danger-bg: rgba(239, 68, 68, 0.12);
+  --danger-border: rgba(239, 68, 68, 0.3);
+
+  --accent-gold: #f59e0b;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 24px;
+  --radius-full: 9999px;
+  
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --shadow-card: 0 16px 36px -8px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.06);
+  --shadow-pop: 0 20px 40px -10px rgba(0, 0, 0, 0.6);
+  --transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+body.theme-light {
+  --bg-main: #f4f5f8;
+  --bg-surface: #ffffff;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f9fafb;
+  --bg-elevated: #f0f2f6;
+  --bg-input: #eef1f6;
+  
+  --text-primary: #111827;
+  --text-secondary: #4b5563;
+  --text-muted: #9ca3af;
+  
+  --border-subtle: #e5e7eb;
+  --border-strong: #d1d5db;
+  
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --primary-glow: rgba(37, 99, 235, 0.18);
+  
+  --shadow-card: 0 12px 28px -6px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  user-select: none;
+}
+
+/* App Container */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+  background-color: var(--bg-main);
+}
+
+/* Header */
+.app-header {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--border-subtle);
+  background-color: var(--bg-surface);
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+
+.header-left, .header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header-center {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.brand-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+.brand-badge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, var(--primary), #8b5cf6);
+  color: #fff;
+  padding: 2px 7px;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.04em;
+}
+
+.nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid transparent;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.nav-btn:hover {
+  color: var(--text-primary);
+  background: var(--bg-elevated);
+}
+
+.nav-btn.active {
+  color: var(--primary);
+  background: var(--primary-glow);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.icon-btn {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.icon-btn:hover {
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+
+.highlight-btn {
+  width: auto;
+  padding: 0 12px;
+  gap: 6px;
+  background: linear-gradient(135deg, #1e3a8a, #312e81);
+  color: #93c5fd;
+  border-color: #3b82f6;
+}
+.highlight-btn:hover {
+  background: linear-gradient(135deg, #2563eb, #4338ca);
+  color: #ffffff;
+}
+
+.btn-text-sm {
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+/* Views Management */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+}
+
+.view-panel {
+  display: none;
+  animation: fadeIn 0.25s ease-out;
+}
+
+.view-panel.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Section Common */
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.section-desc {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+/* Quick Banner */
+.quick-banner {
+  background: linear-gradient(135deg, #1e293b, #0f172a);
+  border: 1px solid #334155;
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.quick-banner h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #f8fafc;
+}
+
+.quick-banner p {
+  font-size: 0.82rem;
+  color: #94a3b8;
+  margin-top: 3px;
+}
+
+.quick-banner-actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* ANKIDROID STYLE TREE VIEW (Screenshot 2 Match) */
+.deck-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.deck-stats-pill {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+/* Deck Selection Bar */
+.deck-selection-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.selection-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.custom-checkbox-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.custom-checkbox-wrap input[type="checkbox"],
+.cat-checkbox,
+.deck-checkbox {
+  width: 17px;
+  height: 17px;
+  accent-color: var(--primary);
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.selection-counter-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+}
+
+.selection-bar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.btn-sm {
+  padding: 6px 12px;
+  font-size: 0.8rem;
+}
+
+.btn-danger-outline {
+  background: transparent;
+  border: 1px solid var(--danger-border);
+  color: var(--danger);
+  border-radius: var(--radius-sm);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-danger-outline:hover:not(:disabled) {
+  background: var(--danger-bg);
+  border-color: var(--danger);
+}
+
+.btn-danger-outline:disabled,
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.btn-icon-danger {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+.btn-icon-danger:hover {
+  background: var(--danger-bg);
+  border-color: var(--danger-border);
+  color: var(--danger);
+}
+
+.cat-actions-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.text-green {
+  color: var(--success);
+}
+
+.deck-tree {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.category-group {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
+  overflow: hidden;
+}
+
+.category-header {
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  background: var(--bg-surface);
+  transition: var(--transition);
+}
+
+.category-header:hover {
+  background: var(--bg-elevated);
+}
+
+.cat-title-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+}
+
+.tree-plus-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  color: var(--primary);
+  transition: transform 0.2s;
+}
+
+.category-group.open .tree-plus-icon {
+  transform: rotate(45deg);
+}
+
+.cat-badge-count {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+}
+
+.category-decks-list {
+  display: none;
+  border-top: 1px solid var(--border-subtle);
+  background: var(--bg-main);
+  padding: 6px 12px;
+}
+
+.category-group.open .category-decks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.deck-tree-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  transition: var(--transition);
+}
+
+.deck-tree-item:hover {
+  border-color: var(--border-strong);
+  transform: translateX(3px);
+}
+
+.deck-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.deck-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.deck-subinfo {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.deck-actions-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.deck-card-counter {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+}
+
+.deck-btn-study {
+  padding: 5px 12px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.deck-btn-study:hover {
+  background: var(--primary-hover);
+}
+
+.deck-btn-quiz {
+  padding: 5px 10px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+  cursor: pointer;
+  transition: var(--transition);
+}
+.deck-btn-quiz:hover {
+  background: var(--bg-card-hover);
+}
+
+.deck-bottom-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 16px 0;
+}
+
+/* =========================================================
+   STUDY VIEW (Matching User's Screenshot 1 closely!)
+   ========================================================= */
+.study-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 620px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.study-top-bar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.study-nav-back {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.icon-btn-ghost {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: var(--transition);
+}
+.icon-btn-ghost:hover {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+}
+
+.study-deck-info h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.study-deck-info span {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.study-controls-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Flip Direction Switcher Pill (No. -> Title vs Title -> No.) */
+.direction-toggle {
+  display: flex;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-full);
+  padding: 2px;
+}
+
+.dir-btn {
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-family: var(--font-sans);
+  background: transparent;
+  color: var(--text-secondary);
+  border: none;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.dir-btn.active {
+  background: var(--primary);
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.control-pill-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  border-radius: var(--radius-full);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.control-pill-btn.active {
+  background: rgba(59, 130, 246, 0.15);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.control-pill-btn.starred {
+  background: rgba(245, 158, 11, 0.15);
+  border-color: var(--accent-gold);
+  color: var(--accent-gold);
+}
+
+/* Progress bar */
+.study-progress-container {
+  width: 100%;
+  height: 4px;
+  background: var(--bg-elevated);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  margin-bottom: 18px;
+}
+
+.study-progress-bar {
+  height: 100%;
+  width: 3%;
+  background: linear-gradient(90deg, var(--primary), #8b5cf6);
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Flashcard 3D Stage */
+.card-stage {
+  width: 100%;
+  perspective: 1200px;
+  margin-bottom: 24px;
+}
+
+.flashcard-wrapper {
+  width: 100%;
+  min-height: 380px;
+  cursor: pointer;
+}
+
+.flashcard-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 380px;
+  transform-style: preserve-3d;
+  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.flashcard-wrapper.flipped .flashcard-inner {
+  transform: rotateY(180deg);
+}
+
+.flashcard-face {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 380px;
+  border-radius: 28px;
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: var(--bg-card);
+  box-shadow: var(--shadow-card);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.flashcard-back {
+  transform: rotateY(180deg);
+  background-color: #1e2025;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.card-face-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-counter {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.card-type-tag {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  background: var(--bg-elevated);
+  color: #93c5fd;
+  border: 1px solid rgba(147, 197, 253, 0.2);
+}
+
+.card-type-tag.success-tag {
+  color: #6ee7b7;
+  border-color: rgba(110, 231, 183, 0.25);
+  background: rgba(16, 185, 129, 0.1);
+}
+
+.card-menu-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: var(--radius-full);
+  transition: var(--transition);
+}
+.card-menu-btn:hover {
+  color: var(--text-primary);
+  background: var(--bg-elevated);
+}
+
+.card-content-area {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 24px 0;
+  text-align: center;
+}
+
+.card-prompt-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.card-main-text {
+  font-size: 1.85rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+  word-wrap: break-word;
+}
+
+.card-main-text.answer-text {
+  font-size: 1.55rem;
+  color: #60a5fa;
+}
+
+.card-notes-box {
+  margin-top: 20px;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  text-align: left;
+}
+
+.notes-heading {
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+  letter-spacing: 0.05em;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.card-notes-box p {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+.card-face-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flip-hint-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  opacity: 0.85;
+}
+
+/* =========================================================
+   BOTTOM CONTROLS BAR (Screenshot 1 Exact Match)
+   ========================================================= */
+.study-bottom-controls {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.circle-btn {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.circle-btn:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-strong);
+  transform: translateY(-2px);
+}
+
+.circle-btn-primary {
+  border-color: rgba(59, 130, 246, 0.4);
+  color: var(--primary);
+}
+.circle-btn-primary:hover {
+  background: var(--primary-glow);
+}
+
+.badge-action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: var(--radius-full);
+  background: var(--bg-surface);
+  font-family: var(--font-sans);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.badge-action-btn.wrong-btn {
+  border: 1.5px solid var(--danger-border);
+  color: var(--danger);
+  background: var(--danger-bg);
+}
+.badge-action-btn.wrong-btn:hover {
+  background: rgba(239, 68, 68, 0.22);
+  transform: translateY(-2px);
+}
+
+.badge-action-btn.right-btn {
+  border: 1.5px solid var(--success-border);
+  color: var(--success);
+  background: var(--success-bg);
+}
+.badge-action-btn.right-btn:hover {
+  background: rgba(16, 185, 129, 0.22);
+  transform: translateY(-2px);
+}
+
+.icon-cross, .icon-tick {
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+.count-badge {
+  font-family: var(--font-mono);
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.btn-flip-cta {
+  flex: 1;
+  max-width: 140px;
+  padding: 12px 14px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  border-radius: var(--radius-full);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: var(--transition);
+}
+.btn-flip-cta:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.shortcuts-legend {
+  font-size: 0.73rem;
+  color: var(--text-muted);
+  text-align: center;
+  margin-top: 4px;
+}
+
+/* =========================================================
+   QUIZ VIEW
+   ========================================================= */
+.quiz-container {
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.quiz-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.quiz-title-area h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.quiz-status-pill {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.quiz-score-pill {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+}
+
+.quiz-progress-line {
+  height: 4px;
+  background: var(--bg-elevated);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  margin-bottom: 18px;
+}
+
+.quiz-progress-fill {
+  height: 100%;
+  width: 10%;
+  background: var(--primary);
+  transition: width 0.3s;
+}
+
+.quiz-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin-bottom: 18px;
+}
+
+.quiz-direction-tag {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+
+.quiz-question-text {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  line-height: 1.4;
+}
+
+.quiz-options-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.quiz-option-btn {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.quiz-option-btn:hover:not(:disabled) {
+  background: var(--bg-card-hover);
+  border-color: var(--primary);
+}
+
+.quiz-option-letter {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--bg-elevated);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.quiz-option-btn.correct {
+  background: var(--success-bg) !important;
+  border-color: var(--success) !important;
+  color: #34d399 !important;
+}
+
+.quiz-option-btn.wrong {
+  background: var(--danger-bg) !important;
+  border-color: var(--danger) !important;
+  color: #f87171 !important;
+}
+
+.quiz-feedback-box {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.quiz-feedback-box.hidden {
+  display: none;
+}
+
+.feedback-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  font-weight: 800;
+  background: var(--success-bg);
+  color: var(--success);
+  flex-shrink: 0;
+}
+
+.feedback-details h4 {
+  font-size: 0.95rem;
+  margin-bottom: 2px;
+}
+.feedback-details p {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+/* =========================================================
+   TWO-COLUMN STANDARDS DIRECTORY (Requested Feature)
+   ========================================================= */
+.table-view-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.table-view-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.table-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.table-filter-bar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.search-input-wrapper {
+  position: relative;
+  flex: 1;
+  min-width: 260px;
+  display: flex;
+  align-items: center;
+}
+
+.search-input-wrapper svg {
+  position: absolute;
+  left: 12px;
+  color: var(--text-muted);
+}
+
+.search-input-wrapper input {
+  width: 100%;
+  padding: 10px 36px 10px 38px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+}
+
+.search-input-wrapper input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.clear-search-btn {
+  position: absolute;
+  right: 10px;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: none;
+}
+
+.custom-select {
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  cursor: pointer;
+}
+.custom-select:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.table-responsive-box {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
+}
+
+.standards-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.88rem;
+}
+
+.standards-table th {
+  padding: 12px 14px;
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+  font-weight: 700;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.standards-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  vertical-align: middle;
+}
+
+.standards-table tbody tr:hover {
+  background: var(--bg-elevated);
+}
+
+.std-num-cell {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--primary);
+  white-space: nowrap;
+}
+
+.std-title-cell {
+  font-weight: 600;
+}
+
+.std-notes-small {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-top: 3px;
+  font-weight: normal;
+}
+
+.table-row-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.table-icon-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
+}
+.table-icon-btn:hover {
+  color: var(--text-primary);
+  background: var(--bg-card-hover);
+}
+.table-icon-btn.delete-btn:hover {
+  color: var(--danger);
+}
+
+.table-footer-status {
+  padding: 10px 4px;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+/* =========================================================
+   BUTTONS & COMMON UI
+   ========================================================= */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  border: none;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: #ffffff;
+}
+.btn-primary:hover {
+  background: var(--primary-hover);
+}
+
+.btn-secondary {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+}
+.btn-secondary:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-strong);
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+}
+.btn-outline:hover {
+  border-color: var(--border-strong);
+  background: var(--bg-elevated);
+}
+
+.btn-text-danger {
+  background: transparent;
+  border: none;
+  color: var(--danger);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 6px 0;
+}
+.btn-text-danger:hover {
+  text-decoration: underline;
+}
+
+/* =========================================================
+   MODALS & BACKUP OVERLAY
+   ========================================================= */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 100;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.modal-overlay.hidden {
+  display: none;
+}
+
+.modal-card {
+  width: 100%;
+  max-width: 640px;
+  max-height: 90vh;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-pop);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-card.small-modal {
+  max-width: 480px;
+}
+
+.modal-header {
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-subtle);
+  position: sticky;
+  top: 0;
+  background: var(--bg-surface);
+  z-index: 2;
+}
+
+.modal-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.modal-title-wrap h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.modal-title-wrap p {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+.gdrive-icon-badge {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-md);
+  background: rgba(59, 130, 246, 0.15);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-close-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  line-height: 1;
+}
+.modal-close-btn:hover {
+  color: var(--text-primary);
+}
+
+.modal-body {
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.backup-card-block {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 16px;
+}
+
+.backup-card-block h4 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.backup-card-block p {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+  margin-bottom: 12px;
+}
+
+.backup-card-block.info-highlight {
+  background: rgba(59, 130, 246, 0.08);
+  border-color: rgba(59, 130, 246, 0.25);
+}
+
+.guide-steps {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  padding-left: 20px;
+}
+
+.guide-steps b {
+  color: var(--text-primary);
+}
+
+.btn-group-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.file-upload-btn {
+  cursor: pointer;
+}
+
+.csv-import-box textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  resize: vertical;
+}
+
+.csv-actions-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.backup-reset-row {
+  text-align: center;
+  padding-top: 8px;
+}
+
+/* Form Styles */
+.modal-form {
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.form-group input, .form-group textarea {
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+}
+
+.form-group input:focus, .form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1f2937;
+  color: #ffffff;
+  padding: 10px 20px;
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 600;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  z-index: 200;
+  transition: opacity 0.2s, transform 0.2s;
+  pointer-events: none;
+}
+
+.toast.hidden {
+  opacity: 0;
+  transform: translate(-50%, 15px);
+}
+
+/* =========================================================
+   MOBILE RESPONSIVENESS
+   ========================================================= */
+@media (max-width: 640px) {
+  .app-header {
+    padding: 0 12px;
+  }
+  .nav-label {
+    display: none;
+  }
+  .main-content {
+    padding: 12px;
+  }
+  .card-stage {
+    margin-bottom: 16px;
+  }
+  .flashcard-wrapper, .flashcard-inner, .flashcard-face {
+    min-height: 330px;
+  }
+  .flashcard-face {
+    padding: 20px 18px;
+    border-radius: 22px;
+  }
+  .card-main-text {
+    font-size: 1.45rem;
+  }
+  .card-main-text.answer-text {
+    font-size: 1.25rem;
+  }
+  .study-bottom-controls {
+    gap: 8px;
+  }
+  .circle-btn {
+    width: 46px;
+    height: 46px;
+  }
+  .badge-action-btn {
+    padding: 8px 12px;
+    gap: 6px;
+  }
+  .count-badge {
+    font-size: 0.95rem;
+  }
+  .btn-flip-cta {
+    padding: 10px 12px;
+    font-size: 0.82rem;
+  }
+  .shortcuts-legend {
+    display: none;
+  }
+}
+
+</style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    :root {
+      --bg-primary: #0a0e17;
+      --bg-card: #162032;
+      --text-main: #f8fafc;
+      --text-muted: #cbd5e1;
+      --border-color: #2a3a54;
+    }
+    [data-theme="light"] {
+      --bg-main: #f0f4f9 !important;
+      --bg-surface: #ffffff !important;
+      --bg-card: #ffffff !important;
+      --bg-elevated: #e2e8f0 !important;
+      --text-primary: #0f172a !important;
+      --text-secondary: #334155 !important;
+      --border-subtle: #cbd5e1 !important;
+      --border-strong: #94a3b8 !important;
+      --bg-primary: #f0f4f9;
+      --bg-card: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #334155;
+      --border-color: #cbd5e1;
+    }
+    body {
+      padding-top: 60px !important;
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
+    }
+  </style>
+
+</head>
+<body class="theme-dark">
+  <div id="app" class="app-container">
+
+    <!-- Top Navigation Header -->
+    <header class="app-header">
+      <div class="header-left">
+        <button id="btn-nav-home" class="nav-btn active" title="Decks Overview">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          <span class="nav-label">Decks</span>
+        </button>
+        <button id="btn-nav-table" class="nav-btn" title="Two-Column Quick Reference">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-4"></path><path d="M9 3v18"></path><path d="M15 3v18"></path><path d="M3 9h18"></path><path d="M3 15h18"></path></svg>
+          <span class="nav-label">Standards List</span>
+        </button>
+      </div>
+
+      <div class="header-center">
+        <span class="brand-title">CA Flashcards</span>
+        <span class="brand-badge">Ind AS &amp; SA</span>
+      </div>
+
+      <div class="header-right">
+        <button id="btn-grand-shuffle" class="icon-btn highlight-btn" title="Grand Mixed Test (All Subjects)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 3h5v5"></path><path d="M4 20L21 3"></path><path d="M21 16v5h-5"></path><path d="M15 15l6 6"></path><path d="M4 4l5 5"></path></svg>
+          <span class="btn-text-sm">Mega Test</span>
+        </button>
+        <button id="btn-open-sync" class="icon-btn" title="Google Drive & Backup Sync">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 18a3.5 3.5 0 0 0 0-7h-1A5 4.5 0 0 0 7 9.5 4 4 0 0 0 5 17h14z"></path><polyline points="12 12 12 16 10 14"></polyline></svg>
+        </button>
+        <button id="btn-toggle-theme" class="icon-btn" title="Toggle Dark/Light Mode">
+          <svg id="theme-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Viewport Area -->
+    <main class="main-content">
+
+      <!-- VIEW 1: ANKIDROID STYLE DECK LIST -->
+      <section id="view-decks" class="view-panel active">
+        <div class="deck-list-container">
+          
+          <!-- Banner for Quick Mega Practice -->
+          <div class="quick-banner">
+            <div class="quick-banner-content">
+              <h3>🔥 All-Subject Mega Revision</h3>
+              <p>Practice Ind AS, SAs, Law &amp; Taxation in random shuffle mode</p>
+            </div>
+            <div class="quick-banner-actions">
+              <button class="btn btn-primary" id="btn-banner-study-all">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Revise All (<span id="total-all-cards-count">0</span>)
+              </button>
+              <button class="btn btn-secondary" id="btn-banner-quiz-all">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                Quiz All
+              </button>
+            </div>
+          </div>
+
+          <!-- Header bar for Decks like AnkiDroid -->
+          <div class="deck-header-row">
+            <h2 class="section-title">Deck Categories</h2>
+            <div class="deck-stats-pill">
+              <span id="stat-total-decks">0 Decks</span> • 
+              <span id="stat-total-mastered" class="text-green">0 Mastered</span>
+            </div>
+          </div>
+
+          <!-- Selection Bar for custom testing and bulk delete -->
+          <div class="deck-selection-bar" id="deck-selection-bar">
+            <div class="selection-bar-left">
+              <label class="custom-checkbox-wrap" title="Select / Deselect all decks">
+                <input type="checkbox" id="chk-select-all-decks">
+                <span class="selection-status-text" id="selection-status-text">Select All Decks</span>
+              </label>
+              <span class="selection-counter-badge" id="selection-counter-badge">0 selected</span>
+            </div>
+            <div class="selection-bar-actions">
+              <button class="btn btn-primary btn-sm" id="btn-revise-selected" disabled title="Test flashcards from selected subjects">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                <span>Revise Selected (<span id="count-selected-cards">0</span>)</span>
+              </button>
+              <button class="btn btn-secondary btn-sm" id="btn-quiz-selected" disabled title="Practice MCQ quiz from selected subjects">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                <span>Quiz</span>
+              </button>
+              <button class="btn btn-danger-outline btn-sm" id="btn-delete-selected" disabled title="Delete selected decks/subjects">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                <span>Delete</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Tree list of decks (matching user's screenshot 2) -->
+          <div id="deck-tree-container" class="deck-tree">
+            <!-- Dynamically populated via app.js -->
+          </div>
+
+          <!-- Quick Deck Action Tools -->
+          <div class="deck-bottom-actions">
+            <button class="btn btn-outline" id="btn-add-deck-modal">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              New Deck / Subject
+            </button>
+            <button class="btn btn-outline" id="btn-add-card-modal">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+              Add Card
+            </button>
+            <button class="btn btn-outline" id="btn-backup-direct">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              Export G-Drive Backup
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 2: FLASHCARD STUDY MODE (Matching User's Screenshot 1) -->
+      <section id="view-study" class="view-panel">
+        <div class="study-container">
+
+          <!-- Card Header & Controls -->
+          <div class="study-top-bar">
+            <div class="study-nav-back">
+              <button id="btn-back-to-decks" class="icon-btn-ghost" title="Back to Decks">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+              </button>
+              <div class="study-deck-info">
+                <h3 id="study-deck-title">Finance Flashcards</h3>
+                <span id="study-deck-subtitle">Ind AS Presentation</span>
+              </div>
+            </div>
+
+            <!-- Direction & Randomize Controls -->
+            <div class="study-controls-group">
+              <!-- Direction Flip Pill (Crucial Feature Requested!) -->
+              <div class="direction-toggle" title="Flip Column: Toggle Question between Number or Title">
+                <button class="dir-btn active" data-dir="num_to_title" id="btn-dir-n2t" title="Question = Number, Answer = Title">
+                  No. &rarr; Title
+                </button>
+                <button class="dir-btn" data-dir="title_to_num" id="btn-dir-t2n" title="Question = Title, Answer = Number">
+                  Title &rarr; No.
+                </button>
+                <button class="dir-btn" data-dir="mixed" id="btn-dir-mixed" title="Mixed Random Direction">
+                  🔀 Mix
+                </button>
+              </div>
+
+              <!-- Shuffle Button -->
+              <button id="btn-toggle-shuffle" class="control-pill-btn active" title="Toggle Random Order">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="20" x2="21" y2="3"></line><polyline points="21 16 21 21 16 21"></polyline><line x1="15" y1="15" x2="21" y2="21"></line><line x1="4" y1="4" x2="9" y2="9"></line></svg>
+                <span>Shuffle</span>
+              </button>
+
+              <!-- Star / Bookmark Button -->
+              <button id="btn-star-card" class="control-pill-btn" title="Bookmark difficult card">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                <span>Star</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Progress Bar -->
+          <div class="study-progress-container">
+            <div class="study-progress-bar" id="study-progress-fill"></div>
+          </div>
+
+          <!-- THE FLASHCARD (Styled after Screenshot 1: Dark, Rounded, Crisp) -->
+          <div class="card-stage">
+            <div class="flashcard-wrapper" id="card-element">
+              <div class="flashcard-inner" id="card-inner">
+                
+                <!-- Front Side -->
+                <div class="flashcard-face flashcard-front">
+                  <div class="card-face-header">
+                    <span class="card-counter" id="card-counter-front">1/32</span>
+                    <span class="card-type-tag" id="card-badge-front">STANDARD NO.</span>
+                    <button class="card-menu-btn" id="btn-card-front-tts" title="Read Aloud">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>
+                    </button>
+                  </div>
+                  
+                  <div class="card-content-area">
+                    <p class="card-prompt-label" id="card-prompt-label">IDENTIFY THE TITLE:</p>
+                    <h2 class="card-main-text" id="card-question-text">IND AS 1</h2>
+                  </div>
+
+                  <div class="card-face-footer">
+                    <span class="flip-hint-pill">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg>
+                      Click card or press Space to see answer
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Back Side -->
+                <div class="flashcard-face flashcard-back">
+                  <div class="card-face-header">
+                    <span class="card-counter" id="card-counter-back">1/32</span>
+                    <span class="card-type-tag success-tag" id="card-badge-back">ANSWER</span>
+                    <button class="card-menu-btn" id="btn-card-back-tts" title="Read Aloud">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                    </button>
+                  </div>
+
+                  <div class="card-content-area">
+                    <p class="card-prompt-label">CORRESPONDING STANDARD / TITLE:</p>
+                    <h2 class="card-main-text answer-text" id="card-answer-text">Presentation of Financial Statements</h2>
+                    
+                    <div class="card-notes-box" id="card-notes-box">
+                      <span class="notes-heading">CA Exam Key Takeaway:</span>
+                      <p id="card-notes-text">Framework for presentation, general purpose financial statements, going concern, accrual basis.</p>
+                    </div>
+                  </div>
+
+                  <div class="card-face-footer">
+                    <span class="flip-hint-pill">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+                      Flip back
+                    </span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- BOTTOM CONTROLS (Identical to user's Screenshot 1!) -->
+          <div class="study-bottom-controls">
+            <!-- Previous Button -->
+            <button id="btn-prev-card" class="circle-btn" title="Previous Card (Left Arrow)">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            </button>
+
+            <!-- Need Review / Wrong Button with Red Count (✕ 0) -->
+            <button id="btn-mark-wrong" class="badge-action-btn wrong-btn" title="Mark as Need Review (Key: 1)">
+              <span class="icon-cross">✕</span>
+              <span class="count-badge" id="count-wrong">0</span>
+            </button>
+
+            <!-- Flip Action Button -->
+            <button id="btn-flip-card" class="btn btn-flip-cta" title="Reveal Answer (Spacebar)">
+              <span id="label-flip-cta">See answer</span>
+            </button>
+
+            <!-- Mastered / Right Button with Green Count (0 ✓) -->
+            <button id="btn-mark-right" class="badge-action-btn right-btn" title="Mark as Mastered (Key: 2)">
+              <span class="count-badge" id="count-right">0</span>
+              <span class="icon-tick">✓</span>
+            </button>
+
+            <!-- Next Button -->
+            <button id="btn-next-card" class="circle-btn circle-btn-primary" title="Next Card (Right Arrow)">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </button>
+          </div>
+
+          <!-- Shortcuts Hint for Fast CA Study -->
+          <div class="shortcuts-legend">
+            <span>Keys: <b>Space</b> Flip • <b>← / →</b> Prev/Next • <b>1</b> Again • <b>2</b> Mastered • <b>R</b> Shuffle</span>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- VIEW 3: PRACTICE QUIZ / MCQ TEST MODE -->
+      <section id="view-quiz" class="view-panel">
+        <div class="quiz-container">
+          <div class="quiz-header">
+            <button id="btn-back-from-quiz" class="icon-btn-ghost">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </button>
+            <div class="quiz-title-area">
+              <h3 id="quiz-deck-name">Ind AS Practice Quiz</h3>
+              <div class="quiz-status-pill">Question <span id="quiz-current-q">1</span> of <span id="quiz-total-q">10</span></div>
+            </div>
+            <div class="quiz-score-pill">
+              Score: <span id="quiz-score">0</span>
+            </div>
+          </div>
+
+          <div class="quiz-progress-line">
+            <div id="quiz-progress-bar" class="quiz-progress-fill"></div>
+          </div>
+
+          <!-- Quiz Question Card -->
+          <div class="quiz-card">
+            <div class="quiz-direction-tag" id="quiz-dir-tag">MATCH THE STANDARD</div>
+            <h2 class="quiz-question-text" id="quiz-q-text">What is the title for IND AS 115?</h2>
+            <div class="quiz-options-grid" id="quiz-options-container">
+              <!-- Dynamically populated 4 options -->
+            </div>
+          </div>
+
+          <div class="quiz-feedback-box hidden" id="quiz-feedback">
+            <div class="feedback-icon" id="feedback-icon">✓</div>
+            <div class="feedback-details">
+              <h4 id="feedback-title">Correct!</h4>
+              <p id="feedback-explanation">IND AS 115 is Revenue from Contracts with Customers.</p>
+            </div>
+            <button class="btn btn-primary" id="btn-quiz-next">Next Question &rarr;</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 4: TWO-COLUMN STANDARDS REFERENCE TABLE & MANAGER -->
+      <section id="view-table" class="view-panel">
+        <div class="table-view-container">
+          <div class="table-view-header">
+            <div>
+              <h2 class="section-title">Two-Column Standards Directory</h2>
+              <p class="section-desc">Instantly search, flip columns, edit and review all standards</p>
+            </div>
+            <div class="table-actions">
+              <button class="btn btn-outline" id="btn-swap-table-cols">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 16V4M7 4L3 8M7 4L11 8M17 8V20M17 20L21 16M17 20L13 16"></path></svg>
+                Flip Columns
+              </button>
+              <button class="btn btn-primary" id="btn-table-add-card">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                + Add Standard
+              </button>
+            </div>
+          </div>
+
+          <!-- Search & Filter Controls -->
+          <div class="table-filter-bar">
+            <div class="search-input-wrapper">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <input type="text" id="table-search-input" placeholder="Search standard number (e.g. 299, 115) or title (e.g. revenue, audit)..." autocomplete="off">
+              <button id="btn-clear-search" class="clear-search-btn">&times;</button>
+            </div>
+            
+            <select id="table-deck-filter" class="custom-select">
+              <option value="all">All Subjects &amp; Decks</option>
+              <!-- Populated dynamically -->
+            </select>
+          </div>
+
+          <!-- Two Column Table -->
+          <div class="table-responsive-box">
+            <table class="standards-table" id="standards-data-table">
+              <thead>
+                <tr>
+                  <th style="width: 60px;">#</th>
+                  <th id="th-col-1" style="width: 250px;">Standard Number</th>
+                  <th id="th-col-2">Title / Subject Matter</th>
+                  <th style="width: 140px;">Deck</th>
+                  <th style="width: 110px; text-align: center;">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="standards-table-body">
+                <!-- Dynamically filled -->
+              </tbody>
+            </table>
+          </div>
+
+          <div class="table-footer-status">
+            <span>Showing <span id="table-visible-count">0</span> of <span id="table-total-count">0</span> items</span>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- MODAL: GOOGLE DRIVE BACKUP & SYNC -->
+    <div id="modal-sync" class="modal-overlay hidden">
+      <div class="modal-card">
+        <div class="modal-header">
+          <div class="modal-title-wrap">
+            <div class="gdrive-icon-badge">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 18a3.5 3.5 0 0 0 0-7h-1A5 4.5 0 0 0 7 9.5 4 4 0 0 0 5 17h14z"></path></svg>
+            </div>
+            <div>
+              <h3>Google Drive &amp; Data Backup</h3>
+              <p>Keep your CA study cards backed up and easily import other subjects</p>
+            </div>
+          </div>
+          <button class="modal-close-btn" id="btn-close-sync">&times;</button>
+        </div>
+
+        <div class="modal-body">
+
+          <!-- Section 1: Direct File Backup (Compatible with Google Drive & Mobile) -->
+          <div class="backup-card-block">
+            <h4>📁 Backup &amp; Restore (Google Drive Compatible)</h4>
+            <p>Export your full flashcard library as a single JSON file. You can save this file directly into your Google Drive folder on your phone or PC and restore it anytime!</p>
+            
+            <div class="btn-group-row">
+              <button class="btn btn-primary" id="btn-export-json">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Download Backup File (.json)
+              </button>
+              
+              <label class="btn btn-secondary file-upload-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                Restore from Backup File
+                <input type="file" id="file-import-json" accept=".json" style="display: none;">
+              </label>
+            </div>
+          </div>
+
+          <!-- Section 2: Google Sheets / CSV Quick Import (For Adding Other Subjects Later!) -->
+          <div class="backup-card-block">
+            <h4>📊 Add Other Subjects via Google Sheets or CSV</h4>
+            <p>Paste text copied from Google Sheets / Excel or comma-separated values to automatically create new flashcards:</p>
+            
+            <div class="csv-import-box">
+              <label for="import-target-deck">Add into Deck:</label>
+              <select id="import-target-deck" class="custom-select" style="margin-bottom: 8px;">
+                <!-- Populated dynamically -->
+              </select>
+
+              <textarea id="csv-paste-area" rows="4" placeholder="Format: Standard Number, Standard Title, Optional Notes&#10;Example:&#10;SA 701, Communicating Key Audit Matters, Mandatory for listed entities&#10;Ind AS 116, Leases, ROU asset and lease liability"></textarea>
+              
+              <div class="csv-actions-row">
+                <button class="btn btn-primary" id="btn-import-csv-text">Import Cards from Text</button>
+                <button class="btn btn-outline" id="btn-export-csv">Export Current Deck as CSV</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 3: Google Drive Cloud Sync Instructions -->
+          <div class="backup-card-block info-highlight">
+            <h4>💡 How to use Google Drive on your Phone:</h4>
+            <ol class="guide-steps">
+              <li>Tap <b>"Download Backup File"</b> &rarr; Choose <b>Save to Drive</b> on your Android / iPhone.</li>
+              <li>When adding more CA notes or subjects from your laptop/PC, export the JSON file or edit the Google Sheet.</li>
+              <li>On your phone, tap <b>"Restore from Backup File"</b> &rarr; Select the file from Google Drive. Your app will update instantly!</li>
+              <li><b>Zero Data Loss:</b> Everything is automatically saved offline in your phone's browser cache too.</li>
+            </ol>
+          </div>
+
+          <!-- Reset / Factory Restore -->
+          <div class="backup-reset-row">
+            <button class="btn-text-danger" id="btn-reset-default">Reset to Default CA Standards (Ind AS &amp; SA)</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL: ADD / EDIT CARD -->
+    <div id="modal-card" class="modal-overlay hidden">
+      <div class="modal-card small-modal">
+        <div class="modal-header">
+          <h3 id="modal-card-title">Add New Standard / Flashcard</h3>
+          <button class="modal-close-btn" id="btn-close-card-modal">&times;</button>
+        </div>
+        <form id="form-card" class="modal-form">
+          <input type="hidden" id="card-edit-id" value="">
+          
+          <div class="form-group">
+            <label for="card-deck-select">Deck / Subject *</label>
+            <select id="card-deck-select" class="custom-select" required></select>
+          </div>
+
+          <div class="form-group">
+            <label for="card-num-input">Standard Number / Code * (e.g. Ind AS 115 or SA 299)</label>
+            <input type="text" id="card-num-input" placeholder="e.g. Ind AS 115 or SA 299 or Sec 139" required>
+          </div>
+
+          <div class="form-group">
+            <label for="card-title-input">Title / Subject Matter *</label>
+            <input type="text" id="card-title-input" placeholder="e.g. Joint Audit of Financial Statements" required>
+          </div>
+
+          <div class="form-group">
+            <label for="card-notes-input">Key CA Exam Notes / Crucial Concept (Optional)</label>
+            <textarea id="card-notes-input" rows="3" placeholder="e.g. Allocation of work among joint auditors, joint & several liability..."></textarea>
+          </div>
+
+          <div class="modal-actions">
+            <button type="button" class="btn btn-secondary" id="btn-cancel-card">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="btn-save-card">Save Card</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- MODAL: ADD NEW DECK / SUBJECT -->
+    <div id="modal-deck" class="modal-overlay hidden">
+      <div class="modal-card small-modal">
+        <div class="modal-header">
+          <h3>Create New Deck / Subject</h3>
+          <button class="modal-close-btn" id="btn-close-deck-modal">&times;</button>
+        </div>
+        <form id="form-deck" class="modal-form">
+          <div class="form-group">
+            <label for="deck-name-input">Deck Name *</label>
+            <input type="text" id="deck-name-input" placeholder="e.g. Direct Tax: International Tax & DTAA" required>
+          </div>
+
+          <div class="form-group">
+            <label for="deck-category-input">Parent Category * (for Anki-style grouping)</label>
+            <input type="text" id="deck-category-input" placeholder="e.g. Direct Taxation or Strategic Financial Management" required>
+          </div>
+
+          <div class="form-group">
+            <label for="deck-desc-input">Description (Optional)</label>
+            <input type="text" id="deck-desc-input" placeholder="e.g. Transfer Pricing regulations and Section 92">
+          </div>
+
+          <div class="modal-actions">
+            <button type="button" class="btn btn-secondary" id="btn-cancel-deck">Cancel</button>
+            <button type="submit" class="btn btn-primary">Create Deck</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Toast Notification Message -->
+    <div id="toast-notification" class="toast hidden"></div>
+
+  </div>
+
+  <script>
+// Preloaded CA Flashcards Data: Ind AS, Standards on Auditing (SA), Other Engagement Standards, and Law
+const INITIAL_DECKS = [
+  {
+    id: "ind_as",
+    name: "Financial Reporting: Ind AS",
+    category: "Financial Reporting",
+    description: "Indian Accounting Standards (Ind AS) mandatory for CA Final & Inter",
+    icon: "calculator",
+    cards: [
+      { id: "indas-1", num: "Ind AS 1", title: "Presentation of Financial Statements", notes: "Framework for presentation, general purpose financial statements, going concern, accrual basis" },
+      { id: "indas-2", num: "Ind AS 2", title: "Inventories", notes: "Valuation at lower of cost and net realisable value (NRV)" },
+      { id: "indas-7", num: "Ind AS 7", title: "Statement of Cash Flows", notes: "Operating, investing and financing cash flows; Direct vs Indirect method" },
+      { id: "indas-8", num: "Ind AS 8", title: "Accounting Policies, Changes in Accounting Estimates and Errors", notes: "Retrospective application for policies and errors; prospective for estimates" },
+      { id: "indas-10", num: "Ind AS 10", title: "Events after the Reporting Period", notes: "Adjusting vs non-adjusting events; going concern assessment" },
+      { id: "indas-12", num: "Ind AS 12", title: "Income Taxes", notes: "Current tax, deferred tax asset (DTA), deferred tax liability (DTL) using balance sheet approach" },
+      { id: "indas-16", num: "Ind AS 16", title: "Property, Plant and Equipment", notes: "Cost model vs revaluation model; component accounting & depreciation" },
+      { id: "indas-19", num: "Ind AS 19", title: "Employee Benefits", notes: "Short-term, post-employment (defined contribution vs defined benefit - actuarial gains in OCI), other long term, termination" },
+      { id: "indas-20", num: "Ind AS 20", title: "Accounting for Government Grants and Disclosure of Government Assistance", notes: "Capital vs revenue approach, recognition when reasonable assurance exists" },
+      { id: "indas-21", num: "Ind AS 21", title: "The Effects of Changes in Foreign Exchange Rates", notes: "Functional currency determination, presentation currency, spot vs closing rates" },
+      { id: "indas-23", num: "Ind AS 23", title: "Borrowing Costs", notes: "Capitalisation of borrowing costs directly attributable to qualifying assets" },
+      { id: "indas-24", num: "Ind AS 24", title: "Related Party Disclosures", notes: "Identification of related parties (KMP, controlling entities) and transaction disclosures" },
+      { id: "indas-27", num: "Ind AS 27", title: "Separate Financial Statements", notes: "Accounting for investments in subsidiaries, joint ventures, and associates at cost or under Ind AS 109" },
+      { id: "indas-28", num: "Ind AS 28", title: "Investments in Associates and Joint Ventures", notes: "Equity method of accounting; significant influence (20% or more voting power)" },
+      { id: "indas-29", num: "Ind AS 29", title: "Financial Reporting in Hyperinflationary Economies", notes: "Restatement of financial statements in terms of the measuring unit current at the balance sheet date" },
+      { id: "indas-33", num: "Ind AS 33", title: "Earnings Per Share", notes: "Basic EPS and Diluted EPS computation, weighted average shares, potential equity shares" },
+      { id: "indas-34", num: "Ind AS 34", title: "Interim Financial Reporting", notes: "Complete or condensed financial statements for an interim period; discrete vs integral view" },
+      { id: "indas-36", num: "Ind AS 36", title: "Impairment of Assets", notes: "Recoverable amount = higher of fair value less costs to sell and Value in Use (VIU); Cash-Generating Units (CGU)" },
+      { id: "indas-37", num: "Ind AS 37", title: "Provisions, Contingent Liabilities and Contingent Assets", notes: "Present obligation, probable outflow (>50%), reliable estimate; contingent liability disclosed; contingent asset recognized only when virtually certain" },
+      { id: "indas-38", num: "Ind AS 38", title: "Intangible Assets", notes: "Identifiable non-monetary asset without physical substance; R&D phase expenditure criteria" },
+      { id: "indas-40", num: "Ind AS 40", title: "Investment Property", notes: "Land or building held to earn rentals or for capital appreciation; only Cost Model allowed under Ind AS" },
+      { id: "indas-41", num: "Ind AS 41", title: "Agriculture", notes: "Biological assets (living animals/plants) measured at fair value less costs to sell, excluding bearer plants" },
+      { id: "indas-101", num: "Ind AS 101", title: "First-time Adoption of Indian Accounting Standards", notes: "Opening Ind AS Balance Sheet, mandatory exceptions and voluntary exemptions" },
+      { id: "indas-102", num: "Ind AS 102", title: "Share-based Payment", notes: "Equity-settled vs Cash-settled share based payment transactions; vesting conditions" },
+      { id: "indas-103", num: "Ind AS 103", title: "Business Combinations", notes: "Acquisition method: identify acquirer, acquisition date, recognize identifiable net assets at FV, calculate goodwill/gain on bargain purchase" },
+      { id: "indas-104", num: "Ind AS 104", title: "Insurance Contracts", notes: "Financial reporting for insurance contracts issued" },
+      { id: "indas-105", num: "Ind AS 105", title: "Non-current Assets Held for Sale and Discontinued Operations", notes: "Measured at lower of carrying amount and FV less cost to sell; no depreciation once classified" },
+      { id: "indas-106", num: "Ind AS 106", title: "Exploration for and Evaluation of Mineral Resources", notes: "Accounting treatment of exploration and evaluation expenditures" },
+      { id: "indas-107", num: "Ind AS 107", title: "Financial Instruments: Disclosures", notes: "Credit risk, liquidity risk, market risk, sensitivity analysis and fair value hierarchy disclosures" },
+      { id: "indas-108", num: "Ind AS 108", title: "Operating Segments", notes: "Management approach: Chief Operating Decision Maker (CODM), 10% threshold quantitative limits, 75% external revenue rule" },
+      { id: "indas-109", num: "Ind AS 109", title: "Financial Instruments", notes: "Classification (Amortised Cost, FVTOCI, FVTPL), Expected Credit Loss (ECL) model, Hedge Accounting" },
+      { id: "indas-110", num: "Ind AS 110", title: "Consolidated Financial Statements", notes: "Control model (Power, exposure to variable returns, link between power and returns)" },
+      { id: "indas-111", num: "Ind AS 111", title: "Joint Arrangements", notes: "Joint Operation (rights to assets/obligations for liabilities) vs Joint Venture (rights to net assets)" },
+      { id: "indas-112", num: "Ind AS 112", title: "Disclosure of Interests in Other Entities", notes: "Disclosures relating to subsidiaries, joint arrangements, associates, and unconsolidated structured entities" },
+      { id: "indas-113", num: "Ind AS 113", title: "Fair Value Measurement", notes: "Fair value hierarchy: Level 1 (quoted unadjusted), Level 2 (observable inputs), Level 3 (unobservable inputs)" },
+      { id: "indas-114", num: "Ind AS 114", title: "Regulatory Deferral Accounts", notes: "Allows first-time adopters to continue previous GAAP for rate-regulated activities" },
+      { id: "indas-115", num: "Ind AS 115", title: "Revenue from Contracts with Customers", notes: "5-Step Model: 1. Identify contract, 2. Identify PO, 3. Determine TP, 4. Allocate TP, 5. Recognize revenue as PO satisfied" },
+      { id: "indas-116", num: "Ind AS 116", title: "Leases", notes: "Single lessee accounting model: Right-of-Use (ROU) Asset and Lease Liability; Operating vs Finance lease for lessor" }
+    ]
+  },
+  {
+    id: "auditing_sa",
+    name: "Auditing: Standards on Auditing (SA)",
+    category: "Auditing",
+    description: "All ICAI Standards on Auditing (SA 200 to SA 810) for CA Final & Inter",
+    icon: "file-check",
+    cards: [
+      { id: "sqc-1", num: "SQC 1", title: "Quality Control for Firms that Perform Audits and Reviews of Historical Financial Information", notes: "Leadership responsibilities, ethical requirements, client relationship acceptance/continuance, HR, engagement performance, monitoring" },
+      { id: "sa-200", num: "SA 200", title: "Overall Objectives of the Independent Auditor and the Conduct of an Audit in Accordance with SAs", notes: "Reasonable assurance, professional skepticism, professional judgment, inherent limitations of audit" },
+      { id: "sa-210", num: "SA 210", title: "Agreeing the Terms of Audit Engagements", notes: "Preconditions for audit, audit engagement letter, recurring audits, changes in terms" },
+      { id: "sa-220", num: "SA 220", title: "Quality Control for an Audit of Financial Statements", notes: "Engagement partner responsibilities, EQCR (Engagement Quality Control Reviewer)" },
+      { id: "sa-230", num: "SA 230", title: "Audit Documentation", notes: "Working papers, timely preparation, assembly of final audit file (within 60 days), retention (minimum 7 years)" },
+      { id: "sa-240", num: "SA 240", title: "The Auditor's Responsibilities Relating to Fraud in an Audit of Financial Statements", notes: "Fraudulent financial reporting vs misappropriation of assets, fraud risk factors, management override of controls" },
+      { id: "sa-250", num: "SA 250", title: "Consideration of Laws and Regulations in an Audit of Financial Statements", notes: "Direct effect vs fundamental operating laws (non-compliance / NOCLAR)" },
+      { id: "sa-260", num: "SA 260 (Revised)", title: "Communication with Those Charged with Governance", notes: "Auditor's responsibilities, planned scope and timing, significant findings, auditor independence" },
+      { id: "sa-265", num: "SA 265", title: "Communicating Deficiencies in Internal Control to Those Charged with Governance and Management", notes: "Identification of significant deficiencies and written communication on timely basis" },
+      { id: "sa-299", num: "SA 299 (Revised)", title: "Joint Audit of Financial Statements", notes: "Division of work, joint & several liability for undivided work / joint decisions, individual liability for allocated work" },
+      { id: "sa-300", num: "SA 300", title: "Planning an Audit of Financial Statements", notes: "Audit strategy vs audit plan, continuous and iterative process" },
+      { id: "sa-315", num: "SA 315", title: "Identifying and Assessing the Risks of Material Misstatement Through Understanding the Entity and Its Environment", notes: "Internal control components, risk assessment procedures, significant risks" },
+      { id: "sa-320", num: "SA 320", title: "Materiality in Planning and Performing an Audit", notes: "Overall materiality, performance materiality, revision as audit progresses" },
+      { id: "sa-330", num: "SA 330", title: "The Auditor's Responses to Assessed Risks", notes: "Overall responses, test of controls (TOC) and substantive procedures (test of details & analytical procedures)" },
+      { id: "sa-402", num: "SA 402", title: "Audit Considerations Relating to an Entity Using a Service Organisation", notes: "Type 1 report (description & design) vs Type 2 report (description, design & operating effectiveness)" },
+      { id: "sa-450", num: "SA 450", title: "Evaluation of Misstatements Identified During the Audit", notes: "Accumulation of misstatements (factual, judgmental, projected), communication, uncorrected misstatements effect" },
+      { id: "sa-500", num: "SA 500", title: "Audit Evidence", notes: "Sufficient appropriate audit evidence (SAAE), reliability, inspection, observation, inquiry, confirmation, recalculation, reperformance" },
+      { id: "sa-501", num: "SA 501", title: "Audit Evidence - Specific Considerations for Selected Items", notes: "Inventory physical counting attendance, litigation & claims inquiry, segment information" },
+      { id: "sa-505", num: "SA 505", title: "External Confirmations", notes: "Positive vs negative confirmation requests, management refusal to allow confirmation, reliability of responses" },
+      { id: "sa-510", num: "SA 510", title: "Initial Audit Engagements - Opening Balances", notes: "Checking whether opening balances contain misstatements, consistent accounting policies" },
+      { id: "sa-520", num: "SA 520", title: "Analytical Procedures", notes: "Substantive analytical procedures, plausibility & predictability of relationships, investigating unexpected fluctuations" },
+      { id: "sa-530", num: "SA 530", title: "Audit Sampling", notes: "Statistical vs non-statistical sampling, sample design, sample size, sampling risk vs non-sampling risk, tolerable misstatement" },
+      { id: "sa-540", num: "SA 540 (Revised)", title: "Auditing Accounting Estimates, Including Fair Value Accounting Estimates, and Related Disclosures", notes: "Estimation uncertainty, management bias, retrospective review of prior year estimates" },
+      { id: "sa-550", num: "SA 550", title: "Related Parties", notes: "Understanding related party relationships and transactions, arm's length assertions, undisclosed related parties" },
+      { id: "sa-560", num: "SA 560", title: "Subsequent Events", notes: "Events between balance sheet date and date of auditor's report, and facts discovered after report date" },
+      { id: "sa-570", num: "SA 570 (Revised)", title: "Going Concern", notes: "Management assessment period (min 12 months), material uncertainty related to going concern (MURGC) separate section" },
+      { id: "sa-580", num: "SA 580", title: "Written Representations", notes: "Management representation letter as audit evidence, date close to auditor's report, cannot substitute other SAAE" },
+      { id: "sa-600", num: "SA 600", title: "Using the Work of Another Auditor", notes: "Principal auditor vs component auditor, questionnaires, coordination, reporting responsibility" },
+      { id: "sa-610", num: "SA 610 (Revised)", title: "Using the Work of Internal Auditors", notes: "Evaluating internal audit function (objectivity, competence, systematic approach), direct assistance of internal auditors" },
+      { id: "sa-620", num: "SA 620", title: "Using the Work of an Auditor's Expert", notes: "Evaluating competence, capabilities and objectivity; adequacy of expert's work" },
+      { id: "sa-700", num: "SA 700 (Revised)", title: "Forming an Opinion and Reporting on Financial Statements", notes: "Standard format of audit report: Title, Addressee, Opinion, Basis for Opinion, Going Concern, KAM, Responsibilities" },
+      { id: "sa-701", num: "SA 701", title: "Communicating Key Audit Matters in the Independent Auditor's Report", notes: "Mandatory for listed entities: matters of most significance in audit selected from matters communicated to TCWG" },
+      { id: "sa-705", num: "SA 705 (Revised)", title: "Modifications to the Opinion in the Independent Auditor's Report", notes: "Qualified opinion (material but not pervasive), Adverse opinion (material AND pervasive misstatement), Disclaimer (unable to obtain SAAE & pervasive)" },
+      { id: "sa-706", num: "SA 706 (Revised)", title: "Emphasis of Matter Paragraphs and Other Matter Paragraphs in the Independent Auditor's Report", notes: "EOM: fundamental to users' understanding; OM: other than presented/disclosed in FS relevant to users" },
+      { id: "sa-710", num: "SA 710", title: "Comparative Information - Corresponding Figures and Comparative Financial Statements", notes: "Audit reporting on corresponding figures vs comparative FS" },
+      { id: "sa-720", num: "SA 720 (Revised)", title: "The Auditor's Responsibilities Relating to Other Information", notes: "Reading other information in annual reports, material inconsistency with FS or auditor's knowledge" },
+      { id: "sa-800", num: "SA 800", title: "Special Considerations - Audits of Financial Statements Prepared in Accordance with Special Purpose Frameworks", notes: "Financial reporting framework designed to meet the financial information needs of specific users" },
+      { id: "sa-805", num: "SA 805", title: "Special Considerations - Audits of Single Financial Statements and Specific Elements, Accounts or Items", notes: "Audit of individual financial statements or specific items like accounts receivable, inventory" },
+      { id: "sa-810", num: "SA 810", title: "Engagements to Report on Summary Financial Statements", notes: "Determining whether summary financial statements are consistent with audited financial statements" }
+    ]
+  },
+  {
+    id: "engagement_standards",
+    name: "Auditing: Other Standards (SRE, SAE, SRS)",
+    category: "Adv. Auditing",
+    description: "Review, Assurance, and Related Services Standards for CA Final",
+    icon: "book-open",
+    cards: [
+      { id: "sre-2400", num: "SRE 2400 (Revised)", title: "Engagements to Review Historical Financial Statements", notes: "Limited assurance engagement based primarily on inquiry and analytical procedures" },
+      { id: "sre-2410", num: "SRE 2410", title: "Review of Interim Financial Information Performed by the Independent Auditor of the Entity", notes: "Review by existing statutory auditor of the entity" },
+      { id: "sae-3400", num: "SAE 3400", title: "The Examination of Prospective Financial Information", notes: "Forecasts (best-estimate assumptions) vs Projections (hypothetical assumptions)" },
+      { id: "sae-3402", num: "SAE 3402", title: "Assurance Reports on Controls at a Service Organisation", notes: "Type 1 vs Type 2 reports issued by service auditor" },
+      { id: "sae-3420", num: "SAE 3420", title: "Assurance Engagements to Report on the Compilation of Pro Forma Financial Information Included in a Prospectus", notes: "Reasonable assurance on whether pro forma adjustments illustrate proper effects" },
+      { id: "srs-4400", num: "SRS 4400 (Revised)", title: "Engagements to Perform Agreed-Upon Procedures Regarding Financial Information", notes: "No assurance expressed; factual findings report; users draw own conclusions" },
+      { id: "srs-4410", num: "SRS 4410 (Revised)", title: "Compilation Engagements", notes: "Assisting management with preparation and presentation of financial information without obtaining audit/review evidence" }
+    ]
+  },
+  {
+    id: "companies_act_audit",
+    name: "Corporate Law: Audit & Accounts Sections",
+    category: "Companies Act",
+    description: "Key sections of Companies Act, 2013 for CA Final & Inter",
+    icon: "scale",
+    cards: [
+      { id: "sec-128", num: "Section 128", title: "Books of Account, etc., to be Kept by Company", notes: "Accrual basis, double entry, kept at registered office, preserved for 8 financial years" },
+      { id: "sec-129", num: "Section 129", title: "Financial Statement", notes: "True and fair view, comply with accounting standards, Schedule III format" },
+      { id: "sec-134", num: "Section 134", title: "Financial Statement, Board's Report, etc.", notes: "Approval of FS, Directors' Responsibility Statement (DRS), signing by Chairperson/2 directors" },
+      { id: "sec-135", num: "Section 135", title: "Corporate Social Responsibility (CSR)", notes: "Net worth ≥ 500 Cr, Turnover ≥ 1000 Cr, or Net profit ≥ 5 Cr; 2% of average net profit of last 3 FYs" },
+      { id: "sec-138", num: "Section 138", title: "Internal Audit", notes: "Mandatory for listed companies, unlisted public companies and private companies meeting prescribed turnover/deposit/borrowing thresholds" },
+      { id: "sec-139", num: "Section 139", title: "Appointment of Auditors", notes: "First auditor within 30 days of incorporation; appointment for 5-year term; rotation of individual (1 term of 5 yrs) and firm (2 terms of 5 yrs)" },
+      { id: "sec-140", num: "Section 140", title: "Removal, Resignation of Auditor and Giving of Special Notice", notes: "Removal before term: Board resolution + Central Govt approval (ADT-2) + Special resolution; Resignation filing ADT-3 within 30 days" },
+      { id: "sec-141", num: "Section 141", title: "Eligibility, Qualifications and Disqualifications of Auditors", notes: "Chartered Accountant in practice; Disqualifications: body corporate, officer/employee, partner/employee of officer, indebtedness > ₹5 Lakhs, relative holding security > ₹1 Lakh face value, etc." },
+      { id: "sec-142", num: "Section 142", title: "Remuneration of Auditors", notes: "Fixed in general meeting or as determined therein; includes expenses incurred" },
+      { id: "sec-143", num: "Section 143", title: "Powers and Duties of Auditors and Auditing Standards", notes: "Right of access to books, duty to make inquiries (143(1)), reporting requirements (143(3)), reporting on fraud to Central Govt within 60 days (143(12) - amount ≥ ₹1 Cr, Form ADT-4)" },
+      { id: "sec-144", num: "Section 144", title: "Auditor not to Render Certain Services", notes: "Prohibited non-audit services: accounting/bookkeeping, internal audit, design of financial info systems, actuarial, investment advisory, etc." },
+      { id: "sec-147", num: "Section 147", title: "Punishment for Contravention", notes: "Penalties for company, officers in default, and statutory auditors" },
+      { id: "sec-148", num: "Section 148", title: "Central Government to Specify Audit of Items of Cost in Respect of Certain Companies", notes: "Maintenance of cost records (Form CRA-1) and appointment of Cost Auditor (Form CRA-2)" },
+      { id: "sec-177", num: "Section 177", title: "Audit Committee", notes: "Minimum 3 directors, majority independent; mandatory for listed companies and public companies with paid-up capital ≥ 10 Cr or turnover ≥ 100 Cr or borrowings > 50 Cr" }
+    ]
+  },
+  {
+    id: "tax_customs",
+    name: "Taxation: Customs & GST Highlights",
+    category: "Customs Act",
+    description: "Key sections of Customs Act and CGST Act for CA preparation",
+    icon: "landmark",
+    cards: [
+      { id: "customs-12", num: "Customs Sec 12", title: "Dutiable Goods / Charging Section", notes: "Duties of customs shall be levied on goods imported into, or exported from India" },
+      { id: "customs-14", num: "Customs Sec 14", title: "Valuation of Goods", notes: "Transaction value: price actually paid or payable for the goods when sold for export to India" },
+      { id: "customs-46", num: "Customs Sec 46", title: "Entry of Goods on Importation (Bill of Entry)", notes: "Filing Bill of Entry for home consumption or warehousing electronically" },
+      { id: "cgst-7", num: "CGST Sec 7", title: "Scope of Supply", notes: "Sale, transfer, barter, exchange, license, rental, lease made for consideration in course or furtherance of business" },
+      { id: "cgst-9", num: "CGST Sec 9", title: "Levy and Collection of CGST", notes: "Charging section for intra-state supplies, reverse charge mechanism (RCM under 9(3) and 9(4))" },
+      { id: "cgst-16", num: "CGST Sec 16", title: "Eligibility and Conditions for Taking Input Tax Credit (ITC)", notes: "Possession of tax invoice, receipt of goods/services, tax paid to govt, filing of return under sec 39" },
+      { id: "cgst-17", num: "CGST Sec 17", title: "Apportionment of Credit and Blocked Credits", notes: "Sec 17(5) negative list / blocked credits: motor vehicles, food & beverages, outdoor catering, works contract for immovable property" }
+    ]
+  }
+];
+
+if (typeof window !== 'undefined') {
+  window.INITIAL_DECKS = INITIAL_DECKS;
+}
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { INITIAL_DECKS };
+}
+
+
+// CA Flashcards App - Main Controller
+(function() {
+  'use strict';
+
+  // Storage Keys
+  const STORAGE_KEY_DECKS = 'ca_flashcards_decks_v1';
+  const STORAGE_KEY_PROGRESS = 'ca_flashcards_progress_v1';
+  const STORAGE_KEY_STARRED = 'ca_flashcards_starred_v1';
+  const STORAGE_KEY_SETTINGS = 'ca_flashcards_settings_v1';
+
+  // State
+  let decks = [];
+  let userProgress = {}; // { cardId: { mastered: boolean, wrongCount: number, rightCount: number } }
+  let starredCardIds = new Set();
+  let selectedDeckIds = new Set();
+  let settings = {
+    theme: 'dark',
+    direction: 'num_to_title', // 'num_to_title' | 'title_to_num' | 'mixed'
+    shuffle: true
+  };
+
+  // Active Session State
+  let activeDeckId = 'all'; // 'all' | 'selected' | deck.id
+  let activeCards = [];
+  let currentCardIndex = 0;
+  let isCardFlipped = false;
+  let currentDirectionForCard = 'num_to_title';
+  let sessionScores = { right: 0, wrong: 0 };
+
+  // Quiz State
+  let quizCards = [];
+  let quizCurrentIndex = 0;
+  let quizScore = 0;
+  let quizAnswered = false;
+
+  // Table State
+  let tableColumnFlipped = false;
+
+  // DOM Elements
+  const el = {
+    // Header & Nav
+    btnNavHome: document.getElementById('btn-nav-home'),
+    btnNavTable: document.getElementById('btn-nav-table'),
+    btnGrandShuffle: document.getElementById('btn-grand-shuffle'),
+    btnOpenSync: document.getElementById('btn-open-sync'),
+    btnToggleTheme: document.getElementById('btn-toggle-theme'),
+    
+    // Views
+    viewDecks: document.getElementById('view-decks'),
+    viewStudy: document.getElementById('view-study'),
+    viewQuiz: document.getElementById('view-quiz'),
+    viewTable: document.getElementById('view-table'),
+    
+    // Decks View
+    deckTreeContainer: document.getElementById('deck-tree-container'),
+    totalAllCardsCount: document.getElementById('total-all-cards-count'),
+    statTotalDecks: document.getElementById('stat-total-decks'),
+    statTotalMastered: document.getElementById('stat-total-mastered'),
+    btnBannerStudyAll: document.getElementById('btn-banner-study-all'),
+    btnBannerQuizAll: document.getElementById('btn-banner-quiz-all'),
+    btnAddDeckModal: document.getElementById('btn-add-deck-modal'),
+    btnAddCardModal: document.getElementById('btn-add-card-modal'),
+    btnBackupDirect: document.getElementById('btn-backup-direct'),
+
+    // Selection Bar
+    chkSelectAllDecks: document.getElementById('chk-select-all-decks'),
+    selectionStatusText: document.getElementById('selection-status-text'),
+    selectionCounterBadge: document.getElementById('selection-counter-badge'),
+    btnReviseSelected: document.getElementById('btn-revise-selected'),
+    countSelectedCards: document.getElementById('count-selected-cards'),
+    btnQuizSelected: document.getElementById('btn-quiz-selected'),
+    btnDeleteSelected: document.getElementById('btn-delete-selected'),
+
+    // Study View
+    btnBackToDecks: document.getElementById('btn-back-to-decks'),
+    studyDeckTitle: document.getElementById('study-deck-title'),
+    studyDeckSubtitle: document.getElementById('study-deck-subtitle'),
+    btnDirN2T: document.getElementById('btn-dir-n2t'),
+    btnDirT2N: document.getElementById('btn-dir-t2n'),
+    btnDirMixed: document.getElementById('btn-dir-mixed'),
+    btnToggleShuffle: document.getElementById('btn-toggle-shuffle'),
+    btnStarCard: document.getElementById('btn-star-card'),
+    studyProgressFill: document.getElementById('study-progress-fill'),
+    cardElement: document.getElementById('card-element'),
+    cardCounterFront: document.getElementById('card-counter-front'),
+    cardCounterBack: document.getElementById('card-counter-back'),
+    cardBadgeFront: document.getElementById('card-badge-front'),
+    cardPromptLabel: document.getElementById('card-prompt-label'),
+    cardQuestionText: document.getElementById('card-question-text'),
+    cardAnswerText: document.getElementById('card-answer-text'),
+    cardNotesBox: document.getElementById('card-notes-box'),
+    cardNotesText: document.getElementById('card-notes-text'),
+    btnPrevCard: document.getElementById('btn-prev-card'),
+    btnNextCard: document.getElementById('btn-next-card'),
+    btnMarkWrong: document.getElementById('btn-mark-wrong'),
+    btnMarkRight: document.getElementById('btn-mark-right'),
+    btnFlipCard: document.getElementById('btn-flip-card'),
+    countWrong: document.getElementById('count-wrong'),
+    countRight: document.getElementById('count-right'),
+    btnCardFrontTTS: document.getElementById('btn-card-front-tts'),
+    btnCardBackTTS: document.getElementById('btn-card-back-tts'),
+
+    // Quiz View
+    btnBackFromQuiz: document.getElementById('btn-back-from-quiz'),
+    quizDeckName: document.getElementById('quiz-deck-name'),
+    quizCurrentQ: document.getElementById('quiz-current-q'),
+    quizTotalQ: document.getElementById('quiz-total-q'),
+    quizScore: document.getElementById('quiz-score'),
+    quizProgressBar: document.getElementById('quiz-progress-bar'),
+    quizDirTag: document.getElementById('quiz-dir-tag'),
+    quizQText: document.getElementById('quiz-q-text'),
+    quizOptionsContainer: document.getElementById('quiz-options-container'),
+    quizFeedback: document.getElementById('quiz-feedback'),
+    feedbackIcon: document.getElementById('feedback-icon'),
+    feedbackTitle: document.getElementById('feedback-title'),
+    feedbackExplanation: document.getElementById('feedback-explanation'),
+    btnQuizNext: document.getElementById('btn-quiz-next'),
+
+    // Table View
+    btnSwapTableCols: document.getElementById('btn-swap-table-cols'),
+    btnTableAddCard: document.getElementById('btn-table-add-card'),
+    tableSearchInput: document.getElementById('table-search-input'),
+    btnClearSearch: document.getElementById('btn-clear-search'),
+    tableDeckFilter: document.getElementById('table-deck-filter'),
+    standardsTableBody: document.getElementById('standards-table-body'),
+    thCol1: document.getElementById('th-col-1'),
+    thCol2: document.getElementById('th-col-2'),
+    tableVisibleCount: document.getElementById('table-visible-count'),
+    tableTotalCount: document.getElementById('table-total-count'),
+
+    // Modals
+    modalSync: document.getElementById('modal-sync'),
+    btnCloseSync: document.getElementById('btn-close-sync'),
+    btnExportJson: document.getElementById('btn-export-json'),
+    fileImportJson: document.getElementById('file-import-json'),
+    importTargetDeck: document.getElementById('import-target-deck'),
+    csvPasteArea: document.getElementById('csv-paste-area'),
+    btnImportCsvText: document.getElementById('btn-import-csv-text'),
+    btnExportCsv: document.getElementById('btn-export-csv'),
+    btnResetDefault: document.getElementById('btn-reset-default'),
+
+    modalCard: document.getElementById('modal-card'),
+    btnCloseCardModal: document.getElementById('btn-close-card-modal'),
+    modalCardTitle: document.getElementById('modal-card-title'),
+    formCard: document.getElementById('form-card'),
+    cardEditId: document.getElementById('card-edit-id'),
+    cardDeckSelect: document.getElementById('card-deck-select'),
+    cardNumInput: document.getElementById('card-num-input'),
+    cardTitleInput: document.getElementById('card-title-input'),
+    cardNotesInput: document.getElementById('card-notes-input'),
+    btnCancelCard: document.getElementById('btn-cancel-card'),
+
+    modalDeck: document.getElementById('modal-deck'),
+    btnCloseDeckModal: document.getElementById('btn-close-deck-modal'),
+    formDeck: document.getElementById('form-deck'),
+    deckNameInput: document.getElementById('deck-name-input'),
+    deckCategoryInput: document.getElementById('deck-category-input'),
+    deckDescInput: document.getElementById('deck-desc-input'),
+    btnCancelDeck: document.getElementById('btn-cancel-deck'),
+
+    toast: document.getElementById('toast-notification')
+  };
+
+  // -------------------------------------------------------------
+  // INITIALIZATION & PERSISTENCE
+  // -------------------------------------------------------------
+  function init() {
+    loadSettings();
+    loadData();
+    setupEventListeners();
+    applyTheme();
+    renderDeckTree();
+    populateDeckSelects();
+    updateGlobalStats();
+    showView('decks');
+  }
+
+  function loadSettings() {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY_SETTINGS);
+      if (saved) settings = { ...settings, ...JSON.parse(saved) };
+    } catch (e) {
+      console.error('Error loading settings', e);
+    }
+  }
+
+  function saveSettings() {
+    try {
+      localStorage.setItem(STORAGE_KEY_SETTINGS, JSON.stringify(settings));
+    } catch (e) {
+      console.error('Error saving settings', e);
+    }
+  }
+
+  function loadData() {
+    try {
+      const defaultSource = (typeof window !== 'undefined' && window.INITIAL_DECKS) ? window.INITIAL_DECKS : (typeof INITIAL_DECKS !== 'undefined' ? INITIAL_DECKS : []);
+      const savedDecks = localStorage.getItem(STORAGE_KEY_DECKS);
+      if (savedDecks) {
+        decks = JSON.parse(savedDecks);
+      } else {
+        // Fallback to rich preloaded data from data.js
+        decks = JSON.parse(JSON.stringify(defaultSource));
+        saveData();
+      }
+
+      const savedProgress = localStorage.getItem(STORAGE_KEY_PROGRESS);
+      if (savedProgress) userProgress = JSON.parse(savedProgress);
+
+      const savedStarred = localStorage.getItem(STORAGE_KEY_STARRED);
+      if (savedStarred) starredCardIds = new Set(JSON.parse(savedStarred));
+    } catch (e) {
+      console.error('Error loading data', e);
+      const defaultSource = (typeof window !== 'undefined' && window.INITIAL_DECKS) ? window.INITIAL_DECKS : (typeof INITIAL_DECKS !== 'undefined' ? INITIAL_DECKS : []);
+      decks = JSON.parse(JSON.stringify(defaultSource));
+    }
+  }
+
+  function saveData() {
+    try {
+      localStorage.setItem(STORAGE_KEY_DECKS, JSON.stringify(decks));
+      localStorage.setItem(STORAGE_KEY_PROGRESS, JSON.stringify(userProgress));
+      localStorage.setItem(STORAGE_KEY_STARRED, JSON.stringify([...starredCardIds]));
+    } catch (e) {
+      console.error('Error saving data', e);
+      showToast('Storage quota exceeded or error saving data!');
+    }
+  }
+
+  // -------------------------------------------------------------
+  // TOAST & NOTIFICATIONS
+  // -------------------------------------------------------------
+  let toastTimer = null;
+  function showToast(msg) {
+    if (!el.toast) return;
+    el.toast.textContent = msg;
+    el.toast.classList.remove('hidden');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => {
+      el.toast.classList.add('hidden');
+    }, 2800);
+  }
+
+  // -------------------------------------------------------------
+  // VIEW NAVIGATION
+  // -------------------------------------------------------------
+  function showView(viewName) {
+    // Nav buttons
+    el.btnNavHome.classList.toggle('active', viewName === 'decks');
+    el.btnNavTable.classList.toggle('active', viewName === 'table');
+
+    // View panels
+    el.viewDecks.classList.toggle('active', viewName === 'decks');
+    el.viewStudy.classList.toggle('active', viewName === 'study');
+    el.viewQuiz.classList.toggle('active', viewName === 'quiz');
+    el.viewTable.classList.toggle('active', viewName === 'table');
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    if (viewName === 'decks') {
+      renderDeckTree();
+      updateGlobalStats();
+    } else if (viewName === 'table') {
+      renderTable();
+    }
+  }
+
+  // -------------------------------------------------------------
+  // THEME MANAGEMENT
+  // -------------------------------------------------------------
+  function applyTheme() {
+    if (settings.theme === 'light') {
+      document.body.classList.add('theme-light');
+      document.body.classList.remove('theme-dark');
+    } else {
+      document.body.classList.add('theme-dark');
+      document.body.classList.remove('theme-light');
+    }
+  }
+
+  function toggleTheme() {
+    settings.theme = settings.theme === 'dark' ? 'light' : 'dark';
+    saveSettings();
+    applyTheme();
+    showToast(`Switched to ${settings.theme} mode`);
+  }
+
+  // -------------------------------------------------------------
+  // GLOBAL STATISTICS & DECK TREE (AnkiDroid Structure)
+  // -------------------------------------------------------------
+  function getAllCards() {
+    const list = [];
+    decks.forEach(d => {
+      d.cards.forEach(c => {
+        list.push({ ...c, deckId: d.id, deckName: d.name, category: d.category });
+      });
+    });
+    return list;
+  }
+
+  function updateGlobalStats() {
+    const all = getAllCards();
+    el.totalAllCardsCount.textContent = all.length;
+    el.statTotalDecks.textContent = `${decks.length} Decks`;
+
+    let mastered = 0;
+    all.forEach(c => {
+      if (userProgress[c.id]?.mastered) mastered++;
+    });
+    el.statTotalMastered.textContent = `${mastered} Mastered`;
+  }
+
+  function renderDeckTree() {
+    // Group decks by category (screenshot 2 structure)
+    const catMap = {};
+    decks.forEach(d => {
+      const cat = d.category || 'General';
+      if (!catMap[cat]) catMap[cat] = [];
+      catMap[cat].push(d);
+    });
+
+    el.deckTreeContainer.innerHTML = '';
+
+    Object.keys(catMap).sort().forEach(cat => {
+      const deckList = catMap[cat];
+      const totalCatCards = deckList.reduce((acc, d) => acc + d.cards.length, 0);
+
+      const groupEl = document.createElement('div');
+      groupEl.className = 'category-group open';
+
+      // Check if all decks in category are selected
+      const catSelectedCount = deckList.filter(d => selectedDeckIds.has(d.id)).length;
+      const isAllCatSelected = deckList.length > 0 && catSelectedCount === deckList.length;
+      const isCatIndeterminate = catSelectedCount > 0 && catSelectedCount < deckList.length;
+
+      // Category Header
+      const headerEl = document.createElement('div');
+      headerEl.className = 'category-header';
+      headerEl.innerHTML = `
+        <div class="cat-title-left">
+          <input type="checkbox" class="cat-checkbox" data-cat="${escapeHtml(cat)}" title="Select all decks under ${escapeHtml(cat)}" ${isAllCatSelected ? 'checked' : ''}>
+          <span class="tree-plus-icon">+</span>
+          <span>${escapeHtml(cat)}</span>
+        </div>
+        <div class="cat-actions-right">
+          <span class="cat-badge-count">${totalCatCards} cards</span>
+          <button class="btn-icon-danger btn-del-cat" title="Delete subject category and its decks" data-cat="${escapeHtml(cat)}">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+          </button>
+        </div>
+      `;
+
+      const catCheckbox = headerEl.querySelector('.cat-checkbox');
+      catCheckbox.indeterminate = isCatIndeterminate;
+
+      // Checkbox event
+      catCheckbox.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const shouldSelect = catCheckbox.checked;
+        deckList.forEach(d => {
+          if (shouldSelect) selectedDeckIds.add(d.id);
+          else selectedDeckIds.delete(d.id);
+        });
+        updateSelectionBar();
+      });
+
+      // Delete Category event
+      headerEl.querySelector('.btn-del-cat').addEventListener('click', (e) => {
+        e.stopPropagation();
+        deleteCategory(cat);
+      });
+
+      // Toggle Open/Collapse
+      headerEl.addEventListener('click', (e) => {
+        if (e.target.tagName !== 'INPUT' && !e.target.closest('button')) {
+          groupEl.classList.toggle('open');
+        }
+      });
+
+      // Deck List inside Category
+      const subListEl = document.createElement('div');
+      subListEl.className = 'category-decks-list';
+
+      deckList.forEach(deck => {
+        const masteredInDeck = deck.cards.filter(c => userProgress[c.id]?.mastered).length;
+        const isDeckSelected = selectedDeckIds.has(deck.id);
+
+        const deckItem = document.createElement('div');
+        deckItem.className = 'deck-tree-item';
+        deckItem.innerHTML = `
+          <div class="deck-item-left" style="display: flex; align-items: center; gap: 10px; flex: 1;">
+            <input type="checkbox" class="deck-checkbox" data-deck-id="${deck.id}" title="Select deck for testing" ${isDeckSelected ? 'checked' : ''}>
+            <div class="deck-info">
+              <div class="deck-name">${escapeHtml(deck.name)}</div>
+              <div class="deck-subinfo">${escapeHtml(deck.description || '')} • <span class="text-green">${masteredInDeck}/${deck.cards.length} mastered</span></div>
+            </div>
+          </div>
+          <div class="deck-actions-pill">
+            <span class="deck-card-counter">${deck.cards.length}</span>
+            <button class="deck-btn-study" data-deck-id="${deck.id}">Study</button>
+            <button class="deck-btn-quiz" data-deck-id="${deck.id}">Quiz</button>
+            <button class="btn-icon-danger btn-del-deck" title="Delete deck" data-deck-id="${deck.id}">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+            </button>
+          </div>
+        `;
+
+        // Checkbox Click
+        const deckChk = deckItem.querySelector('.deck-checkbox');
+        deckChk.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (deckChk.checked) {
+            selectedDeckIds.add(deck.id);
+          } else {
+            selectedDeckIds.delete(deck.id);
+          }
+          updateSelectionBar();
+        });
+
+        // Click handlers
+        deckItem.querySelector('.deck-btn-study').addEventListener('click', (e) => {
+          e.stopPropagation();
+          startStudySession(deck.id);
+        });
+        deckItem.querySelector('.deck-btn-quiz').addEventListener('click', (e) => {
+          e.stopPropagation();
+          startQuizSession(deck.id);
+        });
+        deckItem.querySelector('.btn-del-deck').addEventListener('click', (e) => {
+          e.stopPropagation();
+          deleteDeck(deck.id);
+        });
+        deckItem.addEventListener('click', (e) => {
+          if (e.target.tagName !== 'INPUT' && !e.target.closest('button')) {
+            startStudySession(deck.id);
+          }
+        });
+
+        subListEl.appendChild(deckItem);
+      });
+
+      groupEl.appendChild(headerEl);
+      groupEl.appendChild(subListEl);
+      el.deckTreeContainer.appendChild(groupEl);
+    });
+
+    updateSelectionBar();
+  }
+
+  function updateSelectionBar() {
+    const totalDecksCount = decks.length;
+    const selectedCount = selectedDeckIds.size;
+
+    let selectedCardsCount = 0;
+    decks.forEach(d => {
+      if (selectedDeckIds.has(d.id)) {
+        selectedCardsCount += d.cards.length;
+      }
+    });
+
+    el.countSelectedCards.textContent = selectedCardsCount;
+    el.selectionCounterBadge.textContent = `${selectedCount} selected (${selectedCardsCount} cards)`;
+
+    const hasSelection = selectedCount > 0;
+    el.btnReviseSelected.disabled = !hasSelection || selectedCardsCount === 0;
+    el.btnQuizSelected.disabled = selectedCardsCount < 4;
+    el.btnDeleteSelected.disabled = !hasSelection;
+
+    if (totalDecksCount > 0 && selectedCount === totalDecksCount) {
+      el.chkSelectAllDecks.checked = true;
+      el.chkSelectAllDecks.indeterminate = false;
+      el.selectionStatusText.textContent = 'All Decks Selected';
+    } else if (selectedCount > 0) {
+      el.chkSelectAllDecks.checked = false;
+      el.chkSelectAllDecks.indeterminate = true;
+      el.selectionStatusText.textContent = `${selectedCount} of ${totalDecksCount} Selected`;
+    } else {
+      el.chkSelectAllDecks.checked = false;
+      el.chkSelectAllDecks.indeterminate = false;
+      el.selectionStatusText.textContent = 'Select All Decks';
+    }
+
+    // Synchronize category checkboxes in the DOM
+    document.querySelectorAll('.cat-checkbox').forEach(cb => {
+      const catName = cb.getAttribute('data-cat');
+      const catDecks = decks.filter(d => d.category === catName);
+      const catSelectedCount = catDecks.filter(d => selectedDeckIds.has(d.id)).length;
+      if (catDecks.length > 0 && catSelectedCount === catDecks.length) {
+        cb.checked = true;
+        cb.indeterminate = false;
+      } else if (catSelectedCount > 0) {
+        cb.checked = false;
+        cb.indeterminate = true;
+      } else {
+        cb.checked = false;
+        cb.indeterminate = false;
+      }
+    });
+
+    // Synchronize deck checkboxes in the DOM
+    document.querySelectorAll('.deck-checkbox').forEach(cb => {
+      const dId = cb.getAttribute('data-deck-id');
+      cb.checked = selectedDeckIds.has(dId);
+    });
+  }
+
+  function deleteDeck(deckId) {
+    const deck = decks.find(d => d.id === deckId);
+    if (!deck) return;
+    if (confirm(`Delete deck "${deck.name}" (${deck.cards.length} cards)? This cannot be undone.`)) {
+      decks = decks.filter(d => d.id !== deckId);
+      selectedDeckIds.delete(deckId);
+      saveData();
+      renderDeckTree();
+      updateGlobalStats();
+      populateDeckSelects();
+      renderTable();
+      showToast(`Deleted deck "${deck.name}"`);
+    }
+  }
+
+  function deleteCategory(catName) {
+    const catDecks = decks.filter(d => d.category === catName);
+    if (catDecks.length === 0) return;
+    const totalCards = catDecks.reduce((sum, d) => sum + d.cards.length, 0);
+    if (confirm(`Delete entire subject category "${catName}" and its ${catDecks.length} deck(s) (${totalCards} cards)?`)) {
+      decks = decks.filter(d => d.category !== catName);
+      catDecks.forEach(d => selectedDeckIds.delete(d.id));
+      saveData();
+      renderDeckTree();
+      updateGlobalStats();
+      populateDeckSelects();
+      renderTable();
+      showToast(`Deleted subject "${catName}"`);
+    }
+  }
+
+  function deleteSelectedDecks() {
+    if (selectedDeckIds.size === 0) return;
+    const chosen = decks.filter(d => selectedDeckIds.has(d.id));
+    const totalCards = chosen.reduce((sum, d) => sum + d.cards.length, 0);
+    if (confirm(`Delete all ${chosen.length} selected deck(s) (${totalCards} cards)? This cannot be undone.`)) {
+      decks = decks.filter(d => !selectedDeckIds.has(d.id));
+      selectedDeckIds.clear();
+      saveData();
+      renderDeckTree();
+      updateGlobalStats();
+      populateDeckSelects();
+      renderTable();
+      showToast(`Deleted ${chosen.length} selected deck(s)`);
+    }
+  }
+
+  // -------------------------------------------------------------
+  // STUDY SESSION (Screenshot 1 Match & Direction Flip)
+  // -------------------------------------------------------------
+  function startStudySession(deckId, shuffleOverride) {
+    activeDeckId = deckId;
+    let cards = [];
+
+    if (deckId === 'all') {
+      cards = getAllCards();
+      el.studyDeckTitle.textContent = 'Mega Mix: All Subjects';
+      el.studyDeckSubtitle.textContent = 'Ind AS, Standards on Auditing & Law';
+    } else if (deckId === 'selected' || Array.isArray(deckId)) {
+      const targetIds = Array.isArray(deckId) ? deckId : Array.from(selectedDeckIds);
+      const chosenDecks = decks.filter(d => targetIds.includes(d.id));
+      if (chosenDecks.length === 0) {
+        showToast('Please select at least one deck to study!');
+        return;
+      }
+      chosenDecks.forEach(d => {
+        d.cards.forEach(c => {
+          cards.push({ ...c, deckId: d.id, deckName: d.name, category: d.category });
+        });
+      });
+      el.studyDeckTitle.textContent = `Selected Mix (${chosenDecks.length} Decks)`;
+      el.studyDeckSubtitle.textContent = chosenDecks.map(d => d.name).slice(0, 3).join(', ') + (chosenDecks.length > 3 ? ` +${chosenDecks.length - 3} more` : '');
+    } else {
+      const d = decks.find(x => x.id === deckId);
+      if (!d || d.cards.length === 0) {
+        showToast('This deck has no cards yet! Add some cards first.');
+        return;
+      }
+      cards = d.cards.map(c => ({ ...c, deckId: d.id, deckName: d.name, category: d.category }));
+      el.studyDeckTitle.textContent = d.name;
+      el.studyDeckSubtitle.textContent = d.category;
+    }
+
+    if (cards.length === 0) {
+      showToast('No cards available to study.');
+      return;
+    }
+
+    const shouldShuffle = shuffleOverride !== undefined ? shuffleOverride : settings.shuffle;
+    if (shouldShuffle) {
+      activeCards = shuffleArray([...cards]);
+    } else {
+      activeCards = [...cards];
+    }
+
+    currentCardIndex = 0;
+    sessionScores = { right: 0, wrong: 0 };
+    updateScoreBadges();
+    updateDirectionButtons();
+    updateShuffleButton();
+
+    showView('study');
+    renderCurrentCard();
+  }
+
+  function updateDirectionButtons() {
+    el.btnDirN2T.classList.toggle('active', settings.direction === 'num_to_title');
+    el.btnDirT2N.classList.toggle('active', settings.direction === 'title_to_num');
+    el.btnDirMixed.classList.toggle('active', settings.direction === 'mixed');
+  }
+
+  function updateShuffleButton() {
+    el.btnToggleShuffle.classList.toggle('active', settings.shuffle);
+  }
+
+  function setDirection(dir) {
+    settings.direction = dir;
+    saveSettings();
+    updateDirectionButtons();
+    renderCurrentCard();
+    showToast(`Direction: ${dir === 'num_to_title' ? 'Number → Title' : dir === 'title_to_num' ? 'Title → Number' : 'Mixed / Random'}`);
+  }
+
+  function toggleShuffle() {
+    settings.shuffle = !settings.shuffle;
+    saveSettings();
+    updateShuffleButton();
+
+    const currentCard = activeCards[currentCardIndex];
+    if (settings.shuffle) {
+      activeCards = shuffleArray([...activeCards]);
+      // Keep current card at top if possible
+      const foundIdx = activeCards.findIndex(c => c.id === currentCard.id);
+      if (foundIdx > 0) {
+        [activeCards[0], activeCards[foundIdx]] = [activeCards[foundIdx], activeCards[0]];
+      }
+      currentCardIndex = 0;
+      showToast('Randomized / Shuffled cards');
+    } else {
+      // Re-sort in original deck order
+      startStudySession(activeDeckId, false);
+      showToast('Cards in sequence order');
+      return;
+    }
+    renderCurrentCard();
+  }
+
+  function renderCurrentCard() {
+    if (activeCards.length === 0) return;
+    const card = activeCards[currentCardIndex];
+
+    // Determine direction for this specific card
+    if (settings.direction === 'mixed') {
+      // Pseudo-random deterministic per card or flip
+      currentDirectionForCard = Math.random() > 0.5 ? 'num_to_title' : 'title_to_num';
+    } else {
+      currentDirectionForCard = settings.direction;
+    }
+
+    // Reset flipped state
+    isCardFlipped = false;
+    el.cardElement.classList.remove('flipped');
+    el.btnFlipCard.querySelector('#label-flip-cta').textContent = 'See answer';
+
+    // Update Counter (1/32)
+    const counterText = `${currentCardIndex + 1}/${activeCards.length}`;
+    el.cardCounterFront.textContent = counterText;
+    el.cardCounterBack.textContent = counterText;
+
+    // Update Progress bar
+    const progressPct = ((currentCardIndex + 1) / activeCards.length) * 100;
+    el.studyProgressFill.style.width = `${progressPct}%`;
+
+    // Star state
+    const isStarred = starredCardIds.has(card.id);
+    el.btnStarCard.classList.toggle('starred', isStarred);
+
+    // Front & Back content based on direction
+    if (currentDirectionForCard === 'num_to_title') {
+      // Standard Number -> Title
+      el.cardBadgeFront.textContent = 'STANDARD NO.';
+      el.cardPromptLabel.textContent = 'WHAT IS THE TITLE / SUBJECT MATTER?';
+      el.cardQuestionText.textContent = card.num;
+
+      el.cardAnswerText.textContent = card.title;
+    } else {
+      // Title -> Standard Number
+      el.cardBadgeFront.textContent = 'TITLE / SUBJECT';
+      el.cardPromptLabel.textContent = 'WHAT IS THE STANDARD NUMBER / CODE?';
+      el.cardQuestionText.textContent = card.title;
+
+      el.cardAnswerText.textContent = card.num;
+    }
+
+    // Notes Box
+    if (card.notes && card.notes.trim()) {
+      el.cardNotesBox.style.display = 'block';
+      el.cardNotesText.textContent = card.notes;
+    } else {
+      el.cardNotesBox.style.display = 'none';
+    }
+  }
+
+  function flipCard() {
+    isCardFlipped = !isCardFlipped;
+    el.cardElement.classList.toggle('flipped', isCardFlipped);
+    el.btnFlipCard.querySelector('#label-flip-cta').textContent = isCardFlipped ? 'Flip back' : 'See answer';
+  }
+
+  function nextCard() {
+    if (currentCardIndex < activeCards.length - 1) {
+      currentCardIndex++;
+      renderCurrentCard();
+    } else {
+      showToast('🎉 Completed all cards in this session!');
+    }
+  }
+
+  function prevCard() {
+    if (currentCardIndex > 0) {
+      currentCardIndex--;
+      renderCurrentCard();
+    }
+  }
+
+  function markCard(isRight) {
+    if (activeCards.length === 0) return;
+    const card = activeCards[currentCardIndex];
+
+    if (!userProgress[card.id]) {
+      userProgress[card.id] = { mastered: false, wrongCount: 0, rightCount: 0 };
+    }
+
+    if (isRight) {
+      sessionScores.right++;
+      userProgress[card.id].rightCount++;
+      userProgress[card.id].mastered = true;
+    } else {
+      sessionScores.wrong++;
+      userProgress[card.id].wrongCount++;
+      userProgress[card.id].mastered = false;
+    }
+
+    updateScoreBadges();
+    saveData();
+
+    // Visual feedback & advance
+    if (currentCardIndex < activeCards.length - 1) {
+      nextCard();
+    } else {
+      showToast(`Finished deck! Mastered: ${sessionScores.right}, Need Review: ${sessionScores.wrong}`);
+    }
+  }
+
+  function updateScoreBadges() {
+    el.countWrong.textContent = sessionScores.wrong;
+    el.countRight.textContent = sessionScores.right;
+  }
+
+  function toggleStarCard() {
+    if (activeCards.length === 0) return;
+    const card = activeCards[currentCardIndex];
+    if (starredCardIds.has(card.id)) {
+      starredCardIds.delete(card.id);
+      showToast('Removed from starred');
+    } else {
+      starredCardIds.add(card.id);
+      showToast('⭐ Starred for quick revision');
+    }
+    saveData();
+    el.btnStarCard.classList.toggle('starred', starredCardIds.has(card.id));
+  }
+
+  // Text-To-Speech for hearing pronunciation while revising on phone
+  function speakText(text) {
+    if (!('speechSynthesis' in window)) return;
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.rate = 1.0;
+    utterance.lang = 'en-IN';
+    window.speechSynthesis.speak(utterance);
+  }
+
+  // -------------------------------------------------------------
+  // PRACTICE QUIZ / MCQ MODE
+  // -------------------------------------------------------------
+  function startQuizSession(deckId) {
+    let pool = [];
+    if (deckId === 'all') {
+      pool = getAllCards();
+      el.quizDeckName.textContent = 'All CA Standards Quiz';
+    } else if (deckId === 'selected' || Array.isArray(deckId)) {
+      const targetIds = Array.isArray(deckId) ? deckId : Array.from(selectedDeckIds);
+      const chosenDecks = decks.filter(d => targetIds.includes(d.id));
+      if (chosenDecks.length === 0) {
+        showToast('Please select at least one deck to quiz!');
+        return;
+      }
+      chosenDecks.forEach(d => {
+        d.cards.forEach(c => {
+          pool.push({ ...c, deckId: d.id, deckName: d.name });
+        });
+      });
+      el.quizDeckName.textContent = `Selected Mix Quiz (${chosenDecks.length} Decks)`;
+    } else {
+      const d = decks.find(x => x.id === deckId);
+      if (!d || d.cards.length < 4) {
+        showToast('Need at least 4 cards in the deck to take an MCQ quiz!');
+        return;
+      }
+      pool = d.cards.map(c => ({ ...c, deckId: d.id, deckName: d.name }));
+      el.quizDeckName.textContent = `${d.name} Quiz`;
+    }
+
+    if (pool.length < 4) {
+      showToast('Need at least 4 cards in total for MCQ generation.');
+      return;
+    }
+
+    quizCards = shuffleArray([...pool]).slice(0, 15); // 15 question quiz
+    quizCurrentIndex = 0;
+    quizScore = 0;
+    el.quizScore.textContent = '0';
+    showView('quiz');
+    renderQuizQuestion();
+  }
+
+  function renderQuizQuestion() {
+    quizAnswered = false;
+    el.quizFeedback.classList.add('hidden');
+
+    const total = quizCards.length;
+    el.quizCurrentQ.textContent = quizCurrentIndex + 1;
+    el.quizTotalQ.textContent = total;
+    el.quizProgressBar.style.width = `${((quizCurrentIndex + 1) / total) * 100}%`;
+
+    const current = quizCards[quizCurrentIndex];
+    // Randomly choose question direction for quiz
+    const isNumToTitle = Math.random() > 0.5;
+
+    let questionText = '';
+    let correctAnswer = '';
+    let allAnswersPool = [];
+
+    const allCards = getAllCards();
+
+    if (isNumToTitle) {
+      el.quizDirTag.textContent = 'WHAT IS THE TITLE FOR:';
+      questionText = `What standard does "${current.num}" represent?`;
+      correctAnswer = current.title;
+      allAnswersPool = allCards.map(c => c.title).filter(t => t !== correctAnswer);
+    } else {
+      el.quizDirTag.textContent = 'IDENTIFY THE STANDARD NUMBER:';
+      questionText = `Which code / number corresponds to:\n"${current.title}"?`;
+      correctAnswer = current.num;
+      allAnswersPool = allCards.map(c => c.num).filter(n => n !== correctAnswer);
+    }
+
+    el.quizQText.textContent = questionText;
+
+    // Pick 3 random distractors
+    const distractors = shuffleArray(Array.from(new Set(allAnswersPool))).slice(0, 3);
+    const options = shuffleArray([correctAnswer, ...distractors]);
+
+    el.quizOptionsContainer.innerHTML = '';
+    const letters = ['A', 'B', 'C', 'D'];
+
+    options.forEach((opt, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'quiz-option-btn';
+      btn.innerHTML = `
+        <span class="quiz-option-letter">${letters[idx]}</span>
+        <span class="quiz-option-text">${escapeHtml(opt)}</span>
+      `;
+      btn.addEventListener('click', () => handleQuizAnswer(opt, correctAnswer, btn, current));
+      el.quizOptionsContainer.appendChild(btn);
+    });
+  }
+
+  function handleQuizAnswer(selected, correct, selectedBtn, cardObj) {
+    if (quizAnswered) return;
+    quizAnswered = true;
+
+    const allOptionBtns = el.quizOptionsContainer.querySelectorAll('.quiz-option-btn');
+    allOptionBtns.forEach(b => {
+      b.disabled = true;
+      const text = b.querySelector('.quiz-option-text').textContent;
+      if (text === correct) {
+        b.classList.add('correct');
+      }
+    });
+
+    const isCorrect = selected === correct;
+    if (isCorrect) {
+      quizScore++;
+      el.quizScore.textContent = quizScore;
+      selectedBtn.classList.add('correct');
+      el.feedbackIcon.textContent = '✓';
+      el.feedbackIcon.style.color = 'var(--success)';
+      el.feedbackTitle.textContent = 'Correct Answer!';
+    } else {
+      selectedBtn.classList.add('wrong');
+      el.feedbackIcon.textContent = '✕';
+      el.feedbackIcon.style.color = 'var(--danger)';
+      el.feedbackTitle.textContent = 'Incorrect!';
+    }
+
+    el.feedbackExplanation.textContent = `${cardObj.num}: ${cardObj.title}. ${cardObj.notes ? 'Key Note: ' + cardObj.notes : ''}`;
+    el.quizFeedback.classList.remove('hidden');
+
+    if (quizCurrentIndex >= quizCards.length - 1) {
+      el.btnQuizNext.textContent = 'View Final Score & Finish';
+    } else {
+      el.btnQuizNext.textContent = 'Next Question →';
+    }
+  }
+
+  function nextQuizQuestion() {
+    if (quizCurrentIndex < quizCards.length - 1) {
+      quizCurrentIndex++;
+      renderQuizQuestion();
+    } else {
+      // Quiz finished
+      showToast(`🏆 Quiz Completed! Score: ${quizScore}/${quizCards.length}`);
+      showView('decks');
+    }
+  }
+
+  // -------------------------------------------------------------
+  // TWO-COLUMN STANDARDS DIRECTORY (Requested Feature)
+  // -------------------------------------------------------------
+  function renderTable() {
+    const query = el.tableSearchInput.value.trim().toLowerCase();
+    const selectedDeck = el.tableDeckFilter.value;
+    const all = getAllCards();
+
+    // Update column headers based on flip
+    if (tableColumnFlipped) {
+      el.thCol1.textContent = 'Title / Subject Matter';
+      el.thCol2.textContent = 'Standard Number';
+    } else {
+      el.thCol1.textContent = 'Standard Number';
+      el.thCol2.textContent = 'Title / Subject Matter';
+    }
+
+    const filtered = all.filter(c => {
+      if (selectedDeck !== 'all' && c.deckId !== selectedDeck) return false;
+      if (!query) return true;
+      return c.num.toLowerCase().includes(query) ||
+             c.title.toLowerCase().includes(query) ||
+             (c.notes && c.notes.toLowerCase().includes(query));
+    });
+
+    el.standardsTableBody.innerHTML = '';
+    el.tableVisibleCount.textContent = filtered.length;
+    el.tableTotalCount.textContent = all.length;
+
+    filtered.forEach((card, index) => {
+      const tr = document.createElement('tr');
+
+      const col1Val = tableColumnFlipped ? card.title : card.num;
+      const col2Val = tableColumnFlipped ? card.num : card.title;
+      const isStarred = starredCardIds.has(card.id);
+
+      tr.innerHTML = `
+        <td style="color: var(--text-muted); font-family: var(--font-mono); font-size: 0.8rem;">${index + 1}</td>
+        <td class="${tableColumnFlipped ? 'std-title-cell' : 'std-num-cell'}">${escapeHtml(col1Val)}</td>
+        <td class="${tableColumnFlipped ? 'std-num-cell' : 'std-title-cell'}">
+          ${escapeHtml(col2Val)}
+          ${card.notes ? `<span class="std-notes-small">${escapeHtml(card.notes)}</span>` : ''}
+        </td>
+        <td style="font-size: 0.8rem; color: var(--text-secondary);">${escapeHtml(card.category)}</td>
+        <td>
+          <div class="table-row-actions">
+            <button class="table-icon-btn btn-table-star" title="Star" data-id="${card.id}" style="${isStarred ? 'color: var(--accent-gold);' : ''}">
+              ★
+            </button>
+            <button class="table-icon-btn btn-table-edit" title="Edit" data-id="${card.id}" data-deck="${card.deckId}">
+              ✎
+            </button>
+            <button class="table-icon-btn delete-btn btn-table-del" title="Delete" data-id="${card.id}" data-deck="${card.deckId}">
+              ✕
+            </button>
+          </div>
+        </td>
+      `;
+
+      // Row Actions
+      tr.querySelector('.btn-table-star').addEventListener('click', () => {
+        if (starredCardIds.has(card.id)) starredCardIds.delete(card.id);
+        else starredCardIds.add(card.id);
+        saveData();
+        renderTable();
+      });
+
+      tr.querySelector('.btn-table-edit').addEventListener('click', () => {
+        openEditCardModal(card);
+      });
+
+      tr.querySelector('.btn-table-del').addEventListener('click', () => {
+        if (confirm(`Delete "${card.num}: ${card.title}"?`)) {
+          deleteCard(card.deckId, card.id);
+        }
+      });
+
+      el.standardsTableBody.appendChild(tr);
+    });
+  }
+
+  function swapTableColumns() {
+    tableColumnFlipped = !tableColumnFlipped;
+    renderTable();
+    showToast(tableColumnFlipped ? 'Columns swapped: Title first' : 'Columns swapped: Number first');
+  }
+
+  // -------------------------------------------------------------
+  // CARD & DECK MODALS (CRUD)
+  // -------------------------------------------------------------
+  function populateDeckSelects() {
+    // Table filter
+    el.tableDeckFilter.innerHTML = '<option value="all">All Subjects &amp; Decks</option>';
+    decks.forEach(d => {
+      const opt = document.createElement('option');
+      opt.value = d.id;
+      opt.textContent = `${d.category} - ${d.name}`;
+      el.tableDeckFilter.appendChild(opt);
+    });
+
+    // Card modal deck select
+    el.cardDeckSelect.innerHTML = '';
+    decks.forEach(d => {
+      const opt = document.createElement('option');
+      opt.value = d.id;
+      opt.textContent = d.name;
+      el.cardDeckSelect.appendChild(opt);
+    });
+
+    // CSV target deck select
+    el.importTargetDeck.innerHTML = '';
+    decks.forEach(d => {
+      const opt = document.createElement('option');
+      opt.value = d.id;
+      opt.textContent = d.name;
+      el.importTargetDeck.appendChild(opt);
+    });
+  }
+
+  function openAddCardModal() {
+    el.modalCardTitle.textContent = 'Add New Standard / Flashcard';
+    el.cardEditId.value = '';
+    el.cardNumInput.value = '';
+    el.cardTitleInput.value = '';
+    el.cardNotesInput.value = '';
+    if (activeDeckId !== 'all') {
+      el.cardDeckSelect.value = activeDeckId;
+    }
+    el.modalCard.classList.remove('hidden');
+    el.cardNumInput.focus();
+  }
+
+  function openEditCardModal(card) {
+    el.modalCardTitle.textContent = 'Edit Standard / Flashcard';
+    el.cardEditId.value = card.id;
+    el.cardDeckSelect.value = card.deckId;
+    el.cardNumInput.value = card.num;
+    el.cardTitleInput.value = card.title;
+    el.cardNotesInput.value = card.notes || '';
+    el.modalCard.classList.remove('hidden');
+    el.cardNumInput.focus();
+  }
+
+  function handleSaveCard(e) {
+    e.preventDefault();
+    const id = el.cardEditId.value;
+    const targetDeckId = el.cardDeckSelect.value;
+    const num = el.cardNumInput.value.trim();
+    const title = el.cardTitleInput.value.trim();
+    const notes = el.cardNotesInput.value.trim();
+
+    if (!num || !title) {
+      showToast('Number and Title are required!');
+      return;
+    }
+
+    const deck = decks.find(d => d.id === targetDeckId);
+    if (!deck) {
+      showToast('Selected deck not found!');
+      return;
+    }
+
+    if (id) {
+      // Edit existing card (handle if deck changed)
+      let found = false;
+      decks.forEach(d => {
+        const idx = d.cards.findIndex(c => c.id === id);
+        if (idx !== -1) {
+          if (d.id === targetDeckId) {
+            d.cards[idx].num = num;
+            d.cards[idx].title = title;
+            d.cards[idx].notes = notes;
+          } else {
+            // Moved to another deck
+            d.cards.splice(idx, 1);
+            deck.cards.push({ id, num, title, notes });
+          }
+          found = true;
+        }
+      });
+      showToast('Card updated successfully');
+    } else {
+      // New card
+      const newId = 'card_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
+      deck.cards.push({ id: newId, num, title, notes });
+      showToast('New card added successfully');
+    }
+
+    saveData();
+    el.modalCard.classList.add('hidden');
+    renderDeckTree();
+    renderTable();
+    updateGlobalStats();
+  }
+
+  function deleteCard(deckId, cardId) {
+    const d = decks.find(x => x.id === deckId);
+    if (d) {
+      d.cards = d.cards.filter(c => c.id !== cardId);
+      delete userProgress[cardId];
+      starredCardIds.delete(cardId);
+      saveData();
+      renderTable();
+      renderDeckTree();
+      updateGlobalStats();
+      showToast('Card deleted');
+    }
+  }
+
+  function handleCreateDeck(e) {
+    e.preventDefault();
+    const name = el.deckNameInput.value.trim();
+    const category = el.deckCategoryInput.value.trim();
+    const description = el.deckDescInput.value.trim();
+
+    if (!name || !category) {
+      showToast('Name and Category are required!');
+      return;
+    }
+
+    const newDeck = {
+      id: 'deck_' + Date.now(),
+      name,
+      category,
+      description,
+      cards: []
+    };
+
+    decks.push(newDeck);
+    saveData();
+    populateDeckSelects();
+    renderDeckTree();
+    updateGlobalStats();
+
+    el.modalDeck.classList.add('hidden');
+    el.formDeck.reset();
+    showToast(`Created deck: ${name}`);
+  }
+
+  // -------------------------------------------------------------
+  // GOOGLE DRIVE & DATA BACKUP / RESTORE
+  // -------------------------------------------------------------
+  function exportBackupJSON() {
+    const backupData = {
+      app: 'CA Flashcards Master',
+      version: '1.0',
+      exportedAt: new Date().toISOString(),
+      decks: decks,
+      userProgress: userProgress,
+      starredCardIds: [...starredCardIds],
+      settings: settings
+    };
+
+    const jsonStr = JSON.stringify(backupData, null, 2);
+    const blob = new Blob([jsonStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    const timestamp = new Date().toISOString().slice(0, 10);
+    a.href = url;
+    a.download = `ca_flashcards_backup_${timestamp}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    showToast('Downloaded backup file. Save it to your Google Drive folder!');
+  }
+
+  function importBackupJSON(file) {
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      try {
+        const data = JSON.parse(e.target.result);
+        if (!data.decks || !Array.isArray(data.decks)) {
+          throw new Error('Invalid backup file format: missing decks array');
+        }
+
+        decks = data.decks;
+        if (data.userProgress) userProgress = data.userProgress;
+        if (data.starredCardIds) starredCardIds = new Set(data.starredCardIds);
+        if (data.settings) settings = { ...settings, ...data.settings };
+
+        saveData();
+        saveSettings();
+        applyTheme();
+        populateDeckSelects();
+        renderDeckTree();
+        updateGlobalStats();
+        el.modalSync.classList.add('hidden');
+        showToast('🎉 Successfully restored backup from Google Drive file!');
+      } catch (err) {
+        console.error(err);
+        alert('Could not restore backup: ' + err.message);
+      }
+    };
+    reader.readAsText(file);
+  }
+
+  function importCSVText() {
+    const rawText = el.csvPasteArea.value.trim();
+    const targetDeckId = el.importTargetDeck.value;
+
+    if (!rawText) {
+      showToast('Please paste CSV or text first!');
+      return;
+    }
+
+    const deck = decks.find(d => d.id === targetDeckId);
+    if (!deck) {
+      showToast('Target deck not found');
+      return;
+    }
+
+    const lines = rawText.split(/\r?\n/);
+    let addedCount = 0;
+
+    lines.forEach(line => {
+      const trimmed = line.trim();
+      if (!trimmed) return;
+
+      // Split by tab or comma
+      let parts = trimmed.includes('\t') ? trimmed.split('\t') : trimmed.split(',');
+      parts = parts.map(p => p.trim());
+
+      if (parts.length >= 2) {
+        const num = parts[0];
+        const title = parts[1];
+        const notes = parts.slice(2).join(', ').trim();
+
+        if (num && title) {
+          const newId = 'card_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5);
+          deck.cards.push({ id: newId, num, title, notes });
+          addedCount++;
+        }
+      }
+    });
+
+    if (addedCount > 0) {
+      saveData();
+      renderDeckTree();
+      updateGlobalStats();
+      el.csvPasteArea.value = '';
+      showToast(`Imported ${addedCount} cards into "${deck.name}"!`);
+      el.modalSync.classList.add('hidden');
+    } else {
+      alert('Could not parse any valid lines. Format should be: Number, Title, Optional Notes');
+    }
+  }
+
+  function exportCSV() {
+    const targetDeckId = el.importTargetDeck.value;
+    const deck = decks.find(d => d.id === targetDeckId);
+    if (!deck || deck.cards.length === 0) {
+      showToast('Selected deck is empty');
+      return;
+    }
+
+    let csvContent = 'Standard Number,Title,Notes\n';
+    deck.cards.forEach(c => {
+      const escapedNum = `"${(c.num || '').replace(/"/g, '""')}"`;
+      const escapedTitle = `"${(c.title || '').replace(/"/g, '""')}"`;
+      const escapedNotes = `"${(c.notes || '').replace(/"/g, '""')}"`;
+      csvContent += `${escapedNum},${escapedTitle},${escapedNotes}\n`;
+    });
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${deck.name.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    showToast(`Exported CSV for "${deck.name}"`);
+  }
+
+  function resetToDefaults() {
+    if (confirm('Reset everything to the default CA Ind AS and Standards on Auditing? Any custom cards will be replaced.')) {
+      const defaultSource = (typeof window !== 'undefined' && window.INITIAL_DECKS) ? window.INITIAL_DECKS : (typeof INITIAL_DECKS !== 'undefined' ? INITIAL_DECKS : []);
+      decks = JSON.parse(JSON.stringify(defaultSource));
+      userProgress = {};
+      starredCardIds.clear();
+      saveData();
+      populateDeckSelects();
+      renderDeckTree();
+      updateGlobalStats();
+      el.modalSync.classList.add('hidden');
+      showToast('Reset to default CA decks');
+    }
+  }
+
+  // -------------------------------------------------------------
+  // UTILITIES
+  // -------------------------------------------------------------
+  function shuffleArray(array) {
+    const arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>"']/g, function(m) {
+      switch (m) {
+        case '&': return '&amp;';
+        case '<': return '&lt;';
+        case '>': return '&gt;';
+        case '"': return '&quot;';
+        case "'": return '&#039;';
+        default: return m;
+      }
+    });
+  }
+
+  // -------------------------------------------------------------
+  // EVENT LISTENERS SETUP
+  // -------------------------------------------------------------
+  function setupEventListeners() {
+    // Navigation
+    el.btnNavHome.addEventListener('click', () => showView('decks'));
+    el.btnNavTable.addEventListener('click', () => showView('table'));
+    el.btnGrandShuffle.addEventListener('click', () => startStudySession('all', true));
+    el.btnToggleTheme.addEventListener('click', toggleTheme);
+    el.btnOpenSync.addEventListener('click', () => el.modalSync.classList.remove('hidden'));
+    el.btnCloseSync.addEventListener('click', () => el.modalSync.classList.add('hidden'));
+
+    // Banner Buttons
+    el.btnBannerStudyAll.addEventListener('click', () => startStudySession('all', true));
+    el.btnBannerQuizAll.addEventListener('click', () => startQuizSession('all'));
+
+    // Selection Bar Listeners
+    el.chkSelectAllDecks.addEventListener('change', () => {
+      const selectAll = el.chkSelectAllDecks.checked;
+      if (selectAll) {
+        decks.forEach(d => selectedDeckIds.add(d.id));
+      } else {
+        selectedDeckIds.clear();
+      }
+      updateSelectionBar();
+    });
+
+    el.btnReviseSelected.addEventListener('click', () => {
+      startStudySession('selected', true);
+    });
+
+    el.btnQuizSelected.addEventListener('click', () => {
+      startQuizSession('selected');
+    });
+
+    el.btnDeleteSelected.addEventListener('click', () => {
+      deleteSelectedDecks();
+    });
+
+    // Deck Bottom Action Tools
+    el.btnAddDeckModal.addEventListener('click', () => el.modalDeck.classList.remove('hidden'));
+    el.btnAddCardModal.addEventListener('click', openAddCardModal);
+    el.btnBackupDirect.addEventListener('click', exportBackupJSON);
+
+    // Study View Controls
+    el.btnBackToDecks.addEventListener('click', () => showView('decks'));
+    el.cardElement.addEventListener('click', flipCard);
+    el.btnFlipCard.addEventListener('click', flipCard);
+    el.btnNextCard.addEventListener('click', nextCard);
+    el.btnPrevCard.addEventListener('click', prevCard);
+    el.btnMarkRight.addEventListener('click', () => markCard(true));
+    el.btnMarkWrong.addEventListener('click', () => markCard(false));
+    el.btnStarCard.addEventListener('click', toggleStarCard);
+    el.btnToggleShuffle.addEventListener('click', toggleShuffle);
+
+    // Direction Toggles
+    el.btnDirN2T.addEventListener('click', () => setDirection('num_to_title'));
+    el.btnDirT2N.addEventListener('click', () => setDirection('title_to_num'));
+    el.btnDirMixed.addEventListener('click', () => setDirection('mixed'));
+
+    // TTS Buttons
+    el.btnCardFrontTTS.addEventListener('click', (e) => {
+      e.stopPropagation();
+      speakText(el.cardQuestionText.textContent);
+    });
+    el.btnCardBackTTS.addEventListener('click', (e) => {
+      e.stopPropagation();
+      speakText(el.cardAnswerText.textContent);
+    });
+
+    // Quiz Controls
+    el.btnBackFromQuiz.addEventListener('click', () => showView('decks'));
+    el.btnQuizNext.addEventListener('click', nextQuizQuestion);
+
+    // Table Controls
+    el.btnSwapTableCols.addEventListener('click', swapTableColumns);
+    el.btnTableAddCard.addEventListener('click', openAddCardModal);
+    el.tableSearchInput.addEventListener('input', () => {
+      el.btnClearSearch.style.display = el.tableSearchInput.value ? 'block' : 'none';
+      renderTable();
+    });
+    el.btnClearSearch.addEventListener('click', () => {
+      el.tableSearchInput.value = '';
+      el.btnClearSearch.style.display = 'none';
+      renderTable();
+    });
+    el.tableDeckFilter.addEventListener('change', renderTable);
+
+    // Backup & Sync Modal
+    el.btnExportJson.addEventListener('click', exportBackupJSON);
+    el.fileImportJson.addEventListener('change', (e) => {
+      if (e.target.files.length > 0) importBackupJSON(e.target.files[0]);
+    });
+    el.btnImportCsvText.addEventListener('click', importCSVText);
+    el.btnExportCsv.addEventListener('click', exportCSV);
+    el.btnResetDefault.addEventListener('click', resetToDefaults);
+
+    // Card Modal
+    el.btnCloseCardModal.addEventListener('click', () => el.modalCard.classList.add('hidden'));
+    el.btnCancelCard.addEventListener('click', () => el.modalCard.classList.add('hidden'));
+    el.formCard.addEventListener('submit', handleSaveCard);
+
+    // Deck Modal
+    el.btnCloseDeckModal.addEventListener('click', () => el.modalDeck.classList.add('hidden'));
+    el.btnCancelDeck.addEventListener('click', () => el.modalDeck.classList.add('hidden'));
+    el.formDeck.addEventListener('submit', handleCreateDeck);
+
+    // Close modals on overlay click
+    [el.modalSync, el.modalCard, el.modalDeck].forEach(modal => {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.classList.add('hidden');
+      });
+    });
+
+    // Keyboard Shortcuts for quick revision
+    window.addEventListener('keydown', (e) => {
+      // Don't trigger if user is typing in an input
+      if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
+
+      if (el.viewStudy.classList.contains('active')) {
+        if (e.code === 'Space') {
+          e.preventDefault();
+          flipCard();
+        } else if (e.code === 'ArrowRight') {
+          nextCard();
+        } else if (e.code === 'ArrowLeft') {
+          prevCard();
+        } else if (e.key === '1') {
+          markCard(false);
+        } else if (e.key === '2') {
+          markCard(true);
+        } else if (e.key.toLowerCase() === 'r') {
+          toggleShuffle();
+        } else if (e.key.toLowerCase() === 's') {
+          toggleStarCard();
+        }
+      }
+    });
+  }
+
+  // Start app when DOM is ready
+  document.addEventListener('DOMContentLoaded', init);
+
+})();
+
+</script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW registration skipped:', err));
+      });
+    }
+  </script>
+
+  <script>
+    window.PAGE_ID = "ca-flashcards";
+  </script>
+  <script src="./navigation-bar.js"></script>
+  <script type="module" src="./sync-engine.js"></script>
+</body>
+</html>

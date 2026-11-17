@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CARO 2020 - 1-Minute Rapid Revision</title>
+<style>
+  :root {
+    --bg: #0f172a;
+    --card-bg: #1e293b;
+    --accent: #38bdf8;
+    --text: #f8fafc;
+    --muted: #94a3b8;
+    --border: #334155;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
+  body { background: var(--bg); color: var(--text); display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 16px; }
+  header { text-align: center; margin-bottom: 16px; width: 100%; max-width: 600px; }
+  h1 { font-size: 1.3rem; color: var(--accent); margin-bottom: 4px; }
+  .subtitle { font-size: 0.85rem; color: var(--muted); }
+  .controls { display: flex; gap: 10px; justify-content: center; margin-top: 12px; flex-wrap: wrap; }
+  button { background: var(--card-bg); color: var(--text); border: 1px solid var(--border); padding: 8px 14px; border-radius: 8px; cursor: pointer; font-size: 0.85rem; transition: 0.2s; }
+  button:hover { border-color: var(--accent); color: var(--accent); }
+  button.active { background: var(--accent); color: #0f172a; font-weight: 600; border-color: var(--accent); }
+  
+  /* Flashcard Mode */
+  #flashcard-view { width: 100%; max-width: 600px; display: flex; flex-direction: column; align-items: center; }
+  .progress { font-size: 0.85rem; color: var(--muted); margin-bottom: 10px; }
+  .card-container { width: 100%; height: 340px; perspective: 1000px; cursor: pointer; }
+  .card { width: 100%; height: 100%; position: relative; transition: transform 0.45s cubic-bezier(0.4, 0.2, 0.2, 1); transform-style: preserve-3d; }
+  .card.flipped { transform: rotateY(180deg); }
+  .face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; justify-content: center; box-shadow: 0 10px 25px rgba(0,0,0,0.3); overflow-y: auto; }
+  .front { align-items: center; text-align: center; }
+  .clause-num { font-size: 2.5rem; font-weight: 800; color: var(--accent); }
+  .tap-hint { margin-top: 12px; font-size: 0.8rem; color: var(--muted); }
+  .back { transform: rotateY(180deg); justify-content: flex-start; text-align: left; }
+  .back h2 { font-size: 1.15rem; color: var(--accent); margin-bottom: 12px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+  .back ul { list-style: none; }
+  .back li { margin-bottom: 8px; font-size: 0.92rem; line-height: 1.4; }
+  .back li b { color: #e2e8f0; }
+  .nav-btns { display: flex; gap: 12px; margin-top: 16px; width: 100%; }
+  .nav-btns button { flex: 1; padding: 12px; font-size: 0.95rem; font-weight: 600; }
+
+  /* Sheet Mode */
+  #sheet-view { width: 100%; max-width: 800px; display: none; flex-direction: column; gap: 10px; }
+  .sheet-item { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px; }
+  .sheet-header { display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+  .sheet-title { font-weight: 700; color: var(--accent); font-size: 0.98rem; }
+  .sheet-body { margin-top: 8px; font-size: 0.88rem; line-height: 1.45; color: #cbd5e1; border-top: 1px solid var(--border); padding-top: 8px; }
+  .sheet-body b { color: #f8fafc; }
+</style>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    :root {
+      --bg: #0a0e17;
+      --card-bg: #162032;
+      --accent: #38bdf8;
+      --text: #f8fafc;
+      --muted: #cbd5e1;
+      --border: #2a3a54;
+      --bg-primary: #0a0e17;
+      --bg-card: #162032;
+      --text-main: #f8fafc;
+      --text-muted: #cbd5e1;
+    }
+    [data-theme="light"] {
+      --bg: #f0f4f9;
+      --card-bg: #ffffff;
+      --accent: #0284c7;
+      --text: #0f172a;
+      --muted: #334155;
+      --border: #cbd5e1;
+      --bg-primary: #f0f4f9;
+      --bg-card: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #334155;
+    }
+    body {
+      padding-top: 64px !important;
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
+      color: var(--text) !important;
+      background: var(--bg) !important;
+    }
+    .back li b { color: var(--accent) !important; }
+    .sheet-body b { color: var(--text) !important; }
+    .sheet-body { color: var(--muted) !important; }
+    .subtitle { color: var(--muted) !important; }
+  </style>
+
+</head>
+<body>
+
+<header>
+  <h1>CARO 2020 — 1-Minute Revision</h1>
+  <div class="subtitle">Paragraph 3 (21 Clauses) • CA Final Audit</div>
+  <div class="controls">
+    <button id="btn-cards" class="active" onclick="setMode('cards')">Flashcards</button>
+    <button id="btn-sheet" onclick="setMode('sheet')">All 21 Sheet</button>
+    <button onclick="shuffleCards()">Shuffle</button>
+  </div>
+</header>
+
+<div id="flashcard-view">
+  <div class="progress" id="progress">1 / 21</div>
+  <div class="card-container" onclick="flipCard()">
+    <div class="card" id="card">
+      <div class="face front">
+        <div class="clause-num" id="front-text">Clause 3(i)</div>
+        <div class="tap-hint">Tap card or press Space to flip</div>
+      </div>
+      <div class="face back" id="back-content"></div>
+    </div>
+  </div>
+  <div class="nav-btns">
+    <button onclick="prevCard()">&#8592; Prev</button>
+    <button onclick="flipCard()">Flip</button>
+    <button onclick="nextCard()">Next &#8594;</button>
+  </div>
+</div>
+
+<div id="sheet-view"></div>
+
+<script>
+const originalData = [
+  { num: "Clause 3(i)", title: "Property, Plant & Equipment (PPE) & Intangible Assets", points: [
+    "<b>(a) Records:</b> Proper records (quantitative & situation) for PPE (A) & Intangibles (B)",
+    "<b>(b) Physical Verification:</b> Reasonable intervals; material discrepancies dealt in books",
+    "<b>(c) Title Deeds:</b> Immovable properties held in company name? If not, disclose details",
+    "<b>(d) Revaluation:</b> PPE/Intangibles revalued? By Registered Valuer? Change &ge; 10% aggregate",
+    "<b>(e) Benami Property:</b> Proceedings initiated/pending under Benami Act? Disclosed in FS?"
+  ]},
+  { num: "Clause 3(ii)", title: "Inventory & Working Capital", points: [
+    "<b>(a) Physical Verification:</b> Reasonable coverage/procedure; discrepancies &ge; 10% in aggregate per class",
+    "<b>(b) Working Capital Limits:</b> Sanctioned &gt; Rs. 5 Cr (Banks/FIs) on current assets; Quarterly returns/statements match books?"
+  ]},
+  { num: "Clause 3(iii)", title: "Investments, Guarantees, Security & Loans/Advances", points: [
+    "<b>(a) Aggregate & Balance:</b> Given to Subsidiaries/JVs/Associates (A) vs Others (B) [Not for principal lending cos]",
+    "<b>(b) Prejudicial Terms:</b> Terms & conditions prejudicial to company's interest?",
+    "<b>(c) Repayment Schedule:</b> Stipulated & regular?",
+    "<b>(d) Overdue &gt; 90 Days:</b> Total amount & reasonable recovery steps",
+    "<b>(e) Evergreening:</b> Renewed/extended/fresh loan to settle existing overdue? [Not for principal lending cos]",
+    "<b>(f) Repayable on Demand:</b> Without terms/period; aggregate, % to total loans, & amount to Promoters/Related Parties"
+  ]},
+  { num: "Clause 3(iv)", title: "Compliance with Sec 185 & 186", points: [
+    "Loans, Investments, Guarantees, & Security &rarr; Complied with Sec 185 & 186? If not, provide details"
+  ]},
+  { num: "Clause 3(v)", title: "Deposits & Deemed Deposits", points: [
+    "Compliance with RBI directives & Sec 73–76; Nature of contraventions; CLB/NCLT/RBI/Court orders complied?"
+  ]},
+  { num: "Clause 3(vi)", title: "Cost Records", points: [
+    "Maintenance specified by CG u/s 148(1)? Such accounts & records made & maintained?"
+  ]},
+  { num: "Clause 3(vii)", title: "Statutory Dues", points: [
+    "<b>(a) Undisputed Dues:</b> Regular in depositing (GST, PF, ESI, IT, Customs, etc.)? Arrears &gt; 6 months from due date as on BS date",
+    "<b>(b) Disputed Dues:</b> Not deposited due to dispute &rarr; Amount & Forum where pending"
+  ]},
+  { num: "Clause 3(viii)", title: "Unrecorded Income", points: [
+    "Transactions not recorded in books surrendered/disclosed as income in tax assessments (IT Act)? Properly recorded in books now?"
+  ]},
+  { num: "Clause 3(ix)", title: "Repayment of Loans & Borrowings", points: [
+    "<b>(a) Default:</b> Default in repayment of loans/interest to any lender? Lender-wise details",
+    "<b>(b) Wilful Defaulter:</b> Declared wilful defaulter by bank/FI/other lender?",
+    "<b>(c) Term Loans:</b> Applied for purpose obtained? If diverted, amount & purpose",
+    "<b>(d) Short-Term Funds:</b> Raised on ST basis utilized for Long-Term purposes?",
+    "<b>(e) Entity Obligations:</b> Funds taken from any entity/person to meet obligations of Subsidiaries/Associates/JVs?",
+    "<b>(f) Pledge of Securities:</b> Loans raised during year on pledge of securities held in Subsidiaries/JVs/Associates? Default?"
+  ]},
+  { num: "Clause 3(x)", title: "IPO / FPO & Preferential Allotment", points: [
+    "<b>(a) IPO / FPO (incl. Debt):</b> Applied for purpose raised? Delays/defaults & subsequent rectification",
+    "<b>(b) Preferential Allotment / Private Placement:</b> Sec 42 & Sec 62 complied? Funds used for stated purpose?"
+  ]},
+  { num: "Clause 3(xi)", title: "Fraud & Whistle-Blower", points: [
+    "<b>(a) Fraud Noticed/Reported:</b> By company or on company? Nature & amount",
+    "<b>(b) ADT-4 Filed:</b> Report u/s 143(12) filed by auditor with CG in Form ADT-4?",
+    "<b>(c) Whistle-Blower Complaints:</b> Received during year & considered by auditor?"
+  ]},
+  { num: "Clause 3(xii)", title: "Nidhi Company", points: [
+    "<b>(a) NOF to Deposits:</b> Complied with Net Owned Funds to Deposits ratio of 1:20?",
+    "<b>(b) Unencumbered Term Deposits:</b> Maintaining 10% as specified to meet liability?",
+    "<b>(c) Default:</b> Default in payment of interest/repayment of deposits?"
+  ]},
+  { num: "Clause 3(xiii)", title: "Related Party Transactions (RPT)", points: [
+    "Compliance with Sec 177 (Audit Committee) & Sec 188 (Board/SR); Details disclosed in FS as per applicable AS/Ind AS?"
+  ]},
+  { num: "Clause 3(xiv)", title: "Internal Audit System", points: [
+    "<b>(a) System:</b> Has internal audit system commensurate with size & nature of business?",
+    "<b>(b) Reports Considered:</b> Reports of Internal Auditors for period under audit considered by statutory auditor?"
+  ]},
+  { num: "Clause 3(xv)", title: "Non-Cash Transactions", points: [
+    "Entered into non-cash transactions with directors or persons connected with him? Complied with Sec 192?"
+  ]},
+  { num: "Clause 3(xvi)", title: "Registration u/s 45-IA of RBI Act (NBFC / CIC)", points: [
+    "<b>(a) Sec 45-IA Registration:</b> Required? Registration obtained?",
+    "<b>(b) Valid CoR:</b> Conducted NBFC/HFC activities without valid Certificate of Registration?",
+    "<b>(c) Core Investment Company (CIC):</b> Is it a CIC? Fulfils CIC criteria? If exempted/unregistered, continues to fulfil criteria?",
+    "<b>(d) Group CICs:</b> Whether Group has more than 1 CIC? Indicate number of CICs in Group"
+  ]},
+  { num: "Clause 3(xvii)", title: "Cash Losses", points: [
+    "Incurred cash losses in current FY and immediately preceding FY? State amount of cash losses"
+  ]},
+  { num: "Clause 3(xviii)", title: "Resignation of Statutory Auditors", points: [
+    "Any resignation of statutory auditors during the year? Auditor took into consideration issues, objections, or concerns raised by outgoing auditors?"
+  ]},
+  { num: "Clause 3(xix)", title: "Material Uncertainty / Financial Ratios", points: [
+    "On basis of financial ratios, ageing/expected dates of realization of FA & payment of FL, other info with FS, BoD/Management plans &rarr; Any material uncertainty exists on BS date that company is incapable of meeting liabilities existing at BS date falling due within 1 year from BS date?"
+  ]},
+  { num: "Clause 3(xx)", title: "Corporate Social Responsibility (CSR)", points: [
+    "<b>(a) Other than Ongoing Project:</b> Unspent amount transferred to Fund specified in Schedule VII within 6 months of FY expiry? (Sec 135(5))",
+    "<b>(b) Ongoing Project:</b> Unspent amount u/s 135(5) transferred to Special Account within 30 days from FY end? (Sec 135(6))"
+  ]},
+  { num: "Clause 3(xxi)", title: "Consolidated Financial Statements (CFS)", points: [
+    "Any qualifications or adverse remarks by respective auditors in CARO reports of companies included in CFS? Indicate details of companies & paragraph numbers of CARO report"
+  ]}
+];
+
+let cards = [...originalData];
+let idx = 0;
+let isFlipped = false;
+
+function renderCard() {
+  const item = cards[idx];
+  document.getElementById('progress').textContent = `${idx + 1} / ${cards.length}`;
+  document.getElementById('front-text').textContent = item.num;
+  document.getElementById('back-content').innerHTML = `<h2>${item.num}: ${item.title}</h2><ul>${item.points.map(p => `<li>• ${p}</li>`).join('')}</ul>`;
+  if (isFlipped) {
+    document.getElementById('card').classList.remove('flipped');
+    isFlipped = false;
+  }
+}
+
+function flipCard() {
+  isFlipped = !isFlipped;
+  document.getElementById('card').classList.toggle('flipped', isFlipped);
+}
+
+function nextCard() {
+  idx = (idx + 1) % cards.length;
+  renderCard();
+}
+
+function prevCard() {
+  idx = (idx - 1 + cards.length) % cards.length;
+  renderCard();
+}
+
+function shuffleCards() {
+  for (let i = cards.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [cards[i], cards[j]] = [cards[j], cards[i]];
+  }
+  idx = 0;
+  renderCard();
+  renderSheet();
+}
+
+function renderSheet() {
+  const sheet = document.getElementById('sheet-view');
+  sheet.innerHTML = cards.map(item => `
+    <div class="sheet-item">
+      <div class="sheet-header">
+        <span class="sheet-title">${item.num} — ${item.title}</span>
+      </div>
+      <div class="sheet-body">${item.points.join(' &nbsp;|&nbsp; ')}</div>
+    </div>
+  `).join('');
+}
+
+function setMode(mode) {
+  document.getElementById('btn-cards').classList.toggle('active', mode === 'cards');
+  document.getElementById('btn-sheet').classList.toggle('active', mode === 'sheet');
+  document.getElementById('flashcard-view').style.display = mode === 'cards' ? 'flex' : 'none';
+  document.getElementById('sheet-view').style.display = mode === 'sheet' ? 'flex' : 'none';
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.code === 'Space') { e.preventDefault(); flipCard(); }
+  if (e.code === 'ArrowRight') nextCard();
+  if (e.code === 'ArrowLeft') prevCard();
+});
+
+renderCard();
+renderSheet();
+</script>
+
+  <script>
+    window.PAGE_ID = "caro-2020";
+  </script>
+  <script src="./navigation-bar.js"></script>
+  <script type="module" src="./sync-engine.js"></script>
+</body>
+</html>
