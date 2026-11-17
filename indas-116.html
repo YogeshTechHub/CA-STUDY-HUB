@@ -11,17 +11,35 @@
   
   <style>
     :root {
+      /* Dark Theme (Default) */
       --bg-primary: #0a0e17;
       --bg-secondary: #111827;
       --bg-card: #162032;
+      --bg-card-hover: #1c283f;
       --border-color: #2a3a54;
       --text-main: #f8fafc;
       --text-muted: #cbd5e1;
+      --text-dim: #94a3b8;
       --accent-blue: #3b82f6;
       --accent-emerald: #10b981;
       --accent-amber: #f59e0b;
       --accent-purple: #a855f7;
     }
+
+    [data-theme="light"] {
+      --bg-primary: #f0f4f8;
+      --bg-secondary: #e2e8f0;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f8fafc;
+      --border-color: #cbd5e1;
+      --text-main: #0f172a;
+      --text-muted: #334155;
+      --text-dim: #64748b;
+      --accent-blue: #1d4ed8;
+      --accent-emerald: #047857;
+      --accent-amber: #b45309;
+    }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       background-color: var(--bg-primary);
@@ -29,7 +47,9 @@
       font-family: 'Plus Jakarta Sans', sans-serif;
       line-height: 1.6;
       padding: 24px;
+      padding-top: 70px;
       padding-bottom: 90px;
+      transition: background-color 0.2s, color 0.2s;
     }
     .container { max-width: 1000px; margin: 0 auto; }
     header {
@@ -37,18 +57,7 @@
       border-bottom: 1px solid var(--border-color);
       padding-bottom: 16px;
     }
-    .back-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      color: var(--accent-blue);
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 12px;
-    }
-    .back-link:hover { text-decoration: underline; }
-    h1 { font-size: 28px; font-weight: 800; color: #fff; margin-bottom: 6px; }
+    h1 { font-size: 28px; font-weight: 800; color: var(--text-main); margin-bottom: 6px; }
     .badge-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
     .badge {
       font-size: 11px;
@@ -59,6 +68,8 @@
     }
     .badge-cat-a { background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid #f87171; }
     .badge-sub { background: rgba(59, 130, 246, 0.2); color: #93c5fd; border: 1px solid #3b82f6; }
+    [data-theme="light"] .badge-cat-a { background: #fee2e2; color: #991b1b; border-color: #f87171; }
+    [data-theme="light"] .badge-sub { background: #e0f2fe; color: #0369a1; border-color: #38bdf8; }
     
     .card {
       background: var(--bg-card);
@@ -66,15 +77,16 @@
       border-radius: 12px;
       padding: 20px;
       margin-bottom: 20px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      transition: background 0.2s, border-color 0.2s;
     }
-    .card h2 { font-size: 20px; margin-bottom: 14px; color: #60a5fa; display: flex; align-items: center; gap: 8px; }
+    .card h2 { font-size: 20px; margin-bottom: 14px; color: var(--accent-blue); display: flex; align-items: center; gap: 8px; }
     .checklist-item {
       display: flex;
       align-items: flex-start;
       gap: 12px;
       padding: 10px 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      border-bottom: 1px solid rgba(125, 125, 125, 0.15);
     }
     .checklist-item:last-child { border-bottom: none; }
     .checklist-item input[type="checkbox"] {
@@ -91,23 +103,23 @@
       user-select: text;
     }
     .formula-box {
-      background: #0f172a;
+      background: var(--bg-secondary);
       border-left: 4px solid var(--accent-amber);
       padding: 14px;
       border-radius: 6px;
       margin: 12px 0;
       font-family: 'JetBrains Mono', monospace;
       font-size: 13px;
-      color: #fde68a;
+      color: var(--text-main);
     }
     .notes-box {
       width: 100%;
       min-height: 100px;
-      background: #0d131f;
+      background: var(--bg-secondary);
       border: 1px solid var(--border-color);
       border-radius: 8px;
       padding: 12px;
-      color: #fff;
+      color: var(--text-main);
       font-family: inherit;
       font-size: 14px;
       resize: vertical;
@@ -118,11 +130,11 @@
       border-color: var(--accent-blue);
     }
     .tip-box {
-      background: rgba(16, 185, 129, 0.1);
+      background: rgba(16, 185, 129, 0.12);
       border: 1px solid rgba(16, 185, 129, 0.3);
       padding: 12px;
       border-radius: 8px;
-      color: #6ee7b7;
+      color: var(--accent-emerald);
       font-size: 13px;
       margin-top: 12px;
     }
@@ -131,7 +143,6 @@
 <body>
   <div class="container">
     <header>
-      <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Master Dashboard</a>
       <h1>Ind AS 116: Leases (Revision Capsule)</h1>
       <div class="badge-bar">
         <span class="badge badge-sub">Paper 1: FR</span>
@@ -235,10 +246,11 @@
     </div>
   </div>
 
-  <!-- Page ID Definition & Sync Engine Initialization -->
+  <!-- Page ID Definition & Modules -->
   <script>
     window.PAGE_ID = "indas-116";
   </script>
+  <script src="./navigation-bar.js"></script>
   <script type="module" src="./sync-engine.js"></script>
 </body>
 </html>

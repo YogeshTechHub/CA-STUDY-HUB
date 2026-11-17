@@ -58,30 +58,38 @@ class SyncEngine {
     const style = document.createElement("style");
     style.id = "sync-engine-styles";
     style.textContent = `
-      /* Sync Top Bar */
+      /* Sync Top Bar - Compact, Drag-safe & Smart-Positioned */
       #sync-topbar {
         position: fixed;
-        top: 12px;
-        right: 16px;
+        bottom: 20px;
+        right: 20px;
         z-index: 99999;
         display: flex;
         align-items: center;
         gap: 10px;
-        background: rgba(15, 23, 42, 0.88);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(15, 23, 42, 0.92);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        border: 1px solid rgba(255, 255, 255, 0.15);
         padding: 6px 14px;
         border-radius: 9999px;
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
-        font-size: 13px;
+        box-shadow: 0 10px 32px rgba(0, 0, 0, 0.45);
+        font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        font-size: 12.5px;
         color: #f8fafc;
-        transition: all 0.25s ease;
+        transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+        user-select: none;
+      }
+      [data-theme="light"] #sync-topbar {
+        background: rgba(255, 255, 255, 0.94);
+        border: 1px solid #cbd5e1;
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+        color: #0f172a;
       }
       #sync-topbar:hover {
-        border-color: rgba(59, 130, 246, 0.4);
-        box-shadow: 0 10px 35px rgba(0, 0, 0, 0.45);
+        border-color: rgba(59, 130, 246, 0.5);
+        box-shadow: 0 14px 40px rgba(0, 0, 0, 0.5);
+        transform: translateY(-2px);
       }
       .sync-status-indicator {
         display: flex;
