@@ -3,7 +3,7 @@
 // Works seamlessly across all study capsules and trackers
 // Features:
 // 1. ← Dashboard Link
-// 2. 📋 Copy Clean HTML Button
+// 2. 📋 Copy Prompt Template Button
 // 3. ☀️ / 🌙 Light/Dark Mode Switcher
 // 4. 🎨 5 Eye-Friendly Themes (Paper, Sage, Ocean, Lavender, Sunset)
 // 5. Aa Font Switcher (Plus Jakarta Sans vs. Literata Serif)
@@ -238,19 +238,25 @@
     setTimeout(() => toast.classList.remove("show"), 2200);
   }
 
-  async function copyCleanHtml() {
+  function studyPrompt() {
+    const url = new URL(window.location.pathname, window.location.origin);
+    return [
+      "Create a standalone, mobile-friendly study HTML for [TOPIC] in [SUBJECT]. Use the notes or pages I attach as the content source.",
+      "Use this Yogesh Study Hub page as the model for the study method: " + document.title + " (" + url.href + ").",
+      "Match its section order, revision cues, question formats and interactive study tools wherever they apply. Adapt the material to the new topic.",
+      "Organise the source into short exam-ready points. Preserve its terminology, references, conditions, limits and exceptions. Highlight recall keywords. Give direct answers to simple illustrations and show workings where needed.",
+      "For a tracker or strategy page, organise the new subject by topic and retain study order, progress tracking and revision planning. Use marks or priorities only when supported by the source.",
+      "Make tables easy to scroll with sticky headings. Return the complete working HTML."
+    ].join("\n\n");
+  }
+
+  async function copyStudyPrompt() {
+    const promptText = studyPrompt();
     try {
-      const clone = document.documentElement.cloneNode(true);
-      const toRemove = clone.querySelectorAll(
-        "#hub-site-tools, #hub-copy-toast, #theme-switcher-styles, #sync-topbar, #study-highlight-toolbar"
-      );
-      toRemove.forEach(el => el.remove());
-      const htmlStr = "<!DOCTYPE html>\n" + clone.outerHTML;
-      await navigator.clipboard.writeText(htmlStr);
-      showToast("📋 Clean HTML Structure Copied!");
-    } catch (e) {
-      console.warn("Copy error:", e);
-      showToast("Unable to copy to clipboard");
+      await navigator.clipboard.writeText(promptText);
+      showToast("Study prompt template copied!");
+    } catch {
+      window.prompt("Copy your study prompt template", promptText);
     }
   }
 
@@ -281,8 +287,8 @@
     }
 
     html += `
-      <button class="hub-tool-btn" id="btnHubCopy" title="Copy clean HTML layout">
-        Copy HTML
+      <button class="hub-tool-btn" id="btnHubCopy" title="Copy a reusable study prompt for another topic">
+        Copy Prompt Template
       </button>
 
       <button class="hub-tool-btn" id="btnHubMode" title="Toggle Light / Dark mode">
@@ -317,7 +323,7 @@
     document.body.prepend(header);
 
     // Event handlers
-    document.getElementById("btnHubCopy").addEventListener("click", copyCleanHtml);
+    document.getElementById("btnHubCopy").addEventListener("click", copyStudyPrompt);
     document.getElementById("btnHubMode").addEventListener("click", toggleMode);
     document.getElementById("btnHubFont").addEventListener("click", toggleFont);
 
